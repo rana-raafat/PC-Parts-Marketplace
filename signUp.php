@@ -4,7 +4,7 @@
     </head>
 <body>
 <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);">
-<h1>| Sign Up |</h1>
+<h1>Sign Up</h1>
 Username: <br>
 <input type="text" name="username"><br>
 Email: <br>
