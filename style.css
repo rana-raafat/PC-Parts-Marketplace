@@ -1,0 +1,55 @@
+@font-face {
+    src: url(resources/fonts/xirod.ttf);
+    font-family: xirod;
+}
+
+body{
+    margin: 30px;
+    background: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 140%;
+}
+
+.header, h1, h2, h3, h4, h5{
+    font-size: 280%;
+    font-family: xirod;
+    text-shadow: 3px 3px 1px red, 6px 6px 1px green, 9px 9px 1px blue;
+}
+
+input[type=text],input[type=password]{
+    width: 50%;
+    padding: 7px 14px;
+    margin: 10px 0;
+    font-size: 100%;
+}
+
+button, input[type=button],input[type=submit], input[type=file]{
+    color: black;
+    background: white;
+    margin: 10px 0;
+    font-size: 100%;
+}
+
+button:hover,input[type=button]:hover,input[type=submit]:hover, input[type=file]:hover{
+    background: transparent;
+    color: white;
+    /*
+    background: linear-gradient(to right,red 0% 33%, green 33% 66%, blue 66% 100%);
+    /*
+    /*
+    background: linear-gradient(45deg,red, green, blue); 
+    */
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+
+/* not working */
+.menu_bar_left{
+    text-align: right;
+}
+
+
