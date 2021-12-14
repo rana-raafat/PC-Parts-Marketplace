@@ -40,7 +40,7 @@ input[type=text]:focus, input[type=password]:focus{ /*not working*/
     border-color: red;                 
 }
 
-input[type=button],input[type=submit]{
+input[type=submit]{
     align-self: center;                 /*not working*/
     color: black;
     background: white;
@@ -48,14 +48,14 @@ input[type=button],input[type=submit]{
     font-size: 100%;
 }
 
-button{
+button, input[type=button]{
     color: black;
     background: white;
     margin: 10px 0;
     font-size: 100%;
 }
 
-button:hover, input[type=file]{
+button:hover, input[type=button]:hover, input[type=file]{
     background: transparent;
     color: white;
     margin: 10px 0;
