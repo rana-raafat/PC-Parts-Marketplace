@@ -8,32 +8,58 @@ body{
     background: black;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 140%;
+    font-size: 100%;
 }
 
 .header, h1, h2, h3, h4, h5{
-    font-size: 280%;
+    font-size: 250%;
     font-family: xirod;
-    text-shadow: 3px 3px 1px red, 6px 6px 1px green, 9px 9px 1px blue;
+    text-shadow: 2px 2px 1px black, 4px 4px 1px red, 6px 6px 1px limegreen, 8px 8px 1px blue;
+}
+
+.signUpForm{
+    background-color: black;
+    width: 400px;
+    border-radius: 8px;
+    padding: 20px 40px;
+    /*
+    box-shadow: 0px 0px 10px rgba(255, 0, 0, 1), 0px 0px 20px rgba(255, 255, 255, 0),0px 0px 30px rgba(0, 255, 0, 1), 0px 0px 40px rgba(255, 255, 255, 0),0px 0px 50px rgba(0, 0, 255, 1), 0px 0px 60px rgba(255, 255, 255, 0);
+    */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 input[type=text],input[type=password]{
-    width: 50%;
-    padding: 7px 14px;
+    padding: 5px 20px;
     margin: 10px 0;
     font-size: 100%;
 }
 
-button, input[type=button],input[type=submit], input[type=file]{
+input[type=text]:focus, input[type=password]:focus{ /*not working*/
+    border-color: red;                 
+}
+
+input[type=button],input[type=submit]{
+    align-self: center;                 /*not working*/
     color: black;
     background: white;
     margin: 10px 0;
     font-size: 100%;
 }
 
-button:hover,input[type=button]:hover,input[type=submit]:hover, input[type=file]:hover{
+button{
+    color: black;
+    background: white;
+    margin: 10px 0;
+    font-size: 100%;
+}
+
+button:hover, input[type=file]{
     background: transparent;
     color: white;
+    margin: 10px 0;
+    font-size: 100%;
     /*
     background: linear-gradient(to right,red 0% 33%, green 33% 66%, blue 66% 100%);
     /*

@@ -3,20 +3,22 @@
         <link rel="stylesheet" href="style.css">
     </head>
 <body>
-<form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);">
+<div class="signUpForm">
+<form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
 <h1>Sign Up</h1>
 Username: <br>
-<input type="text" name="username"><br>
+<input type="text" name="username" placeholder="Enter your username"><br>
 Email: <br>
-<input type="text" name="email"><br>
+<input type="text" name="email" placeholder="Enter your email address"><br>
 Password: <br>
-<input type="password" name="password"><br>
+<input type="password" name="password" placeholder="Enter your password"><br>
 Address: <br>
-<input type="text" name="address"><br>
+<input type="text" name="address" placeholder="Enter your delivery address"><br>
 Image: <br>
 <input type="file" name="profilepic"><br>
 <input type="submit" name="submit"><br>
 </form>
+</div>
 
 <script>
     function validate(form){
