@@ -16,7 +16,7 @@
 	}
 	else{
 		echo "<h2>Welcome</h2>";
-		echo"<a href='Home.php'>Home</a>";
+		echo"<a href='Home.php'>Home</a>"; //not finished yet
 		echo"<a href='LogIn.php'>Login</a>"; //not made yet
 		echo"<a href='SignUp.php'>SignUp</a>";
 	}
