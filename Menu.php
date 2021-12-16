@@ -6,7 +6,7 @@
     
 	if(!empty($_SESSION['Name'])){ //if logged in
 		echo "<h2>Welcome ". $_SESSION['Name'] . " <img src='". $_SESSION['image']."' alt='profilepic' width='20' height='20'></h2>";
-		echo"<a href='Home.php'>Home</a>"; 	//website title will redirect to home page instead
+		echo"<a href='Home.php'>Home</a>"; 	//website title will redirect to home page too
         echo"<a href='Profile.php'>Profile</a>"; //not made yet
         echo"<a href='Cart.php'>SCart</a>"; //not made yet
 		echo"<a href='SignOut.php'>SignOut</a>"; //not made yet
