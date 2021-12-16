@@ -1,5 +1,7 @@
 <html>
-	<head><link rel="stylesheet" href="style.css"></head>
+	<head>
+		<link rel="stylesheet" href="style.css">
+	</head>
 <body>
     <a href='Home.php'><h1>Website name</h1></a>		
     <?php
