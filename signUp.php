@@ -1,47 +1,26 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-    </head>
+    <?php 
+    session_start();
+    include "Menu.php";
+     ?>
 <body>
-<div class="signUpForm">
-<form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
-<h1>Sign Up</h1>
-Username: <br>
-<input type="text" name="username" placeholder="Enter your username"><br>
-Email: <br>
-<input type="text" name="email" placeholder="Enter your email address"><br>
-Password: <br>
-<input type="password" name="password" placeholder="Enter your password"><br>
-Address: <br>
-<input type="text" name="address" placeholder="Enter your delivery address"><br>
-Image: <br>
-<input type="file" name="profilepic"><br>
-<input type="submit" name="submit"><br>
-</form>
-</div>
+    <h3>SignUp</h3>
 
 <script>
     function validate(form){
-        fail="";
-        if(form.username.value=="")
-            fail+="Username required  ";
-        if(form.email.value=="")
-            fail+="Email required  ";
-        else{
-            <?php
-            $sanitizedEmail= filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-            if(!filter_var($sanitizedEmail, FILTER_VALIDATE_EMAIL)){
-                ?>
-                fail += "Invalid email  ";
-                <?php
-            }
-            ?>
+        var fail="";
+        if(form.username.value==""){
+            fail+="Username required   ";
+        }
+        if(form.email.value==""){
+            fail+="Email required   ";
         }
         if(form.password.value==""){
-            fail+="Password required  ";
+            fail+="Password required    ";
         }
-        if(form.address.value=="")
+        if(form.address.value==""){
             fail+="Address required  ";
+        }
         if(fail == ""){
             return true;
         }
@@ -53,68 +32,98 @@ Image: <br>
     }
 </script>
 
+<form method="post" action="SignUp.php" enctype="multipart/form-data" onsubmit="return validate(this);">
+
+    Image: <input type="file" name="profilepic"><br><br>
+    Username: <input type="text" name="username" maxlength=25><br>
+    Email: <input type="text" name="email"><br>
+    Password: <input type="password" name="password" maxlength=75 minlength=8><br>
+    Address: <input type="text" name="address"><br><br>
+
+    <input type="submit" name="submit"><br>
+</form>
 <?php 
 
 if(isset($_POST["submit"])){
-    //defaultImage="ProfilePictures/default.png";
+    
     $username=$_POST["username"];
     $password=$_POST["password"];
     $email=$_POST["email"];
     $address=$_POST["address"];
-    $imagePath=""; 
+    $imagePath="ProfilePictures/default.png"; //default image
     $userType="customer"; //default usertype is customer
-    $default=false;
-
-    if($_FILES["profilepic"]["size"]==0){
-        $imagePath="ProfilePictures/default.png"; //default image
+    
+    $sanitizedEmail= filter_var($email, FILTER_SANITIZE_EMAIL); 
+    if(!filter_var($sanitizedEmail, FILTER_VALIDATE_EMAIL)){  //check if valid email
+        echo "Error: Please enter a valid email<br>";
     }
     else{
-        $target_dir="ProfilePictures/";
-        $target_file=$target_dir.basename($_FILES["profilepic"]["name"]);
-        $imageType= strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        
-        if(file_exists($target_file)){ //why does it matter if the file exists already? normally multiple users can have the same pic
-            echo "Image already exists<br>";
-            $imagePath="ProfilePictures/default.png";
+
+        $con = mysqli_connect("localhost","root","","project");
+        if(!$con){
+            echo "connection error<br>";
+            die();
         }
-        else if($_FILES["profilepic"]["size"]>1000000){
-            echo "Image size is too large<br>";
-            $imagePath="ProfilePictures/default.png";
+
+        $checkEmail="SELECT * FROM users WHERE email='" . $email . "'";
+        $checkUsername="SELECT * FROM users WHERE username='" . $username . "'";
+        $EmailResult = $con->query($checkEmail);
+        $UsernameResult = $con->query($checkUsername);
+
+        if($EmailResult->num_rows > 0){
+            echo "An account with this email already exists<br>";
         }
-        else if($imageType != "jpeg" && $imageType != "jpg" && $imageType != "png"){
-            echo "Incorrect file type; Enter a jpg, jpeg or png<br>";
-            $imagePath="ProfilePictures/default.png";
+        if($UsernameResult->num_rows > 0){
+            echo "Username already taken<br>";
         }
         else{
-            if(move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_file)){
+            
+            $target_dir="ProfilePictures/";
+            $target_file=$target_dir.basename($_FILES["profilepic"]["name"]);
+            $imageType= strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            
+            if($_FILES["profilepic"]["size"]==0){ //check if no image is inserted
+                echo "Default picture used<br>";
+            }
+            else if(file_exists($target_file)){ //check if pic already exists, if it does don't move_uploaded_file so there are no duplicates
                 $imagePath=$target_file;
             }
+            else if($_FILES["profilepic"]["size"]>1000000){
+                echo "Error: Image size is too large<br>";
+            }
+            else if($imageType != "jpeg" && $imageType != "jpg" && $imageType != "png"){
+                echo "Error: Incorrect file type, Please enter a jpg, jpeg or png<br>";
+            }
             else{
-                $imagePath="ProfilePictures/default.png";
+                if(move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_file)){
+                    $imagePath=$target_file;
+                }
+                else{
+                    echo "Error uploading image<br>";
+                }
+            }
+            
+            $sql="INSERT INTO users(username,password,email,address,imagePath,userType) VALUES('" . $username . "','" . $password 
+                . "','" . $email . "','" . $address . "','" . $imagePath ."','" . $userType . "')";
+
+            $result = $con->query($sql);
+            if(!$result){
+                echo "error inserting data into database<br>";
+                printf("Error: %s\n", mysqli_error($con));
+        	    exit(); //exit stops the program
+            }
+            else{
+                echo "Account creation successful<br>";
+                header("Location:SignUp.php");
+                //header("Location:Home.php");
             }
         }
+        $con->close();
     }
-
-    $con = mysqli_connect("localhost","root","","project");
-    if(!$con){
-        echo "connection error<br>";
-        die();
-    }
-    $sql="INSERT INTO users(username,password,email,address,imagePath,userType) VALUES('" . $username . "','" . $password . "','" . $email . "','" . $address . "','" . $imagePath ."','" . $userType . "')";
-    $result = $con->query($sql);
-    if(!$result){
-        echo "error inserting data into database<br>";
-        printf("Error: %s\n", mysqli_error($con));
-    	exit();//exit stops the program
-    }
-    else{
-        echo "inserting successful<br>";
-        header("Location:home.php");
-    }
-    $con->close();
-    
 }
 
 ?>
+
+
 </body>
 </html>
