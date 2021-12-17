@@ -4,7 +4,7 @@
 
 if(isset($_POST['Submit'])){ //check if form was submitted
      
-    $email=$_POST["email"];
+    $email=$_POST["Email"];
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))//check if valid email
     {  
         echo "Error: Please enter a valid email<br>";
