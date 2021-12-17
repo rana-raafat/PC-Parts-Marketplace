@@ -60,7 +60,7 @@ input[type=text]:hover, input[type=password]:hover{
   }
 }
 
-input[type=submit]{
+input[type=submit], input[type=reset]{
     align-self: center;                 /*not working*/
     color: black;
     background: white;
@@ -75,7 +75,7 @@ button, input[type=button]{
     font-size: 100%;
 }
 
-button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=file]{
+button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=file]{
     background: transparent;
     color: white;
     margin: 10px 0;
