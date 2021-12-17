@@ -7,27 +7,8 @@
             session_start();
             include "Menu.php";
         ?>
-        <div class="SignUpForm">
-        <h1>Sign Up</h1>
-        <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
-            Image: <br>
-            <input type="file" name="profilepic"><br>
-            Username: <br>
-            <input type="text" name="username" placeholder="Enter your username"><br>
-            Email: <br>
-            <input type="text" name="email" placeholder="Enter your email address"><br>
-            Password: <br>
-            <input type="password" name="password" placeholder="Enter your password"><br>
-            Address: <br>
-            <input type="text" name="address" placeholder="Enter your delivery address"><br>
-            <input type="submit" name="submit"><br>
-        </form>
-        </div>
-
-
-        
-<script>
-    function validate(form){
+    <script>
+    function validate(form){ //sometimes when the script is under the form it causes an error where the form doesn't know what the validate function is
         var fail="";
         if(form.username.value==""){
             fail+="Username required\n";
@@ -49,7 +30,25 @@
             return false;
         }     
     }
-</script>
+    </script>
+
+        <div class="SignUpForm">
+        <h1>Sign Up</h1>
+        <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
+            Image: <br>
+            <input type="file" name="profilepic"><br>
+            Username: <br>
+            <input type="text" name="username" placeholder="Enter your username" maxlength=25><br>
+            Email: <br>
+            <input type="text" name="email" placeholder="Enter your email address"><br>
+            Password: <br>
+            <input type="password" name="password" placeholder="Enter your password" maxlength=75 minlength=8><br>
+            Address: <br>
+            <input type="text" name="address" placeholder="Enter your delivery address"><br>
+            <input type="submit" name="submit"><br>
+        </form>
+        </div>
+
 
 <?php 
 if(isset($_POST["submit"])){
@@ -87,7 +86,7 @@ if(isset($_POST["submit"])){
         else{
             
             $target_dir="resources/images/ProfilePictures/";
-            $target_file=$target_dir.basename($_FILES["profilepic"]["name"]);
+            $target_file=$target_dir . basename($_FILES["profilepic"]["name"]);
             $imageType= strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
             
             if($_FILES["profilepic"]["size"]==0){ //check if no image is inserted
