@@ -9,7 +9,7 @@ if(isset($_POST['Submit'])){ //check if form was submitted
     {  
         echo "Error: Please enter a valid email<br>";
     }
-    
+    //when the user enters an invalid email then we shouldn't proceed and access the db so from $servername till the end should be inside an "else{}" statement
     $servername = "localhost";
     $username = "root";
     $password = "";
