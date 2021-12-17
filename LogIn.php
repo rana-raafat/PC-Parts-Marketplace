@@ -5,6 +5,7 @@
     <body>
     <?php
 //
+session_start();
 if(isset($_POST['Submit'])){ //check if form was submitted
      
     $email=$_POST["Email"];
@@ -17,7 +18,6 @@ if(isset($_POST['Submit'])){ //check if form was submitted
     $username = "root";
     $password = "";
     $dbname = "project";
-    session_start();
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
 

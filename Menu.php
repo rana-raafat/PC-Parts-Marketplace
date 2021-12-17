@@ -6,13 +6,14 @@
     <body>
         <a href='Home.php'><h1>Website name</h1></a>		
         <?php
-	        //session_start();    
-        	if(!empty($_SESSION['Name'])){ //if logged in
-	    	    echo"<text class='header'>Welcome ". $_SESSION['Name'] . " <img src='". $_SESSION['image']."' alt='profilepic' width='20' height='20'></text>";
+	        session_start();    
+        	if(!empty($_SESSION['name'])){ //if logged in
+	    	    echo"<text class='header'>Welcome ". $_SESSION['name'] . " <img src='". $_SESSION['image']."' alt='profilepic' width='20' height='20'></text>";
     	    	echo"<a href='Home.php'>Home</a>"; 	//website title will redirect to home page too
                 echo"<a href='Profile.php'>Profile</a>"; //not made yet
                 echo"<a href='Cart.php'>Cart</a>"; //not made yet
-		        echo"<a href='SignOut.php'>SignOut</a>"; //not made yet
+		        echo"<a href='SignOut.php'>SignOut</a>";
+				//echo"<a href='delete.php'>SignOut</a>";  //not made yet
 	        }
 	        else{
 		        echo"<text class='header'> Welcome </text>";
@@ -23,6 +24,7 @@
                 */
                 echo "<a href='LogIn.php'> <input type='button' value='Log In' class='menu_bar_left' > </a>";
                 echo "<a href='SignUp.php'> <button class='menu_bar_left'> Sign Up </button> </a>";
+				echo"<a href='delete.php'><input type='button' value='Delete' class='menu_bar_left' ></a>";
             }
 	    ?>
         
