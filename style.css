@@ -11,13 +11,19 @@ body{
     font-size: 100%;
 }
 
-.header, h1, h2, h3, h4, h5{
+h1, h2, h3, h4, h5{
     font-size: 250%;
     font-family: xirod;
     text-shadow: 1px 1px 1px black, 2px 2px 1px red, 3px 3px 1px goldenrod, 4px 4px 1px green, 5px 5px 1px turquoise, 6px 6px 1px blue,  7px 7px 1px indigo;
+    font-weight: lighter;
 }
 
-.signUpForm{
+.header{
+    font-size: 200%;
+    font-family: xirod;
+}
+
+.SignUpForm{
     background-color: black;
     width: 400px;
     height: 600px;
@@ -69,7 +75,7 @@ button, input[type=button]{
     font-size: 100%;
 }
 
-button:hover, input[type=button]:hover, input[type=file]{
+button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=file]{
     background: transparent;
     color: white;
     margin: 10px 0;
@@ -84,6 +90,7 @@ button:hover, input[type=button]:hover, input[type=file]{
 
 a:hover, a:visited, a:link, a:active
 {
+    color: white; 
     text-decoration: none;
 }
 

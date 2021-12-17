@@ -1,9 +1,10 @@
 <html>
     <head>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="Style.css">
     </head>
 <body>
-<div class="signUpForm">
+
+<div class="SignUpForm">
 <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
 <h1>Sign Up</h1>
 Username: <br>
@@ -109,7 +110,7 @@ if(isset($_POST["submit"])){
     }
     else{
         echo "inserting successful<br>";
-        header("Location:home.php");
+        header("Location:Home.php");
     }
     $con->close();
     
