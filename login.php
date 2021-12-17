@@ -62,7 +62,7 @@ if(isset($_POST['Submit'])){ //check if form was submitted
     }
 </script>
 <h1>Login</h1>
-<form action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);"> <?php /* the enctype is for uploading files so we can remove it i think */ ?>
 	Email:<br>
 	<input type="text" name="Email">  <br>
 	Password:<br>
