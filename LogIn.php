@@ -3,7 +3,8 @@
         <link rel="stylesheet" href="Style.css">
     </head>
     <body>
-    <?php
+
+<?php
 //
 session_start();
 if(isset($_POST['Submit'])){ //check if form was submitted
