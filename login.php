@@ -29,7 +29,6 @@ if(isset($_POST['Submit'])){ //check if form was submitted
             $_SESSION["username"]=$row['username'];
             $_SESSION["password"]=$row['password'];
             $_SESSION["email"]=$row['email'];
-            $_SESSION["Email"]=$row['Email'];
             $_SESSION["address"]=$row['address'];
             $_SESSION["imagePath"]=$row['imagePath'];
             $_SESSION["userType"]=$row['userType'];
