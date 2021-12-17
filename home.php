@@ -7,7 +7,7 @@
     </head>
     <body>
         <?php
-        include_once "Menu.php";
+            include_once "Menu.php";
         ?>
         <br>
         <!--

@@ -2,28 +2,30 @@
     <head>
         <link rel="stylesheet" href="Style.css">
     </head>
-<body>
-<?php 
-    session_start();
-    include "Menu.php";
-?>
-<div class="SignUpForm">
-<form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
-<h1>Sign Up</h1>
-Image: <br>
-<input type="file" name="profilepic"><br>
-Username: <br>
-<input type="text" name="username" placeholder="Enter your username"><br>
-Email: <br>
-<input type="text" name="email" placeholder="Enter your email address"><br>
-Password: <br>
-<input type="password" name="password" placeholder="Enter your password"><br>
-Address: <br>
-<input type="text" name="address" placeholder="Enter your delivery address"><br>
-<input type="submit" name="submit"><br>
-</form>
-</div>
+    <body>
+        <?php 
+            session_start();
+            include "Menu.php";
+        ?>
+        <div class="SignUpForm">
+        <h1>Sign Up</h1>
+        <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
+            Image: <br>
+            <input type="file" name="profilepic"><br>
+            Username: <br>
+            <input type="text" name="username" placeholder="Enter your username"><br>
+            Email: <br>
+            <input type="text" name="email" placeholder="Enter your email address"><br>
+            Password: <br>
+            <input type="password" name="password" placeholder="Enter your password"><br>
+            Address: <br>
+            <input type="text" name="address" placeholder="Enter your delivery address"><br>
+            <input type="submit" name="submit"><br>
+        </form>
+        </div>
 
+
+        
 <script>
     function validate(form){
         var fail="";
@@ -130,5 +132,6 @@ if(isset($_POST["submit"])){
 ?>
 
 
-</body>
+
+    </body>
 </html>
