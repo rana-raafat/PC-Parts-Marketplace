@@ -5,4 +5,27 @@
     <body>
         nothing here yet
     </body>
+
+    <?php
+        session_start();
+        if(isset($_POST['Yes']))
+        {
+            session_destroy();
+            header("Location:home.php");
+        }
+
+        if(isset($_POST['No']))
+        {
+            header("Location:home.php");
+        }
+
+    ?>
+
+<form action="" method="post">
+
+Are you sure you want to Delete your account Yes/No<br>
+
+<input type="submit" name="Yes" value="Yes"/>
+<input type="submit" name="No" value="No"/>
+</form>
 </html>
