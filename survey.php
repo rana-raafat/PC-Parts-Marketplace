@@ -12,6 +12,7 @@
                     echo "connection error<br>";
                     die();
                 }//('14')
+                //hello ?
                 $sql="INSERT INTO survery(customerID,rating,improvement,age) VALUES('" . $_SESSION['id'] ."','" . $_POST['rating']  ."','" . $_POST['review'] . "','" . $_POST['Age'] . "')";
                 $result=$conn->query($sql);
                 if(!$result){
