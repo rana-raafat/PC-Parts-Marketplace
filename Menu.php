@@ -7,8 +7,8 @@
         <a href='Home.php'><h1>Website name</h1></a>		
         <?php
 	        //session_start();    
-        	if(!empty($_SESSION['name'])){ //if logged in
-	    	    echo"<text class='header'>Welcome ". $_SESSION['name'] . " <img src='". $_SESSION['imagePath']."' alt='profilepic' width='20' height='20'></text>";
+        	if(!empty($_SESSION['username'])){ //if logged in
+	    	    echo"<text class='header'>Welcome ". $_SESSION['username'] . " <img src='". $_SESSION['imagePath']."' alt='profilepic' width='50' height='50'></text>";
     	    	echo"<a href='Home.php'>Home</a>"; 	//website title will redirect to home page too
                 echo"<a href='Profile.php'>Profile</a>"; //not made yet
                 echo"<a href='Cart.php'>Cart</a>"; //not made yet
