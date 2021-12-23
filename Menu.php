@@ -14,6 +14,7 @@
                 echo"<a href='Cart.php'>Cart</a>"; //not made yet
 		        echo"<a href='SignOut.php'>SignOut</a>";
 				//echo"<a href='delete.php'>SignOut</a>";  //not made yet
+                //test test
 	        }
 	        else{
 		        echo"<text class='header'> Welcome </text>";
