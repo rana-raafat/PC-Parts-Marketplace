@@ -9,11 +9,14 @@
 	        //session_start();    
         	if(!empty($_SESSION['username'])){ //if logged in
 	    	    echo"<text class='header'>Welcome ". $_SESSION['username'] . " <img src='". $_SESSION['imagePath']."' alt='profilepic' width='50' height='50'></text>";
-    	    	echo"<a href='Home.php'>Home</a>"; 	//website title will redirect to home page too
-                echo"<a href='Profile.php'>Profile</a>"; //not made yet
-                echo"<a href='Cart.php'>Cart</a>"; //not made yet
-		        echo"<a href='SignOut.php'>SignOut</a>";
-				//echo"<a href='delete.php'>SignOut</a>";  //not made yet
+    	    	echo"<a href='Home.php'>Home </a>"; 	//website title will redirect to home page too
+                echo"<a href='Profile.php'>Profile </a>"; //not made yet
+                echo"<a href='Cart.php'>Cart </a>"; //not made yet
+		        echo"<a href='SignOut.php'> SignOut </a>";
+				echo"<a href='delete.php'>Delete </a>"; 
+                echo"<a href='survey.php'>Survey </a>";
+                echo"<a href='SurveyResults.php'>Survey Results</a>";
+                
                 
 	        }
 	        else{

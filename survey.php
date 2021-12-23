@@ -9,14 +9,14 @@
             {
                 $conn = new mysqli("localhost","root","", "project");
                 if(!$conn){
-                    echo "connection error<br>";
+                    echo "couldn't connect to the DataBase<br>";
                     die();
                 }//('14')
-                //hello ?
-                $sql="INSERT INTO survery(customerID,rating,improvement,age) VALUES('" . $_SESSION['id'] ."','" . $_POST['rating']  ."','" . $_POST['review'] . "','" . $_POST['Age'] . "')";
-                $result=$conn->query($sql);
+               
+                $sql="INSERT INTO survey(customerID,rating,improvement,age) VALUES('" . $_SESSION['id'] ."','" . $_POST['rating']  ."','" . $_POST['review'] . "','" . $_POST['Age'] . "')";
+                $result = mysqli_query($conn,$sql);
                 if(!$result){
-                    echo "connection error<br>";
+                    echo "couldn't insert into the DataBase<br>";
                     die();
                 }
                 $conn->close();
