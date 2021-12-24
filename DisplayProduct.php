@@ -13,8 +13,9 @@
         // Create connection
         $con = new mysqli("localhost", "root", "", "project");
 
-        $productname="AMD RYZEN 5 3600X";
-        $sql= "SELECT * FROM product WHERE name='" . $productname . "'";
+        //$productname="AMD RYZEN 5 3600X";
+        $id = $_GET['id'];
+        $sql= "SELECT * FROM product WHERE id='" . $id . "'";
         $result = mysqli_query($con,$sql);	
 
         if (!$result) {
@@ -26,6 +27,7 @@
             echo  "<b>" . $row['name'] . "</b>";
             echo "<br><br>" . $row['price'] . " LE<br><br>";
             echo "<b>Description :</b> <br>". $row['description'] . "<br>";
+            //need to add rating and reviews and such here
         }
         else{
             echo "Product missing<br>";
