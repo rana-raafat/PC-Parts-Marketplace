@@ -34,6 +34,7 @@ if(isset($_POST['Submit'])){ //check if form was submitted
             }
             
             if($row = $result->fetch_assoc()){
+                
                 $_SESSION["id"]=$row['id'];
                 $_SESSION["username"]=$row['username'];
                 $_SESSION["password"]=$row['password'];
@@ -42,6 +43,7 @@ if(isset($_POST['Submit'])){ //check if form was submitted
                 $_SESSION["imagePath"]=$row['imagePath'];
                 $_SESSION["userType"]=$row['userType'];
                 header("Location:Home.php");
+               
             }
             else{
                 echo "Invalid Email or Password";
