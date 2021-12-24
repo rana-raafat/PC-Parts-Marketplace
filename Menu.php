@@ -32,8 +32,8 @@
             }
 	    ?>
         
-        <form method='post' action='SearchResults.php'> <?php /* page not made yet */ ?>
-            <input type='text' name='searchQuery' placeholder='Search for a product' maxlength=75>
+        <form method='post' action='SearchResults.php'> <?php /* page not done */ ?>
+            <input type='text' name='searchQuery' placeholder='Search for a product' maxlength=100>
             <input type='submit' name='submitSearch'>
         </form>
 	</body>
