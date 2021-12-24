@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
+        <title> Sign Up </title>
     </head>
     <body>
         <?php 
@@ -121,8 +122,7 @@ if(isset($_POST["submit"])){
             }
             else{
                 echo "Account creation successful<br>";
-                header("Location:SignUp.php");
-                //header("Location:Home.php");
+                header("Location:Home.php");
             }
         }
         $con->close();

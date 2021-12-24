@@ -1,9 +1,12 @@
 <html>
-	
+	<head>
+		<title>Delete Account</title>
+	</head>
+	<body>
 	<?php
-
 		session_start();
-
+		include_once "Menu.php";
+		
 		// Create connection
 		if(isset($_POST['Yes'])) {
 
@@ -42,5 +45,6 @@
         <input type="submit" name="Yes" value="Yes"/>
         <input type="submit" name="No" value="No"/>
 	</form>
+	</body>
 </html>
 

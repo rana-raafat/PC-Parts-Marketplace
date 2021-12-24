@@ -4,11 +4,12 @@
         <meta charset="UTF-8">
         <title>PC Parts Marketplace</title>
         <link rel="stylesheet" href="Style.css">
+        <title>Home</title>
     </head>
     <body>
         <?php
             session_start();
-            include_once "Menu.php";
+            include "Menu.php";
         ?>
         <br>
         <!--

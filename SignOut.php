@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
+        <title> Sign Out </title>
     </head>
     <body>
         nothing here yet

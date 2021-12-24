@@ -1,12 +1,15 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
+        <title> Log In </title>
     </head>
     <body>
 
 <?php
 //
 session_start();
+include "Menu.php";
+
 if(isset($_POST['Submit'])){ //check if form was submitted
      
     $email=$_POST["Email"];
@@ -14,7 +17,6 @@ if(isset($_POST['Submit'])){ //check if form was submitted
     {  
         exit("Error: Please enter a valid email") ;
     }
-
     else{
         $servername = "localhost";
         $username = "root";
@@ -47,7 +49,6 @@ if(isset($_POST['Submit'])){ //check if form was submitted
     }
 }
 ?>
-<?php include "Menu.php";?>
 
 <script>
     function validate(form){
@@ -69,7 +70,7 @@ if(isset($_POST['Submit'])){ //check if form was submitted
         
     }
 </script>
-<h1>Login</h1>
+<h1>Log In</h1>
 <form action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
 	Email:<br>
 	<input type="text" name="Email" placeholder="Enter your email address">  <br>
