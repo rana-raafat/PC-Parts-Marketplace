@@ -15,8 +15,8 @@
 		        echo"<a href='SignOut.php'> SignOut </a>";
 				echo"<a href='delete.php'>Delete </a>"; 
                 echo"<a href='survey.php'>Survey </a>";
-                echo"<a href='SurveyResults.php'>Survey Results</a>";
-                
+                echo"<a href='SurveyResults.php'> Survey Results </a>";
+                echo"<a href='Chats.php'> Chats </a>";
                 
 	        }
 	        else{
