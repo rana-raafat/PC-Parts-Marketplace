@@ -4,16 +4,12 @@
         session_start();
         include "Menu.php";
         
-
         $conn = new mysqli("localhost","root","", "project");
         if(!$conn){
             echo "couldn't connect to the DataBase<br>";
              die();
         }
 
-        /*
-
-        */
         $sql="SELECT * FROM survey";
         $result = mysqli_query($conn,$sql);
         if(!$result){
@@ -64,12 +60,7 @@
         }
         echo "</table>";
 
-    $conn->close();
-
-
-                
-
-            
+    $conn->close();     
             
     ?>
     
