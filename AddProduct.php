@@ -37,12 +37,12 @@
         Price: <br>
         <input type="number" name="price" min="0" step="0.01" value="0"><br><br>
         Select a category: <br>
-        <input type="radio" name="category" value="Motherboard" > Motherboard <br>
-        <input type="radio" name="category" value="RAM" > RAM <br>
-        <input type="radio" name="category" value="Graphics Card" > Graphics Card <br>
-        <input type="radio" name="category" value="Fan" > Fan <br>
-        <input type="radio" name="category" value="HDD/SSD" > HDD/SSD <br>
-        <input type="radio" name="category" value="Processor" checked> Processor <br>
+        <input type="radio" name="category" value="Motherboard" checked> Motherboard <br>
+        <input type="radio" name="category" value="RAM"> RAM <br>
+        <input type="radio" name="category" value="Graphics Card"> Graphics Card <br>
+        <input type="radio" name="category" value="Fan"> Fan <br>
+        <input type="radio" name="category" value="HDD/SSD"> HDD/SSD <br>
+        <input type="radio" name="category" value="Processor"> Processor <br>
         <input type="submit" name="submit"><br>
     </form>
 <?php 
@@ -104,7 +104,8 @@
         }
         else{
             echo "Product added successfully<br>";
-            header("Location:addproduct.php");
+            //header("Location:addproduct.php");
+            header("Location:home.php");
         }
     }
     $con->close();

@@ -68,7 +68,7 @@ if(isset($_POST["submit"])){
     else{
 
         $con = mysqli_connect("localhost","root","","project");
-        if(!$con){
+        if(!$con){ //maybe here we can throw an exception? instead of using die()
             echo "connection error<br>";
             die();
         }

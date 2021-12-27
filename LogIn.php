@@ -24,30 +24,34 @@ if(isset($_POST['Submit'])){ //check if form was submitted
         $dbname = "project";
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
+        if(!$conn){ //maybe here we can throw an exception? instead of using die()
+            echo "connection error<br>";
+            die();
+        }
 
-            $sql= "SELECT * FROM users WHERE email='" . $_POST['Email'] . "' AND password='" . $_POST['Password'] . "'";
-            $result = mysqli_query($conn,$sql);	
+        $sql= "SELECT * FROM users WHERE email='" . $_POST['Email'] . "' AND password='" . $_POST['Password'] . "'";
+        $result = mysqli_query($conn,$sql);	
 
-            if (!$result) {
-                printf("Error: %s\n", mysqli_error($conn));
-                exit();
-            }
+        if (!$result) {
+            printf("Error: %s\n", mysqli_error($conn));
+            exit();
+        }
+        
+        if($row = $result->fetch_assoc()){
             
-            if($row = $result->fetch_assoc()){
-                
-                $_SESSION["id"]=$row['id'];
-                $_SESSION["username"]=$row['username'];
-                $_SESSION["password"]=$row['password'];
-                $_SESSION["email"]=$row['email'];
-                $_SESSION["address"]=$row['address'];
-                $_SESSION["imagePath"]=$row['imagePath'];
-                $_SESSION["userType"]=$row['userType'];
-                header("Location:Home.php");
-               
-            }
-            else{
-                echo "Invalid Email or Password";
-            }
+            $_SESSION["id"]=$row['id'];
+            $_SESSION["username"]=$row['username'];
+            $_SESSION["password"]=$row['password'];
+            $_SESSION["email"]=$row['email'];
+            $_SESSION["address"]=$row['address'];
+            $_SESSION["imagePath"]=$row['imagePath'];
+            $_SESSION["userType"]=$row['userType'];
+            header("Location:Home.php");
+            
+        }
+        else{
+            echo "Invalid Email or Password";
+        }
     }
 }
 ?>
