@@ -27,74 +27,77 @@
                 die();
             }
             echo "<tr>";
+            $username_arr=array(); 
+            $id_arr=array();
 
-            while($row = $result->fetch_assoc()){
-                if ($row['senderID']==$_SESSION['id']){
+            while($row = $result->fetch_assoc())
+    {
+                if ($row['senderID']==$_SESSION['id'])
+                {
 
                     $sql2="SELECT * FROM users WHERE id='" . $row['recepientID'] . "'";
                     $result2 = mysqli_query($conn,$sql2);
-                    if(!$result2){
+                    if(!$result2)
+                    {
                         echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                         die();
                     }
                 
-                    if($row2 = $result2->fetch_assoc()){
-                        //echo "<td>" . $row2['username'] . "</td>";
-?>             
-    <tr>
-        <td><?php echo$row2['username'];  ?></td>
-        <td> <a href=Messages.php?id=<?php echo $row2['id']; ?> >Message</a></td>
-    </tr>
-
-<?php 
-            }
-        }
-        else if($row['recepientID']==$_SESSION['id'])
-        {
-            $sql3="SELECT * FROM users WHERE id='" . $row['senderID'] . "'";
-            $result3 = mysqli_query($conn,$sql3);
-            if(!$result3){
-                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                die();
-            }
-            $username_arr=array(); 
-            $id_arr=array();
-
-            while($row3 = $result3->fetch_assoc()){ 
-                $flag=false;
-                // mohamed
-                for($i=0;$i<sizeof($username_arr);$i++){
-                    if($username_arr[$i]==$row3['username'])
+                    while($row2 = $result2->fetch_assoc())
                     {
-                        $flag=true;
-                        break;
-                    }
-                    else
-                    {
-                        
-                    }
-                   // $id_arr[]= $row3['id'];
+                        $flag=false;
+                        for($i=0;$i<sizeof($username_arr);$i++)
+                        {
+                            if($username_arr[$i]==$row2['username'])
+                            {
+                                $flag=true;
+                                break;
+                            }
+                        }
+
+                            if($flag==false)
+                            {
+                                $username_arr[]=$row2['username'];
+                                $id_arr[]=$row2['id'];
+                            }
+                    }             
+
                 }
+                else if($row['recepientID']==$_SESSION['id'])
+                {
+                    $sql3="SELECT * FROM users WHERE id='" . $row['senderID'] . "'";
+                    $result3 = mysqli_query($conn,$sql3);
+                    if(!$result3){
+                        echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                        die();
+                    }
 
-                $username_arr[$i]=$row3['username'];
-                  
-                
+                        while($row3 = $result3->fetch_assoc())
+                        {   
+                            $flag=false;
 
-            } 
-        }
+                            for($i=0;$i<sizeof($username_arr);$i++)
+                            {
+                                if($username_arr[$i]==$row3['username'])
+                                {
+                                    $flag=true;
+                                    break;
+                                }
+                            }
+
+                                if($flag==false)
+                                {
+                                    $username_arr[]=$row3['username'];
+                                    $id_arr[]=$row3['id'];
+                                } 
+
+                        } 
+                    }
             
     }     
-// mohamed mohamed mohamed hady farah 
+// mohamed mohamed mohamed hady farah hady
         for ($i=0;$i<sizeof($username_arr);$i++)
         {
-            for ($j=0;$j<sizeof($username_arr);$j++)
-            {
-                if($i==$j)
-                {
-                    continue;// skipjutsu
-                }
-                else
-                {
                    
 ?>
 <tr>
@@ -105,8 +108,7 @@
 </tr> 
 
 <?php
-                }
-        }
+
     }
 
     echo"</table>";
