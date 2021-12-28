@@ -77,7 +77,7 @@ if(isset($_POST['Submit'])){ //check if form was submitted
     }
 </script>
 <h1>Log In</h1>
-<form action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);">
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);" class="form-horizontal">
 	Email:<br>
 	<input type="text" name="Email" placeholder="Enter your email address">  <br>
 	Password:<br>

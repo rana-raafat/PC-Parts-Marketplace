@@ -62,11 +62,10 @@
     <input type="radio" name="rating" value="4">4</input>
     <input type="radio" name="rating" value="5">5</input>
     <br>
-    review:
-    <input type="textarea" name="review">
-
-    What is your Age:
-    <input type="text" name="Age">
+    Suggested Improvements:
+    <textarea name="review" class="form-control"></textarea>
+    What is your Age?
+    <input type="text" name="Age" class="form-control">
     <input type="submit" value="submit" name="submit">
 </form>   
 
