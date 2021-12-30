@@ -25,7 +25,7 @@
 
             <th>rating</th>
 
-            <th>improvement</th>
+            <th>Suggested Improvements</th>
 
             <th>age</th>
 
