@@ -4,6 +4,10 @@
         <title> Profile </title>
     </head>
     <body>
-        nothing here yet
+        <?php
+        session_start();
+        include "Menu.php";
+        
+        ?>
     </body>
 </html>

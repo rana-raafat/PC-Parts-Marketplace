@@ -33,7 +33,7 @@
             die();
         }
         
-        $reviewed=false; $reviewText=''; $rate=''; $itemError = '';
+        $reviewed=false; $reviewText=''; $currentRating=0; $itemError = '';
 
         $id = $_GET['id'];
         
@@ -67,8 +67,8 @@
             if(isset($_SESSION['username'])){
                 
                 if($_SESSION['userType'] == "administrator"){
-                    echo "<a href=EditProduct.php?id=" . $row['id'] . ">Edit Product</a> ";
-                    echo "<a href=DeleteProduct.php?id=" . $row['id'] . ">Delete Product</a><br><br>"; //not made yet
+                    echo "<a href='EditProduct.php?id=" . $row['id'] . "'> Edit Product </a> ";
+                    echo "<a href='DeleteProduct.php?id=" . $row['id'] . "'>Delete Product</a><br><br>";
                 }
             }
             echo "<img src='" . $row['imagePath'] ."'>";
@@ -98,12 +98,104 @@
                     $reviewed=true;
                     if($reviewRow = $selectResult->fetch_assoc()){
                         $reviewText=$reviewRow['reviewText'];
-                        $rate=$reviewRow['starRating'];
+                        $currentRating=$reviewRow['starRating'];
                     }
                 }
             }
             else{
                 echo "<b>Average Rating:</b> 0.0 Stars<br>";
+            }
+
+            $stars='';
+            switch ($currentRating){
+                case 1:
+                    $stars='1star';
+                    break;
+                case 2:
+                    $stars='2stars';
+                    break;
+                case 3:
+                    $stars='3stars';
+                    break;
+                case 4:
+                    $stars='4stars';
+                    break;
+                case 5:
+                    $stars='5stars';
+                    break;
+            }
+
+            if(isset($_POST['submitReview'])){
+                $update = "UPDATE product SET " . $_POST['rating'] . "=" . $_POST['rating'] . "+1, numberOfReviews = numberOfReviews+1 WHERE id='" . $id . "'";
+                $insert = "INSERT INTO review VALUES('" . $id . "','" . $_SESSION['id'] . "','" . $_POST['review'] . "','" . $_POST['rating'] ."')";
+                $updateResult = $con->query($update);
+                $insertResult = $con->query($insert);
+
+                if(!$updateResult){ //exception here
+                    echo "Error updating the product table<br>";
+                }
+                if(!$insertResult){ //exception here
+                    echo "Error inserting in the review table<br>";
+                }
+                else{
+                    //header("Location:DisplayProduct.php?id=".$id);
+                    ?>
+                    <script>
+                        $(document).ready(function() {
+                            window.location.href = window.location.href;
+                        });
+                    </script>
+                    <?php
+                }
+            }
+            else if(isset($_POST['editReview'])){
+                
+                $OldRatingsql="SELECT ". $_POST['newRating'] ." FROM product WHERE id='". $id ."'"; 
+
+                $updateReview = "UPDATE review SET reviewText='" . $_POST['newreview'] . "', starRating='" . $_POST['newRating'] ."' WHERE productID='" . $_GET['id']. "' AND customerID='" . $_SESSION['id'] . "'";
+                $reviewResult = $con->query($updateReview);
+                $updateRating = "UPDATE product SET " . $_POST['newRating'] . "=" . $_POST['newRating'] . " + 1, ". $stars . "=" . $stars . "-1 WHERE id='" . $id . "'";
+                $ratingResult = $con->query($updateRating);
+                if(!$reviewResult){ //exception here
+                    echo "Error updating the review table<br>";
+                }
+                if(!$ratingResult){
+                    echo "Error updating the product table<br>";
+                }
+                else{
+                    //header("Location:DisplayProduct.php?id=".$id);
+                    ?>
+                    <script>
+                        $(document).ready(function() {
+                            window.location.href = window.location.href;
+                        });
+                    </script>
+                    <?php
+                }
+            }
+            else if(isset($_POST['deleteReview'])){
+                $deleteReview = "DELETE FROM review WHERE productID='" . $id . "' AND customerID='" . $_SESSION['id'] ."'";
+                $deleteResult = $con->query($deleteReview);
+                
+                $decrement_reviews_sql = "UPDATE product SET " . $stars . "=" . $stars . "-1, numberOfReviews = numberOfReviews-1 WHERE id='" . $id . "'";
+                $decrementResult = $con->query($decrement_reviews_sql);
+
+                if(!$deleteResult){ //exception here
+                    echo "Error deleting from the review table<br>";
+                }
+                else if(!$decrementResult){ //exception here
+                    echo "Error decrementing the reviews in product table<br>";
+                }
+                else{
+                    //header("Location:DisplayProduct.php?id=".$id);
+                    ?>
+                    <script>
+                        $(document).ready(function() {
+                            window.location.href = window.location.href;
+                        });
+                    </script>
+                    <?php
+                }
             }
             
             //if the logged in user has reviewed this product remove the form and place a "edit review" option instead 
@@ -127,21 +219,21 @@
                 ?>
                 <br><b>Edit your review:</b>
                 <form method='post' action='' onsubmit='return validate(this);'>
-                    <input type='radio' name='rating' value='1star' <?php echo ($rate=='1')?'checked':'' ?> >1 star 
-                    <input type='radio' name='rating' value='2stars' <?php echo ($rate=='2')?'checked':'' ?>>2 stars
-                    <input type='radio' name='rating' value='3stars' <?php echo ($rate=='3')?'checked':'' ?>>3 stars
-                    <input type='radio' name='rating' value='4stars' <?php echo ($rate=='4')?'checked':'' ?>>4 stars
-                    <input type='radio' name='rating' value='5stars' <?php echo ($rate=='5')?'checked':'' ?>>5 stars<br><br>
-                    <textarea name='review' rows='4' cols='50' maxlength='1000'><?php echo $reviewText; ?></textarea><br>
+                    <input type='radio' name='newRating' value='1star' <?php echo ($currentRating==1)?'checked':'' ?> >1 star 
+                    <input type='radio' name='newRating' value='2stars' <?php echo ($currentRating==2)?'checked':'' ?>>2 stars
+                    <input type='radio' name='newRating' value='3stars' <?php echo ($currentRating==3)?'checked':'' ?>>3 stars
+                    <input type='radio' name='newRating' value='4stars' <?php echo ($currentRating==4)?'checked':'' ?>>4 stars
+                    <input type='radio' name='newRating' value='5stars' <?php echo ($currentRating==5)?'checked':'' ?>>5 stars<br><br>
+                    <textarea name='newreview' rows='4' cols='50' maxlength='1000'><?php echo $reviewText; ?></textarea><br>
                     <input type='submit' name='editReview' value='submit'>
                 </form>
                 <?php
                 }
             else{
-                echo "<form id='edit' method='post' action=''> <button type='submit' name='edit' value='edit'> Edit review </button></form>";
-                //output user's review here
-                echo "<b>" . $_SESSION['username'] . "</b><br>";
-                echo $rate . " stars<br>" . $reviewText . "<br><br>";
+                echo "<br><br><b> " . $_SESSION['username'] . " </b><br>";
+                echo $currentRating . " stars<br>" . $reviewText;
+                echo "<form id='edit' method='post' action=''> <button type='submit' name='edit' value='edit'> Edit review</button> ";
+                echo "<button type='submit' name='deleteReview' value='delete'> Delete review</button></form>";
             }
             }
             //need to add rating and reviews and such here
@@ -157,7 +249,8 @@
                     $usernameSql = "SELECT username FROM users WHERE id='" . $reviews['customerID'] . "'";
                     $usernameResult = $con->query($usernameSql);
                     if($username=$usernameResult->fetch_assoc()){
-                        echo "<b>" . $username['username'] . "</b><br>";
+                        //need to make the username an href to the profile page
+                        echo "<b><a href='profile.php?id=". $reviews['customerID'] ."'>" . $username['username'] . "</a></b><br>";
                         echo $reviews['starRating'] . " stars<br>" . $reviews['reviewText'] . "<br><br>";
                         $counter++;
                     }
@@ -166,30 +259,6 @@
             }
             else{
                 echo "No current reviews for this product<br>";
-            }
-
-            if(isset($_POST['submitReview'])){
-                $update = "UPDATE product SET " . $_POST['rating'] . "=" . $_POST['rating'] . "+1, numberOfReviews = numberOfReviews+1 WHERE id='" . $id . "'";
-                $insert = "INSERT INTO review VALUES('" . $id . "','" . $_SESSION['id'] . "','" . $_POST['review'] . "','" . $_POST['rating'] ."')";
-                $updateResult = $con->query($update);
-                $insertResult = $con->query($insert);
-
-                if(!$updateResult){ //exception here
-                    echo "Error updating the product table<br>";
-                }
-                if(!$insertResult){ //exception here
-                    echo "Error inserting in the review table<br>";
-                }
-            }
-            else if(isset($_POST['editReview'])){
-                $updateReview = "UPDATE review SET reviewText='" . $_POST['review'] . "', starRating='" . $_POST['rating'] ."' WHERE productID='" . $_GET['id']. "' AND customerID='" . $_SESSION['id'] . "'";
-                $editResult = $con->query($updateReview);
-
-                if(!$editResult){ //exception here
-                    echo "Error updating the review table<br>";
-                }
-                header("Location:DisplayProduct.php?id=".$id); //could be replaced if we use ajax i think
-                //$con->close();
             }
         }
         else{

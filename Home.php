@@ -3,13 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Website Name - Home</title>
-        <link rel="stylesheet" href="Style.css">
+        
     </head>
     <body>
         <?php
         session_start();
         include "Menu.php";
-        
+        //<link rel="stylesheet" href="Style.css">
         $con = new mysqli("localhost", "root", "", "project");
         if(!$con){ //exception
             echo "connection error<br>";

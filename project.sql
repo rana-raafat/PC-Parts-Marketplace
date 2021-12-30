@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2021 at 03:07 PM
+-- Generation Time: Dec 30, 2021 at 05:18 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -54,6 +54,14 @@ CREATE TABLE `cartitem` (
   `amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `cartitem`
+--
+
+INSERT INTO `cartitem` (`customerID`, `productID`, `amount`) VALUES
+(16, 1, 5),
+(16, 37, 17);
+
 -- --------------------------------------------------------
 
 --
@@ -98,8 +106,8 @@ CREATE TABLE `message` (
   `id` int(10) UNSIGNED NOT NULL,
   `senderID` int(10) UNSIGNED NOT NULL,
   `recepientID` int(10) UNSIGNED NOT NULL,
-  `messageText` varchar(255) DEFAULT NULL,
-  `readStatus` int(11) NOT NULL
+  `messageText` text DEFAULT NULL,
+  `readStatus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -220,10 +228,9 @@ CREATE TABLE `productsuggestion` (
 --
 
 CREATE TABLE `review` (
-  `id` int(10) UNSIGNED NOT NULL,
   `productID` int(10) UNSIGNED NOT NULL,
   `customerID` int(10) UNSIGNED NOT NULL,
-  `reviewText` varchar(255) DEFAULT NULL,
+  `reviewText` text DEFAULT NULL,
   `starRating` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -347,8 +354,7 @@ ALTER TABLE `productsuggestion`
 -- Indexes for table `review`
 --
 ALTER TABLE `review`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `productID` (`productID`),
+  ADD PRIMARY KEY (`productID`,`customerID`),
   ADD KEY `customerID` (`customerID`);
 
 --
@@ -396,12 +402,6 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `productsuggestion`
 --
 ALTER TABLE `productsuggestion`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `review`
---
-ALTER TABLE `review`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
