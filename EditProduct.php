@@ -64,7 +64,7 @@
                 echo  "<input type='text' name='name' value='" . $row['name'] . "' max='2'>" ;
                 echo "<br><br><input type='number' name='price' min='0' step='0.01' value='". $row['price'] ."'> LE<br><br>";
                 echo "<textarea name='description' rows='4' cols='50'>". $row['description'] ."</textarea><br>";
-                echo "Category: <select name='category'> <option value='' selected disabled hidden>Choose category</option>"; //try removing disabled hidden
+                echo "Category: <select name='category'> <option value='' selected>Choose category</option>";
                 echo "<option value='Motherboard'>Motherboard</option>";
                 echo "<option value='RAM'>RAM</option> <option value='Graphics Card'>Graphics Card</option>";
                 echo "<option value='Fan'>Fan</option> <option value='HDD/SSD'>HDD/SSD</option>";

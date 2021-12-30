@@ -1,18 +1,22 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
-        <title>Search Result</title>
+        <title>Category</title>
     </head>
     <body>
     <?php
         session_start();
         include "Menu.php";
-
-        if(isset($_POST['submitSearch'])){
+        
+        if(isset($_GET['cat'])){
             $con = new mysqli("localhost", "root", "", "project");
+            if(!$con){ //maybe here we can throw an exception? instead of using die()
+                echo "connection error<br>";
+                die();
+            }
             
-            $search=$_POST['searchQuery'];
-            $sql= "SELECT * FROM product WHERE name LIKE '%" . $search . "%'";
+            $search=$_GET['cat'];
+            $sql= "SELECT * FROM product WHERE category LIKE '%" . $search . "%'";
             $result = mysqli_query($con,$sql);
             if ($result->num_rows == 0) {
                 echo "No products found<br>";
@@ -27,7 +31,9 @@
                 }
                 echo $averageRating . " Stars<br><br>";
             }
+            $con->close();
         }
     ?>
+    
     </body>
 </html>

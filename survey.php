@@ -11,7 +11,7 @@
                 if(!$conn){
                     echo "couldn't connect to the DataBase<br>";
                     die();
-                }//('14')
+                }
                
                 $sql="INSERT INTO survey(customerID,rating,improvement,age) VALUES('" . $_SESSION['id'] ."','" . $_POST['rating']  ."','" . $_POST['review'] . "','" . $_POST['Age'] . "')";
                 $result = mysqli_query($conn,$sql);

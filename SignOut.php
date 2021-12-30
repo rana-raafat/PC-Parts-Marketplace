@@ -23,7 +23,7 @@
 
 <form action="" method="post">
 
-Are you sure you want to SignOut your account Yes/No<br>
+Are you sure you want to sign out of your account Yes/No<br>
 
 <input type="submit" name="Yes" value="Yes"/>
 <input type="submit" name="No" value="No"/>

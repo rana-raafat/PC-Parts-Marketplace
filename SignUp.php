@@ -85,7 +85,6 @@ if(isset($_POST["submit"])){
             echo "Username already taken<br>";
         }
         else{
-            
             $target_dir="resources/images/ProfilePictures/";
             $target_file=$target_dir . basename($_FILES["profilepic"]["name"]);
             $imageType= strtolower(pathinfo($target_file, PATHINFO_EXTENSION));

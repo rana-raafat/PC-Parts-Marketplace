@@ -36,8 +36,15 @@
                 echo "<a href='SignUp.php'> <button class='menu_bar_left'> Sign Up </button> </a>";
 				echo"<a href='delete.php'><input type='button' value='Delete' class='menu_bar_left' ></a>";
             }
+            //category drop down menu links
+            /*<a href="Category.php?cat=Motherboard">Motherboard</a>
+                <a href="Category.php?cat=RAM">RAM</a>
+                <a href="Category.php?cat=Card">Graphics Card</a>
+                <a href="Category.php?cat=Fan">Fan</a>
+                <a href="Category.php?cat=HDD">HDD/SSD</a>
+                <a href="Category.php?cat=Processor">Processor</a>*/
 	    ?>
-        
+            
         <form method='post' action='SearchResults.php'> <?php /* page not done */ ?>
             <br><input type='text' name='searchQuery' placeholder='Search for a product' maxlength=100>
             <input type='submit' name='submitSearch'>

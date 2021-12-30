@@ -21,6 +21,7 @@
             return false;
         }     
     }
+
     </script>
     <?php 
         session_start();
@@ -31,9 +32,11 @@
             echo "connection error<br>";
             die();
         }
-        $reviewed=false; $reviewText=''; $rate='';
+        
+        $reviewed=false; $reviewText=''; $rate=''; $itemError = '';
 
         $id = $_GET['id'];
+        
         $sql= "SELECT * FROM product WHERE id='" . $id . "'";
         $result = mysqli_query($con,$sql);	
 
@@ -41,20 +44,48 @@
             printf("Error: %s\n", mysqli_error($con));
             exit();
         }
+
+        if(isset($_POST['addButton'])){ 
+            $checkCart = "SELECT * FROM cartitem WHERE customerID='". $_SESSION['id'] . "' AND productID='" . $id . "'";
+            $checkResult = $con->query($checkCart);
+            if($checkResult->num_rows != 0){
+                $itemError= "Item is already in cart<br>";
+            }
+            else if($checkResult->num_rows == 0){
+                $addToCart = "INSERT INTO cartitem VALUES('". $_SESSION['id'] . "','" . $id . "','" . $_POST['amount'] ."')";
+                $addResult = $con->query($addToCart);
+
+                if(!$addResult){ //exception here
+                    echo "Error inserting into cart<br>";
+                }
+            }
+            //header("Location:DisplayProduct.php?id=".$id);
+            //$con->close();
+        }
         
         if($row = $result->fetch_assoc()){
             if(isset($_SESSION['username'])){
+                
                 if($_SESSION['userType'] == "administrator"){
                     echo "<a href=EditProduct.php?id=" . $row['id'] . ">Edit Product</a> ";
                     echo "<a href=DeleteProduct.php?id=" . $row['id'] . ">Delete Product</a><br><br>"; //not made yet
                 }
-                else if($_SESSION['userType'] == "customer"){
-                    //add to cart button, adds product as a row in cartitem table and adds it to the cart cookies
-                }
-                
             }
-            echo "<img src='" . $row['imagePath'] ."'><br><br>";
-            echo  "<b>" . $row['name'] . "</b>";
+            echo "<img src='" . $row['imagePath'] ."'>";
+            
+            if(isset($_SESSION['username'])){
+                if($_SESSION['userType'] == "customer"){
+                    //add to cart button, adds product as a row in cartitem table 
+                    ?>
+                    <form id='addCart' method='post' action=''> 
+                    <input type='number' name='amount' min='1' max='50' value='0'>
+                    <button type='submit' name='addButton' value='addButton'>Add to Cart</button></form> <?  ?>
+                    <?php
+                    echo $itemError;
+                }
+            }
+
+            echo  "<br><b>" . $row['name'] . "</b>";
             echo "<br><br>" . $row['price'] . " LE<br><br>";
             echo "<b>Description :</b> <br>". $row['description'] . "<br>";
             if($row['numberOfReviews']>0){
@@ -127,7 +158,7 @@
                     $usernameResult = $con->query($usernameSql);
                     if($username=$usernameResult->fetch_assoc()){
                         echo "<b>" . $username['username'] . "</b><br>";
-                        echo $reviews['starRating'] . " stars<br>" . $reviews['reviewText'] . "<br>";
+                        echo $reviews['starRating'] . " stars<br>" . $reviews['reviewText'] . "<br><br>";
                         $counter++;
                     }
                 }
@@ -157,8 +188,8 @@
                 if(!$editResult){ //exception here
                     echo "Error updating the review table<br>";
                 }
-                header("Location:DisplayProduct.php?id=".$id);
-                $con->close();
+                header("Location:DisplayProduct.php?id=".$id); //could be replaced if we use ajax i think
+                //$con->close();
             }
         }
         else{
