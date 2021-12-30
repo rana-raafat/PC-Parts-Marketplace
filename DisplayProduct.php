@@ -79,7 +79,7 @@
                     ?>
                     <form id='addCart' method='post' action=''> 
                     <input type='number' name='amount' min='1' max='50' value='0'>
-                    <button type='submit' name='addButton' value='addButton'>Add to Cart</button></form> <?  ?>
+                    <button type='submit' name='addButton' value='addButton'>Add to Cart</button></form>
                     <?php
                     echo $itemError;
                 }

@@ -36,14 +36,14 @@
                 else if($prodRow = $productResult->fetch_assoc()){ 
                     $totalPrice+=$prodRow['price'];
                     $image= "<img src='" . $prodRow['imagePath'] ."' height=50 width=50>";
-                    $name="<a href=DisplayProduct.php?id=" . $prodRow['id'] . ">" . $prodRow['name'] . "</a><br>";
+                    $name="<a href='DisplayProduct.php?id=" . $prodRow['id'] . "'>" . $prodRow['name'] . "</a><br>";
                     echo "<tr><td>" . $image . "</td> <td>" .  $name . "</td> <td>" . $prodRow['price'] . "</td> <td>" . $row['amount'] . "</td></tr>";
                 }
                 
             }
             echo "</tbody></table> </div>";
             echo "<b>Total price:</b>" . $totalPrice." "; 
-            echo "<a href=Checkout.php?total=" . $totalPrice . "><button type='submit' name='checkout' value='checkout'>Checkout</button></a>";
+            echo "<a href='Checkout.php?total=" . $totalPrice . "'><button type='submit' name='checkout' value='checkout'>Checkout</button></a>";
             $con->close();
         }
         else{
