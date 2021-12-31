@@ -13,8 +13,8 @@
             echo "connection error<br>";
             die();
         }
-        if(isset($_Get['id'])){
-            $sql="SELECT * FROM users WHERE id='". $_Get['id'] ."'";
+        if(isset($_GET['id'])){
+            $sql="SELECT * FROM users WHERE id='". $_GET['id'] ."'";
             $result=$con->query($sql);
             if($result->num_rows == 0){
                 echo "Error: profile not found<br>";
@@ -27,21 +27,41 @@
                         if($_SESSION['userType']=='administrator'){
                             if($row['userType']=='administrator'){
                                 //if they open an admin's profile they have a button that can delete this admin
+                                echo "<a href='RemoveAdmin.php'><button type='submit' name='removeadmin'> Remove admin </button></a>";
                             }
                             else if($row['userType']=='customer'){
                                 //if they open a customer's profile they have a button that can make this customer an admin
-                            }
-                        }
-                        else if($_SESSION['userType']=='hrpartner'){
-                            if($row['userType']=='administrator'){
-                            //they have the option to add a penalty to an admin when they open an admin's profile
-                            //which sends the hr to the penalty page NEVERMIND
+                                echo "<a href='AddAdmin.php'><button type='submit' name='addadmin'> Add admin </button></a>";
+
+                                //can see messages the customer SENT NOT MADE YETTTT
+                                //echo "<a href='AddAdmin.php'><button type='submit' name='addadmin'> Add admin </button></a>";
                             }
                         }
                         else if($_SESSION['userType']=='auditor'){
                             if($row['userType']=='administrator'){
-                            //if the auditor opens an admin's profile they have an option to request an investigation
-                            //which sends the auditor to the investigation request page
+                                //can see messages between admin and customers  
+                                //redirects to show message history
+                            }
+                            else if($row['userType']=='customer'){
+                                //if they open a customer's profile they have a 'send survey' button
+                                //sends survey link as a message
+                                
+                                ?>
+                                <form method='post' action=<?php echo 'Messages.php?id=' . $row['id']; ?>>
+                                <button type='submit' name='sendsurvey'> Send Survey </button>
+                                </form>
+                                <?php
+                            }
+                            else if($row['userType']=='hrpartner'){
+                                //if they open an hr's profile they have a 'request investigation' button
+                                //the link is sent to the hr as
+                            }
+                        }
+                        else{
+                            if($row['userType']!='customer'){
+                                //if they open a profile that isn't a customer have a 'Message' button
+                                
+                                //NOTE: I AM CONSIDERING ALLOWING EVERYONE TO MESSAGE EVERYONE
                             }
                         }
                     }
