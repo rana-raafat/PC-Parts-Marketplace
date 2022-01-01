@@ -61,7 +61,7 @@
             }
             if($row = $result->fetch_assoc()){
                 echo "<img src='" . $row['imagePath'] ."'><input type='file' name='productpic'><br><br>";
-                echo  "<input type='text' name='name' value='" . $row['name'] . "' max='2'>" ;
+                echo  "<input type='text' name='name' value='" . $row['name'] . "'>" ;
                 echo "<br><br><input type='number' name='price' min='0' step='0.01' value='". $row['price'] ."'> LE<br><br>";
                 echo "<textarea name='description' rows='4' cols='50'>". $row['description'] ."</textarea><br>";
                 echo "Category: <select name='category'> <option value='' selected>Choose category</option>";

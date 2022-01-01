@@ -11,7 +11,10 @@
         //use $_GET to get the hr id then use sql to get the hr name
         //at the end add the request data into the table 
         //then send the request as a message to the hr 
+        //increment the investigationsmade value of this hr in the hrpartner table
 
+
+        
         //i had this in the messages page initially but figured there was no point writing it there, sorry about that
         //didn't mean to write anything in here since i am technically not supposed to work on this page. this code is supposed to be the last
         //thing in the page btw
