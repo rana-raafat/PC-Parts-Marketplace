@@ -79,12 +79,7 @@
                         else if($_SESSION['userType']=='customer'){
                             if($row['userType']!='customer'){
                                 //if they open a profile that isn't a customer have a 'Message' button
-                                ?>
-                                <form method='post' action=<?php echo 'Messages.php?id=' . $row['id']; ?>>
-                                <button type='submit' name='message'> Message </button>
-                                </form>
-                                <?php
-                                //NOTE: I AM CONSIDERING ALLOWING EVERYONE TO MESSAGE EVERYONE
+                                echo "<a href='Messages.php?id=". $row['id'] ."'><button type='submit' name='message'> Message </button></a>";
                             }
                         }
                     }
