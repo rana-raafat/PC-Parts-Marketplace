@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2021 at 05:18 PM
+-- Generation Time: Jan 01, 2022 at 10:45 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -49,18 +49,11 @@ INSERT INTO `administrator` (`id`, `penalties`) VALUES
 --
 
 CREATE TABLE `cartitem` (
+  `orderID` int(10) UNSIGNED NOT NULL,
   `customerID` int(10) UNSIGNED NOT NULL,
   `productID` int(10) UNSIGNED NOT NULL,
   `amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `cartitem`
---
-
-INSERT INTO `cartitem` (`customerID`, `productID`, `amount`) VALUES
-(16, 1, 5),
-(16, 37, 17);
 
 -- --------------------------------------------------------
 
@@ -109,6 +102,42 @@ CREATE TABLE `message` (
   `messageText` text DEFAULT NULL,
   `readStatus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`id`, `senderID`, `recepientID`, `messageText`, `readStatus`) VALUES
+(1, 8, 15, 'Kindly take <a href=\"survey.php\">this survey</a>.', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `customerID` int(10) UNSIGNED NOT NULL,
+  `numberOfProducts` int(11) DEFAULT NULL,
+  `completed` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customerID`, `numberOfProducts`, `completed`) VALUES
+(1, 9, 0, 0),
+(2, 10, 0, 0),
+(3, 11, 0, 0),
+(4, 12, 0, 0),
+(5, 13, 0, 0),
+(6, 14, 0, 0),
+(7, 15, 0, 0),
+(8, 16, 0, 0),
+(9, 17, 0, 0),
+(10, 18, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -302,8 +331,9 @@ ALTER TABLE `administrator`
 -- Indexes for table `cartitem`
 --
 ALTER TABLE `cartitem`
-  ADD PRIMARY KEY (`productID`,`customerID`),
-  ADD KEY `customerID` (`customerID`);
+  ADD PRIMARY KEY (`productID`,`customerID`,`orderID`),
+  ADD KEY `customerID` (`customerID`),
+  ADD KEY `orderID` (`orderID`);
 
 --
 -- Indexes for table `hrpartner`
@@ -327,6 +357,13 @@ ALTER TABLE `message`
   ADD PRIMARY KEY (`id`),
   ADD KEY `senderID` (`senderID`),
   ADD KEY `recepientID` (`recepientID`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`,`customerID`),
+  ADD KEY `customerID` (`customerID`);
 
 --
 -- Indexes for table `penalty`
@@ -384,7 +421,13 @@ ALTER TABLE `investigationrequest`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `penalty`
@@ -431,7 +474,8 @@ ALTER TABLE `administrator`
 --
 ALTER TABLE `cartitem`
   ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `cartitem_ibfk_2` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `cartitem_ibfk_2` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `cartitem_ibfk_3` FOREIGN KEY (`orderID`) REFERENCES `orders` (`id`);
 
 --
 -- Constraints for table `hrpartner`
@@ -453,6 +497,12 @@ ALTER TABLE `investigationrequest`
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`senderID`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `message_ibfk_2` FOREIGN KEY (`recepientID`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `penalty`

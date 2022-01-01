@@ -15,7 +15,10 @@
             echo "couldn't connect to the DataBase<br>";
             die();
         }
-
+        //need to get both sender and reciever gonna probably gonna do a list thing again here too
+        //a list of all the customers the admin contacted is there then when the auditor
+        //clicks on one of those people it sends the aditor to the chathistory page which then displays the
+        //conversation between them
         if(isset($_GET['id'])){
             if(isset($_POST['customerchat'])){
                 $sql="SELECT * FROM message WHERE senderID='".$_GET['id']."'";

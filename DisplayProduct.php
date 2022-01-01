@@ -52,11 +52,25 @@
                 $itemError= "Item is already in cart<br>";
             }
             else if($checkResult->num_rows == 0){
-                $addToCart = "INSERT INTO cartitem VALUES('". $_SESSION['id'] . "','" . $id . "','" . $_POST['amount'] ."')";
-                $addResult = $con->query($addToCart);
-
-                if(!$addResult){ //exception here
-                    echo "Error inserting into cart<br>";
+                $orderIDsql = "SELECT id FROM orders WHERE customerID='" . $_SESSION['id'] . "' AND completed='0'";
+                $orderIDresult = $con->query($orderIDsql);
+                if($orderIDresult->num_rows == 0){
+                    echo "Error: order not found<br>";
+                }
+                else if($orderRow = $orderIDresult->fetch_assoc()){ //not tested
+                    $addToCart = "INSERT INTO cartitem VALUES('" . $orderRow['id'] . "','". $_SESSION['id'] . "','" . $id . "','" . $_POST['amount'] ."')";
+                    $addResult = $con->query($addToCart);
+                    if(!$addResult){ //exception here
+                        echo "Error inserting into cart<br>";
+                    }
+                    else{
+                        //for now the order contains the number of unique products not number of items cause.. idk
+                        $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts+1 WHERE id='" . $orderRow['id'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
+                        $updateOrderResult = $con->query($updateOrdersql);
+                        if(!$updateOrderResult){ //exception here
+                            echo "Error updating order<br>";
+                        }
+                    }   
                 }
             }
             //header("Location:DisplayProduct.php?id=".$id);

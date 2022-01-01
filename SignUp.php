@@ -120,8 +120,23 @@ if(isset($_POST["submit"])){
         	    exit(); //exit stops the program
             }
             else{
-                echo "Account creation successful<br>";
-                header("Location:Home.php");
+                //create a new order for the user
+                $IDsql = "SELECT id FROM users WHERE username='" . $username ."'"; //not tested
+                $IDresult = $con->query($IDsql);
+                if($IDresult->num_rows == 0){
+                    echo "Error: user not found<br>";
+                }
+                else if($idrow = $IDresult->fetch_assoc()){
+                    $ordersql = "INSERT INTO orders(customerID, numberOfProducts, completed) VALUES('". $idrow['id'] . "','0','0')";
+                    $orderResult = $con->query($ordersql);
+                    if(!$ordersql){
+                        echo "Error: couldn't create new order<br>";
+                    }
+                    else{
+                        echo "Account creation successful<br>";
+                        header("Location:Home.php");
+                    }
+                }
             }
         }
         $con->close();
