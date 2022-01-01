@@ -67,7 +67,12 @@
                             }
                             else if($row['userType']=='hrpartner'){
                                 //if they open an hr's profile they have a 'request investigation' button
-                                //the link is sent to the hr as
+                                //the link is sent to the hr as a message
+                                ?>
+                                <form method='post' action=<?php echo 'InvestigationRequest.php?id=' . $row['id']; ?>>
+                                <button type='submit' name='investigation'> Request Ivenstigation </button>
+                                </form>
+                                <?php
                             }
                         }
                         else{

@@ -89,7 +89,7 @@
                     }
                     else if($penaltyRow=$penaltyResult->fetch_assoc()){
                         if($penaltyRow['penalties']>=3){
-                            //fire the admin by deleting their account 
+                            //fire the admin by deleting their account ?
                         }
                     }
                     else{
