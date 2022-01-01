@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="Style.css">
-        <title>Penalty</title>
+        <title> Penalty </title>
     </head>
     <body>
         <script>
@@ -73,23 +73,38 @@
                     $selectPenaltiessql="SELECT penalties FROM administrator WHERE id='" . $_POST['admin'] . "'";
                     $penaltyResult = $con->query($selectPenaltiessql);
 
-                    if(!$insertResult || !$update_HR_Result || !$update_Admin_Result || !$penaltyResult) {
+                    if(!$insertResult || !$update_HR_Result || !$update_Admin_Result || $penaltyResult->num_rows == 0) {
                         if (!$insertResult){
                             echo "Error inserting into penalty table<br>";
                         }
                         else if(!$update_HR_Result){
                             echo "Error updating hrpartner table<br>";
                         }
-                        else if(!$penaltyResult){
-                            echo "Error fetching penalties from admin table<br>";
+                        else if(!$update_Admin_Result){
+                            echo "Error updating administrator table<br>";
                         }
                         else{
-                            echo "Error updating administrator table<br>";
+                            echo "Error admin not found in users table<br>";
                         }
                     }
                     else if($penaltyRow=$penaltyResult->fetch_assoc()){
                         if($penaltyRow['penalties']>=3){
-                            //fire the admin by deleting their account ?
+                            //fire the admin by deleting their account
+                            $deletesql = "DELETE FROM administrator WHERE id='" . $_POST['admin'] . "'";
+                            $deleteResult = $con->query($deletesql);
+                            if(!$deleteResult){
+                                echo "Error deleting from admin table<br>";
+                            }
+                            else{
+                                $deleteUsersql = "DELETE FROM users WHERE id='" . $_POST['admin'] . "'";
+                                $deleteUserResult = $con->query($deleteUsersql);
+                                if(!$deleteUserResult){
+                                    echo "Error deleting from users table<br>";
+                                }
+                                else{
+                                    header("Location:Home.php");
+                                }
+                            }
                         }
                     }
                     else{

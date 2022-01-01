@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
-        <title> Profile </title>
+        <title> Messages </title>
     </head>
     <body>
         <?php
@@ -77,7 +77,7 @@
         if(isset($_POST['sendsurvey'])){
             $link = 'Kindly take <a href="survey.php">this survey</a>';
             //don't sanatize this cause it needs to stay as a link obviously
-            $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $_GET['id'] ."','". $link ."','1') " ;
+            $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $_GET['id'] ."','". $link ."','0') " ;
             $surveyResult = mysqli_query($conn,$survey);
             if(!$surveyResult){
                 echo "couldn't insert survey into the DataBase<br>";

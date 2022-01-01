@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
-        <title> Profile </title>
+        <title> Chats </title>
     </head>
 <body>
 <?php
