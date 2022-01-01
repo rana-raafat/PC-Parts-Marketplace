@@ -68,6 +68,7 @@
                             else if($row['userType']=='hrpartner'){
                                 //if they open an hr's profile they have a 'request investigation' button
                                 //the link is sent to the hr as a message
+                                
                                 ?>
                                 <form method='post' action=<?php echo 'InvestigationRequest.php?id=' . $row['id']; ?>>
                                 <button type='submit' name='investigation'> Request Ivenstigation </button>
@@ -75,10 +76,14 @@
                                 <?php
                             }
                         }
-                        else{
+                        else if($_SESSION['userType']=='customer'){
                             if($row['userType']!='customer'){
                                 //if they open a profile that isn't a customer have a 'Message' button
-                                
+                                ?>
+                                <form method='post' action=<?php echo 'Messages.php?id=' . $row['id']; ?>>
+                                <button type='submit' name='message'> Message </button>
+                                </form>
+                                <?php
                                 //NOTE: I AM CONSIDERING ALLOWING EVERYONE TO MESSAGE EVERYONE
                             }
                         }
