@@ -70,15 +70,26 @@
                     $update_HR_sql= "UPDATE hrpartner SET penaltiesGiven = penaltiesGiven+1 WHERE id='" . $_SESSION['id'] . "'";
                     $update_HR_Result = mysqli_query($con,$update_HR_sql);
 
-                    if (!$insertResult || !$update_HR_Result || !$update_Admin_Result) {
+                    $selectPenaltiessql="SELECT penalties FROM administrator WHERE id='" . $_POST['admin'] . "'";
+                    $penaltyResult = $con->query($selectPenaltiessql);
+
+                    if(!$insertResult || !$update_HR_Result || !$update_Admin_Result || !$penaltyResult) {
                         if (!$insertResult){
                             echo "Error inserting into penalty table<br>";
                         }
                         else if(!$update_HR_Result){
                             echo "Error updating hrpartner table<br>";
                         }
+                        else if(!$penaltyResult){
+                            echo "Error fetching penalties from admin table<br>";
+                        }
                         else{
                             echo "Error updating administrator table<br>";
+                        }
+                    }
+                    else if($penaltyRow=$penaltyResult->fetch_assoc()){
+                        if($penaltyRow['penalties']>=3){
+                            //fire the admin by deleting their account 
                         }
                     }
                     else{

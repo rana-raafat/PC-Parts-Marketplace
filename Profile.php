@@ -27,20 +27,33 @@
                         if($_SESSION['userType']=='administrator'){
                             if($row['userType']=='administrator'){
                                 //if they open an admin's profile they have a button that can delete this admin
-                                echo "<a href='RemoveAdmin.php'><button type='submit' name='removeadmin'> Remove admin </button></a>";
+                                echo "<a href='RemoveAdmin.php?id=". $row['id'] ."'><button type='submit' name='removeadmin'> Remove admin </button></a>";
                             }
                             else if($row['userType']=='customer'){
                                 //if they open a customer's profile they have a button that can make this customer an admin
-                                echo "<a href='AddAdmin.php'><button type='submit' name='addadmin'> Add admin </button></a>";
+                                echo "<a href='AddAdmin.php?id=". $row['id'] ."'><button type='submit' name='addadmin'> Add admin </button></a>";
 
                                 //can see messages the customer SENT NOT MADE YETTTT
-                                //echo "<a href='AddAdmin.php'><button type='submit' name='addadmin'> Add admin </button></a>";
+                                ?>
+                                <form method='post' action=<?php echo 'ChatHistory.php?id=' . $row['id']; ?>>
+                                <button type='submit' name='customerchat'> Chat History </button>
+                                </form>
+                                <?php
                             }
                         }
                         else if($_SESSION['userType']=='auditor'){
                             if($row['userType']=='administrator'){
-                                //can see messages between admin and customers  
+                                //can see messages between admin and customers
+                                ?>
+                                <form method='post' action=<?php echo 'ChatHistory.php?id=' . $row['id']; ?>>
+                                <button type='submit' name='adminchat'> Chat History </button>
+                                </form>
+                                <?php
                                 //redirects to show message history
+                                //NOTE: on second thought this button should redirect to chats where
+                                //a list of all the customers the admin contacted is there then when the auditor
+                                //clicks on one of those people it sends the aditor to the chathistory page which then displays the
+                                //conversation between them (then the auditor can add a comment to that conversation i don't understand how)
                             }
                             else if($row['userType']=='customer'){
                                 //if they open a customer's profile they have a 'send survey' button
