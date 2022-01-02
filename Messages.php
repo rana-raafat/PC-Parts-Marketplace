@@ -74,19 +74,6 @@
             header("Location:Chats.php");
         }
 
-        if(isset($_POST['sendsurvey'])){
-            $link = 'Kindly take <a href="survey.php">this survey</a>';
-            //don't sanatize this cause it needs to stay as a link obviously
-            $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $_GET['id'] ."','". $link ."','0') " ;
-            $surveyResult = mysqli_query($conn,$survey);
-            if(!$surveyResult){
-                echo "couldn't insert survey into the DataBase<br>";
-                printf("Error: %s\n", mysqli_error($conn));
-                die();
-            }
-            $conn->close();
-            header("Location:Messages.php?id=".$_GET['id']);
-        }
         ?>
 
         <form action="" method="post">

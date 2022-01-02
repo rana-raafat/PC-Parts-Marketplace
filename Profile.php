@@ -58,9 +58,19 @@
                             else if($row['userType']=='customer'){
                                 //if they open a customer's profile they have a 'send survey' button
                                 //sends survey link as a message
-                                
+                                if(isset($_POST['sendsurvey'])){
+                                    $link = 'Kindly take <a href="survey.php">this survey</a>';
+                                    //don't sanatize this cause it needs to stay as a link obviously
+                                    $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $row['id'] ."','". $link ."','0') " ;
+                                    $surveyResult = mysqli_query($con,$survey);
+                                    if(!$surveyResult){
+                                        echo "couldn't insert survey into the DataBase<br>";
+                                        printf("Error: %s\n", mysqli_error($con));
+                                        die();
+                                    }
+                                }
                                 ?>
-                                <form method='post' action=<?php echo 'Messages.php?id=' . $row['id']; ?>>
+                                <form method='post' action=''>
                                 <button type='submit' name='sendsurvey'> Send Survey </button>
                                 </form>
                                 <?php
