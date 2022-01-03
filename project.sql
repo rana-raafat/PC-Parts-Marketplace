@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2022 at 10:45 PM
+-- Generation Time: Jan 03, 2022 at 09:21 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -41,6 +41,20 @@ INSERT INTO `administrator` (`id`, `penalties`) VALUES
 (4, 2),
 (5, 1),
 (6, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auditorcomment`
+--
+
+CREATE TABLE `auditorcomment` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `auditorID` int(10) UNSIGNED NOT NULL,
+  `messageID` int(10) UNSIGNED NOT NULL,
+  `commentText` text DEFAULT NULL,
+  `readStatus` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -99,16 +113,10 @@ CREATE TABLE `message` (
   `id` int(10) UNSIGNED NOT NULL,
   `senderID` int(10) UNSIGNED NOT NULL,
   `recepientID` int(10) UNSIGNED NOT NULL,
+  `auditorFlag` tinyint(1) DEFAULT NULL,
   `messageText` text DEFAULT NULL,
   `readStatus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `message`
---
-
-INSERT INTO `message` (`id`, `senderID`, `recepientID`, `messageText`, `readStatus`) VALUES
-(1, 8, 15, 'Kindly take <a href=\"survey.php\">this survey</a>.', 1);
 
 -- --------------------------------------------------------
 
@@ -328,6 +336,14 @@ ALTER TABLE `administrator`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `auditorcomment`
+--
+ALTER TABLE `auditorcomment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auditorID` (`auditorID`),
+  ADD KEY `messageID` (`messageID`);
+
+--
 -- Indexes for table `cartitem`
 --
 ALTER TABLE `cartitem`
@@ -412,6 +428,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `auditorcomment`
+--
+ALTER TABLE `auditorcomment`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `investigationrequest`
 --
 ALTER TABLE `investigationrequest`
@@ -421,7 +443,7 @@ ALTER TABLE `investigationrequest`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -468,6 +490,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `administrator`
   ADD CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `auditorcomment`
+--
+ALTER TABLE `auditorcomment`
+  ADD CONSTRAINT `auditorcomment_ibfk_1` FOREIGN KEY (`auditorID`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `auditorcomment_ibfk_2` FOREIGN KEY (`messageID`) REFERENCES `message` (`id`);
 
 --
 -- Constraints for table `cartitem`
