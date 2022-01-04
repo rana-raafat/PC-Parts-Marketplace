@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2022 at 09:21 AM
+-- Generation Time: Jan 04, 2022 at 01:33 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -294,7 +294,7 @@ CREATE TABLE `survey` (
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
+  `password` varchar(225) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(50) DEFAULT NULL,
   `imagePath` varchar(255) DEFAULT NULL,
@@ -306,24 +306,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `address`, `imagePath`, `userType`) VALUES
-(1, 'Sarah', 'sarahpass', 'sarah@mail.com', 'Nasr City', 'resources/images/ProfilePictures/hr1.jpg', 'hrpartner'),
-(2, 'Hady', 'hadypass', 'hady@mail.com', 'Maadi', 'resources/images/ProfilePictures/hr2.jpg', 'hrpartner'),
-(3, 'Dina', 'dinapass', 'dina@mail.com', 'Obour', 'resources/images/ProfilePictures/admin1.jpg', 'administrator'),
-(4, 'John', 'johnpass', 'john@mail.com', 'Nasr City', 'resources/images/ProfilePictures/admin2.jpg', 'administrator'),
-(5, 'Mona', 'monapass', 'mona@mail.com', '6th of October', 'resources/images/ProfilePictures/admin3.png', 'administrator'),
-(6, 'Mohamed', 'mohamedpass', 'mohamed@mail.com', 'Obour', 'resources/images/ProfilePictures/admin4.png', 'administrator'),
-(7, 'Arsany', 'arsanypass', 'arsany@mail.com', 'Obour', 'resources/images/ProfilePictures/auditor1.jpg', 'auditor'),
-(8, 'Mazen', 'mazenpass', 'mazen@mail.com', 'Nasr City', 'resources/images/ProfilePictures/auditor2.jpg', 'auditor'),
-(9, 'Ayman', 'aymanpass', 'ayman@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer1.png', 'customer'),
-(10, 'Mostafa', 'mostafapass', 'mostafa@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer2.png', 'customer'),
-(11, 'Laila', 'lailapass', 'laila@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer3.png', 'customer'),
-(12, 'Farida', 'faridapass', 'farida@mail.com', 'Obour', 'resources/images/ProfilePictures/customer4.png', 'customer'),
-(13, 'Rahma', 'rahmapass', 'rahma@mail.com', '6th of October', 'resources/images/ProfilePictures/customer5.png', 'customer'),
-(14, 'Sayed', 'sayedpass', 'sayed@mail.com', 'Obour', 'resources/images/ProfilePictures/customer6.png', 'customer'),
-(15, 'Helmy', 'helmypass', 'helmy@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer7.png', 'customer'),
-(16, 'Reem', 'reempass', 'reem@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer8.png', 'customer'),
-(17, 'Wael', 'waelpass', 'wael@mail.com', 'Obour', 'resources/images/ProfilePictures/customer9.png', 'customer'),
-(18, 'Khaled', 'khaledpass', 'khaled@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer10.png', 'customer');
+(1, 'Sarah', '501612faff7f69259b8d263116a299f2', 'sarah@mail.com', 'Nasr City', 'resources/images/ProfilePictures/hr1.jpg', 'hrpartner'),
+(2, 'Hady', 'f1a15dbf6d85d92329ee59bd6dac88e0', 'hady@mail.com', 'Maadi', 'resources/images/ProfilePictures/hr2.jpg', 'hrpartner'),
+(3, 'Dina', '7a8b32c09f759fbc131ee48094f45c26', 'dina@mail.com', 'Obour', 'resources/images/ProfilePictures/admin1.jpg', 'administrator'),
+(4, 'John', '3bffe7a2bc163d273184e8902afe66b7', 'john@mail.com', 'Nasr City', 'resources/images/ProfilePictures/admin2.jpg', 'administrator'),
+(5, 'Mona', 'ec597cae68ee2489846132fc330c1d6e', 'mona@mail.com', '6th of October', 'resources/images/ProfilePictures/admin3.png', 'administrator'),
+(6, 'Mohamed', 'a6ba8aa79a862ac2adc06b86d702b5b5', 'mohamed@mail.com', 'Obour', 'resources/images/ProfilePictures/admin4.png', 'administrator'),
+(7, 'Arsany', '4c9068a2d012cf552ce72d2e5db963f3', 'arsany@mail.com', 'Obour', 'resources/images/ProfilePictures/auditor1.jpg', 'auditor'),
+(8, 'Mazen', 'b75f837755db2313fbcaa612daf9afdb', 'mazen@mail.com', 'Nasr City', 'resources/images/ProfilePictures/auditor2.jpg', 'auditor'),
+(9, 'Ayman', '0dc03efd2e07d077f67c285919eea6e7', 'ayman@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer1.png', 'customer'),
+(10, 'Mostafa', '0b742a325a584e413e0b9478337eb62b', 'mostafa@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer2.png', 'customer'),
+(11, 'Laila', 'e3f269c6cf359bf211f734647c72e938', 'laila@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer3.png', 'customer'),
+(12, 'Farida', '626a5d8f0e3d7820ec9647a5e102d50e', 'farida@mail.com', 'Obour', 'resources/images/ProfilePictures/customer4.png', 'customer'),
+(13, 'Rahma', '3b8a073fe11859eb285ef8646d64e632', 'rahma@mail.com', '6th of October', 'resources/images/ProfilePictures/customer5.png', 'customer'),
+(14, 'Sayed', 'dbbf3063c5aea9512c646285dbb43d42', 'sayed@mail.com', 'Obour', 'resources/images/ProfilePictures/customer6.png', 'customer'),
+(15, 'Helmy', 'fd82b32013d092effd6fedcb1afb81f0', 'helmy@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer7.png', 'customer'),
+(16, 'Reem', 'c6bcd95edc1a4686a690059e7c4a184e', 'reem@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer8.png', 'customer'),
+(17, 'Wael', 'bddf98c7056ab76cc1df3f9deb2c5bc4', 'wael@mail.com', 'Obour', 'resources/images/ProfilePictures/customer9.png', 'customer'),
+(18, 'Khaled', 'eab3b507da4581fcc1e61e4d7d5263b7', 'khaled@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer10.png', 'customer');
 
 --
 -- Indexes for dumped tables
