@@ -80,7 +80,9 @@
                             }
                         }
 
-                        $updatesql = "UPDATE users SET username='" . $_POST['username'] . "', password='" . $_POST['password'] . "', email='" 
+                        $encryptedPass = md5($_POST['password']);
+
+                        $updatesql = "UPDATE users SET username='" . $_POST['username'] . "', password='" . $encryptedPass . "', email='" 
                         . $_POST['email'] . "', address='" . $_POST['address'] . "', imagePath='" . $imagePath . "'";
                         //$updateResult = $con->query($updatesql);
                     }

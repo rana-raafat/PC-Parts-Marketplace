@@ -13,9 +13,13 @@
 			$conn = new mysqli("localhost","root","", "project");
 			//echo $_SESSION['email'];
 			$sql="DELETE FROM users WHERE email ='". $_SESSION['email'] . "'";
+			$sql2="DELETE FROM orders WHERE customerID ='". $_SESSION['id'] . "'";
+			$result2=mysqli_query($conn,$sql2);
 			$result=mysqli_query($conn,$sql);
-			if(!$result){
+			
+			if(!$result || !$result2){
 				//throw exception maybe? that says Database error or sth
+				echo "error deleting";
 			}
 			else{
 				session_destroy();

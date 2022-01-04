@@ -43,7 +43,7 @@
             Email: <br>
             <input type="text" name="email" placeholder="Enter your email address"><br>
             Password: <br>
-            <input type="password" name="password" placeholder="Enter your password" maxlength=75 minlength=8><br>
+            <input type="password" name="password" placeholder="Enter your password" maxlength=50 minlength=8><br>
             Address: <br>
             <input type="text" name="address" placeholder="Enter your delivery address"><br>
             <input type="submit" name="submit"><br>
@@ -110,7 +110,9 @@ if(isset($_POST["submit"])){
                 }
             }
             
-            $sql="INSERT INTO users(username,password,email,address,imagePath,userType) VALUES('" . $username . "','" . $password 
+            $encryptedPass = md5($password);
+
+            $sql="INSERT INTO users(username,password,email,address,imagePath,userType) VALUES('" . $username . "','" . $encryptedPass 
                 . "','" . $email . "','" . $address . "','" . $imagePath ."','" . $userType . "')";
 
             $result = $con->query($sql);
@@ -134,7 +136,14 @@ if(isset($_POST["submit"])){
                     }
                     else{
                         echo "Account creation successful<br>";
-                        header("Location:Home.php");
+                        //header("Location:Home.php");
+                        ?>
+                        <script>
+                        $(document).ready(function() {
+                            window.location.replace("Home.php");;
+                        });
+                        </script>
+                        <?php
                     }
                 }
             }

@@ -29,13 +29,16 @@ if(isset($_POST['Submit'])){ //check if form was submitted
             die();
         }
 
-        $sql= "SELECT * FROM users WHERE email='" . $_POST['Email'] . "' AND password='" . $_POST['Password'] . "'";
+        $encryptedPass = md5($_POST['Password']);
+
+        $sql= "SELECT * FROM users WHERE email='" . $_POST['Email'] . "' AND password='" . $encryptedPass . "'";
         $result = mysqli_query($conn,$sql);	
 
         if (!$result) {
             printf("Error: %s\n", mysqli_error($conn));
             exit();
         }
+
         
         if($row = $result->fetch_assoc()){
             

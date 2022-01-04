@@ -100,7 +100,6 @@
             echo "<img src='". $_SESSION['imagePath']. "' alt='profilepic' width='150' height='150'><br><br>";
             echo "Username: " . $_SESSION['username'] . "<br><br>";
             echo "Email: " . $_SESSION['email'] . "<br><br>";
-            echo "Password: " . $_SESSION['password'] . "<br><br>";
             echo "Address: " . $_SESSION['address'] . "<br><br>";
 
             if($_SESSION['userType']!='customer'){
