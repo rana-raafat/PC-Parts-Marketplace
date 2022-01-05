@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Messages </title>
     </head>
     <body>
@@ -66,12 +65,20 @@
                 die();
             }
             $conn->close();
-            header("Location:Messages.php?id=".$_GET['id']);
+            ?>
+
+            <script>window.location.href='Messages.php?id=<?php echo $_GET['id']?>'</script>
+
+            <?php
         }
 
         if(isset($_POST['exit']))
         {
-            header("Location:Chats.php");
+            ?>
+
+            <script>window.location.href='Chats.php'</script>
+            
+            <?php
         }
 
         ?>

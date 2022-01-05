@@ -1,82 +1,30 @@
+/********************************************************************************************/
 @font-face {
     src: url(resources/fonts/xirod.ttf);
     font-family: xirod;
 }
 
-/*WEBSITE NAME IN MENU*/
-.navbar-custom .navbar-brand{
-    font-size: 200%;
-    color: white;
-    font-family: xirod;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-.navbar-custom .navbar-brand:hover{
-    color: grey;
-}
-
-.navbar-custom .input-group-btn .seach-icon:hover{
-    text-decoration: none;    /*not working*/
-}
-
-body{
-    margin: 30px;
-    background: black;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 125%;
-    line-height: 2;
-}
-
-h1, h2, h3, h4, h5{
-    font-family: xirod;
-    text-shadow: 1px 1px 1px black, 2px 2px 1px red, 3px 3px 1px goldenrod, 4px 4px 1px green, 5px 5px 1px turquoise, 6px 6px 1px blue,  7px 7px 1px indigo;
-    font-weight: lighter;
-}
-
-.header{
-    font-size: 200%;
-    font-family: xirod;
-}
-
-.SignUpForm{
-    background-color: black;
-    width: 400px;
-    height: 600px;
-    border-radius: 8px;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*
-    box-shadow: 0px 0px 10px rgba(255, 0, 0, 1), 0px 0px 20px rgba(255, 255, 255, 0),0px 0px 30px rgba(0, 255, 0, 1), 0px 0px 40px rgba(255, 255, 255, 0),0px 0px 50px rgba(0, 0, 255, 1), 0px 0px 60px rgba(255, 255, 255, 0);
-    */
-    /*
-    animation: box_glow 1s ease-in-out infinite alternate;
-    */
-}
-
-input[type=text],input[type=password]{
-    background: white;
-    color: black;
-    padding: 5px 20px;
-    margin: 10px 0;
-    font-size: 100%;
-}
-
-input[type=text]:hover, input[type=password]:hover{
-    animation: box_glow 1s ease-in-out infinite alternate;
-}
-
 @keyframes glow {
     from {
-        text-shadow: black;
+        background: linear-gradient(45deg,red 0%, green 50%, blue 100%); 
+        -webkit-background-clip: text;
+        -webkit-text-stroke: 2px transparent;
+        }
+    
+    to {
+        background: linear-gradient(45deg,red 0%, green 50%, blue 100%); 
+        -webkit-background-clip: text;
+        -webkit-text-stroke: 2px transparent;
+        text-shadow: 0 0 4px white;
+    }
+}
+
+@keyframes glow2 {
+    from {
     }
     
     to {
-        background: linear-gradient(45deg,red, green, blue); 
-        -webkit-background-clip: text;
-        -webkit-text-stroke: 2px transparent;
+        text-shadow: 0 0 4px white;
     }
 }
 
@@ -90,7 +38,44 @@ input[type=text]:hover, input[type=password]:hover{
   }
 }
 
-input[type=submit], input[type=reset]{
+/********************************************************************************************/
+
+body{
+    margin: 30px;
+    background: black;
+    color: white;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5{
+    font-family: xirod;
+    font-weight: lighter;
+    text-shadow: 1px 1px 1px black, 2px 2px 1px red, 3px 3px 1px goldenrod, 4px 4px 1px green, 5px 5px 1px turquoise, 6px 6px 1px blue,  7px 7px 1px indigo;
+    animation: glow2 2s ease-in-out infinite alternate;
+}
+
+.header{
+    font-size: 150%;
+    font-family: xirod;
+}
+
+/********************************************************************************************/
+
+input[type=text],input[type=password], input[type=search]{
+    border-radius: 3rem;
+    background: white;
+    color: black;
+    padding: 5px 20px;
+    margin: 10px 0;
+    font-size: 100%;
+}
+                                                   
+input[type=text]:hover, input[type=password]:hover, input[type=search]:hover, textarea:hover{
+    animation: box_glow 2s ease-in-out infinite alternate;
+}
+
+input[type=submit], input[type=reset], .select {
+    border-radius: 3rem;
     align-self: center;                 /*not working*/
     color: black;
     background: white;
@@ -105,10 +90,9 @@ button, input[type=button]{
     font-size: 100%;
 }
 
-button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=file]{
+button:hover, input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=file], .select-items div:hover{
     background: transparent;
     color: white;
-    margin: 10px 0;
     font-size: 100%;
 }
 
@@ -117,8 +101,274 @@ textarea{
     height: 250px;
 }
 
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 1em;
+    width: 1em;
+    border-radius: 50em;
+    background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+    background-size: contain;
+    opacity: 1;
+    color: #333;
+}
+
 a:hover, a:visited, a:link, a:active
 {
     color: white; 
     text-decoration: none;
 }
+
+.input-group-btn {
+    font-size: unset !important;
+}
+
+/*******************************************************************************************************************************/
+
+.navbar-custom{
+    border-radius: 1.5rem;
+}
+.navbar-custom .navbar-brand{
+    font-size: 200%;
+    color: white;
+    font-family: xirod;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.navbar-custom .navbar-brand:hover{
+    color: lightgray;
+}
+
+.rgbshape{
+    width: 350px;
+    height: 50px;
+    mix-blend-mode: lighten;
+    float: inline-start;
+    position: absolute;
+    transform: translate(-85%, 0%);
+}
+
+/********************************************************************************************/
+
+.searchbar{
+    float: left;
+}
+
+.search{    
+    justify-content: space-between;
+    background: transparent;
+    color: white;
+    float: right;
+}
+
+.search:hover{    
+    color: grey;
+    float: right;
+    font-size: unset !important;
+}
+
+.search:focus{
+    color: unset !important;
+    outline: none !important;
+}
+
+.search::-webkit-search-cancel-button{
+    position:relative;
+    right:20px;  
+    color: black;  
+}
+
+.form-control:focus, .form-control:focus-visible {
+    border: none !important;
+    outline: none !important;
+}
+.modal-content{
+    font-size: 125%;
+    background: #222;
+    box-shadow: blanchedalmond;
+}
+
+/*******************************************************************************************************************************/
+
+.card {
+    background: #222;
+    margin: 50px;
+    border-radius: 3rem;
+}
+
+.chat-app{
+    padding:20px;
+    display: flex;
+    width: 800px;
+}
+
+.chat-app .people-list {
+    width: 270px;
+    padding-right: 20px;
+}
+
+.people-list .chat-list li {
+    padding: 10px 15px;
+}
+
+.people-list .chat-list li:hover {
+    background: #efefef;
+    color: #222;
+    cursor: pointer
+}
+
+.people-list img {
+    float: left;
+}
+
+.people-list .about {
+    float: left;
+    padding-left: 10px
+}
+
+.chat-app .chat {
+    border-left: 1px solid #777;
+    width: 530px;
+}
+
+.chat .chat-header {
+    padding: 15px 20px;
+    border-bottom: 2px solid #777
+}
+
+.chat .chat-header img {
+    float: left;
+}
+
+.chat .chat-header .chat-about {
+    float: left;
+    padding-left: 10px
+}
+
+/*
+.chat .chat-history{
+    display : flex;
+    flex-direction : column-reverse;
+}
+*/
+
+.chat .chat-history ul {
+    padding: 0;
+}
+
+.chat .chat-history ul li {
+    list-style: none;
+    padding: 20px;
+}
+
+.chat .chat-history .message-data {
+    margin-bottom: 15px
+}
+
+.chat .chat-history .message-data img {
+    border-radius: 40px;
+    width: 40px
+}
+
+.chat .chat-history .message {
+    color: #444;
+    padding: 18px 20px;
+    line-height: 26px;
+    font-size: 16px;
+    border-radius: 5rem;
+    display: inline-block;
+}
+
+.chat .chat-history .message:after {
+    bottom: 100%;
+    left: 7%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: #fff;
+    border-width: 10px;
+    margin-left: -10px
+}
+
+.chat .chat-history .my-message {
+    background: lightsteelblue
+}
+
+.chat .chat-history .my-message:after {
+    bottom: 100%;
+    left: 30px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-bottom-color: lightsteelblue;
+    border-width: 10px;
+    margin-left: -10px;
+    top: -40%
+
+}
+
+.chat .chat-history .other-message {
+    background: #e8f1f3;
+    text-align: right;
+    float: right
+}
+
+.chat .chat-history .other-message:after {
+    border-bottom-color: #e8f1f3;
+    left: 50%;
+    top: -50%
+}
+
+.readStatus-notSeen{
+    font-size: xx-small;
+    opacity: 50%;
+}
+
+.readStatus-seen{
+    font-size: xx-small;
+}
+
+.txtToBeSent{
+padding: 10px;;
+}
+
+.send{
+    border-radius: 3rem;
+}
+
+.send:hover{   
+    background-color: white;
+    color: black; 
+    font-size: 14px;
+    animation: box_glow 3s ease-in-out infinite alternate;
+}
+
+.send:focus{
+    background-color: white;
+    color: black;
+    outline: none !important;
+}
+
+.empty-chat{
+    width: 740;
+    height: 494;
+    background: #222;
+    margin: 50px;
+    border-radius: 3rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+    position:inherit; 
+}
+
+/*******************************************************************************************************************************/
+
+
+    /*
+    background-image: url(resources/images/style/giphy3.gif);
+    background-size: 600px 300px;
+    mix-blend-mode: lighten;
+    */

@@ -1,6 +1,5 @@
 <html>
 <head>
-    <link rel="stylesheet" href="Style.css">
     <title>Adding product</title>
 </head>
 <body>

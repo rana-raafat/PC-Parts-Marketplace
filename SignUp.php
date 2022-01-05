@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Sign Up </title>
     </head>
     <body>
@@ -33,7 +32,6 @@
     }
     </script>
 
-        <div class="SignUpForm">
         <h1>Sign Up</h1>
         <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
             Image: <br>
@@ -48,7 +46,6 @@
             <input type="text" name="address" placeholder="Enter your delivery address"><br>
             <input type="submit" name="submit"><br>
         </form>
-        </div>
 
 
 <?php 

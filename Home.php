@@ -9,7 +9,7 @@
         <?php
         session_start();
         include "Menu.php";
-        //<link rel="stylesheet" href="Style.css">
+        
         $con = new mysqli("localhost", "root", "", "project");
         if(!$con){ //exception
             echo "connection error<br>";
@@ -36,6 +36,9 @@
             if ($result->num_rows == 0) {
                 echo "No products found<br>";
             }
+            ?>
+            <!---->
+            <?php
             while($row = $result->fetch_assoc()){
                 echo "<img src='" . $row['imagePath'] . "' wdith='150' height='150'><br>";
                 echo "<a href=DisplayProduct.php?id=" . $row['id'] . ">" . $row['name'] . "</a><br>";
@@ -49,5 +52,6 @@
         }
         ?>
         <br>
+
     </body>
 </html>

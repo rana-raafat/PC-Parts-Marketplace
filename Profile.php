@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Profile </title>
     </head>
     <body>
@@ -142,7 +141,9 @@
             }
             ?>
             <a href='EditProfile.php'><button type='submit' name='edit' value='edit'>Edit profile</button></a>
+            <!--
             <a href='delete.php'><button type='submit' name='edit' value='edit'> Delete profile </button></a>
+            -->
             <?php
         } 
         else{
