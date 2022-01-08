@@ -230,8 +230,8 @@
 
                             <div class="box-footer">
                                 <form action="" method="post">
-                                    <div class="input-group txtToBeSent">
-              					        <input type="text" name="txt" placeholder="Type Message ..." class="form-control">
+                                    <div class="input-group">
+              					        <input type="text" name="txt" placeholder="Type Message ..." class="form-control txtToBeSent">
 
                           				<span class="input-group-btn">
                         				    <button type="submit" name="send" class="btn send">Send</button>

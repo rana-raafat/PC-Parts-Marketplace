@@ -191,12 +191,14 @@ a:hover, a:visited, a:link, a:active
 
 .card {
     background: #222;
-    margin: 50px;
+    margin:20px;
     border-radius: 3rem;
+
+    justify-self:center; /*not working*/
 }
 
 .chat-app{
-    padding:20px;
+    padding:10px;
     display: flex;
     width: 800px;
 }
@@ -244,12 +246,12 @@ a:hover, a:visited, a:link, a:active
     padding-left: 10px
 }
 
-/*
 .chat .chat-history{
-    display : flex;
-    flex-direction : column-reverse;
+    height: 350px;
+    overflow:auto; 
+    display:flex;
+    flex-direction: column-reverse;
 }
-*/
 
 .chat .chat-history ul {
     padding: 0;
@@ -333,12 +335,18 @@ a:hover, a:visited, a:link, a:active
     font-size: xx-small;
 }
 
-.txtToBeSent{
-padding: 10px;;
+.input-group{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+input.form-control.txtToBeSent{
+    padding: 25px 25px;
 }
 
 .send{
     border-radius: 3rem;
+    padding: 15px 15px;
 }
 
 .send:hover{   
