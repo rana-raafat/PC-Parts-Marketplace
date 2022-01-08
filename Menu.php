@@ -134,7 +134,7 @@
             
             <!--------------------------------------------------------- In both cases --------------------------------------------------------->
        
-                <form class="searchbar" action="SearchResults.php" method="post">
+                <form class="searchbar" action="SearchResults.php" method="get">
 
                     <input type="text" name="searchQuery" placeholder="Search for a product">
 

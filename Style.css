@@ -114,7 +114,7 @@ input[type=search]::-webkit-search-cancel-button {
 
 a:hover, a:visited, a:link, a:active
 {
-    color: white; 
+    color: grey; 
     text-decoration: none;
 }
 
@@ -366,9 +366,105 @@ padding: 10px;;
 
 /*******************************************************************************************************************************/
 
+.products-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 20px;
+}
+
+.product-list-item{
+    padding: 10px;
+    margin: 10px;
+    line-break: auto; /*not working*/
+}
+
+.product-list-item:hover{
+    background: white;
+    color: black;
+    border-radius: 1.5rem;
+
+}
+
+.product-list-image{
+    float: left;
+    width: 150px;
+    height: 150px;
+    vertical-align: baseline;
+    padding-right: 10px;
+}
+
 
     /*
     background-image: url(resources/images/style/giphy3.gif);
     background-size: 600px 300px;
     mix-blend-mode: lighten;
     */
+
+/*******************************************************************************************************************************/
+
+.carousel{
+    position: inherit;
+    
+    width: 1000;
+    height: 500px;
+
+    margin-top: 50px;
+}
+
+.item, .item-active{
+    border-radius: 1.5rem;
+    justify-content: space-evenly;
+}
+
+.carousel-inner{
+    border-radius: 1.5rem;
+
+    background: white;
+    
+    width: inherit;
+    height: inherit;
+}
+
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+height: unset;
+}
+
+.carousel-image{
+    justify-self: baseline; /*not working*/
+
+    width: 500px;
+    height: 500px;
+}
+
+.carousel-info{
+    font-size: 200%;
+    font-family: xirod;
+    color: #222;
+    text-shadow: 1px 1px 1px darkslategray;
+
+    position: absolute;
+    top: 0px; bottom: 0px;
+    left: 700px;
+    padding: 50px ;
+}
+
+.carousel-info-nowrap{
+    white-space: nowrap;
+}
+
+.fa-star, .fa-star-o{
+    color:goldenrod;
+}
+
+.carousel-control{
+    height: 510px;
+    top: 150px;
+}
+
+.carousel-control.left{
+    left: 100px;
+}
+
+.carousel-control.right{
+    right: 100px;   
+}
