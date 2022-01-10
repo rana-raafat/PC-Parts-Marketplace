@@ -19,7 +19,7 @@
         $rand=1;
         $displayed = [];
         $skip=false;
-        $output=9;
+        $output=10;
         ?>
 <div class="container">
   <div id="productsCarousel" class="carousel slide" data-ride="carousel">
@@ -52,7 +52,7 @@
             if($skip){ $skip=false; continue; 
             }
             
-            if($output == 9){
+            if($output == 10){
                 echo"<div class='item active'>";
             }
             else{
@@ -66,29 +66,33 @@
             if ($result->num_rows == 0) {
                 echo "No products found<br>";
             }
-            while($row = $result->fetch_assoc()){
+            if($row = $result->fetch_assoc()){
                 echo "<a href=DisplayProduct.php?id=" . $row['id'] . ">";
-                echo "<img src='" . $row['imagePath'] . "' class='carousel-image' alt='product_image'>";
-                echo "<div class='carousel-info'>";
-                echo $row['name'];
-                echo "<br><br>";
-                echo "<div class='carousel-info-nowrap'>";
-                echo $row['price'] . " LE";
-                echo "<br>";
-                $averageRating = 0;
-                if($row['numberOfReviews']>0){
-                    $averageRating = (1.0*$row['1star'] + 2.0*$row['2stars'] + 3.0*$row['3stars'] + 4.0*$row['4stars'] + 5.0*$row['5stars']) / $row['numberOfReviews'];
-                    
-                }
-                for($i=1; $i<= 5; $i++){
-                    if($i<=$averageRating)
-                        echo "<i class='fa fa-star'></i>";
-                    else
-                        echo "<i class='fa fa-star-o'></i>";
-                }
-                echo " Stars";
-                echo "</div>";
-                echo "</div>";
+                    echo "<div class='col-xs-5'>";
+                        echo "<img src='" . $row['imagePath'] . "' class='img-responsive carousel-image' alt='product_image'>";
+                    echo "</div>";
+                
+                    echo "<div class='col-xs-7'>";
+                        echo "<div class='carousel-caption'>";
+                            echo $row['name'];
+                            echo "<br><br>";
+                            echo "<div class='carousel-caption nowrap'>";
+                                echo $row['price'] . " LE";
+                                echo "<br>";
+                                $averageRating = 0;
+                                if($row['numberOfReviews']>0){
+                                    $averageRating = (1.0*$row['1star'] + 2.0*$row['2stars'] + 3.0*$row['3stars'] + 4.0*$row['4stars'] + 5.0*$row['5stars']) / $row['numberOfReviews'];
+                                }
+                                for($i=1; $i<= 5; $i++){
+                                    if($i<=$averageRating)
+                                        echo "<i class='fa fa-star'></i>";
+                                    else
+                                        echo "<i class='fa fa-star-o'></i>";
+                                }
+                                echo " Stars";
+                            echo "</div>";
+                        echo "</div>";
+                    echo "</div>";
                 echo "</a>";
             }
             echo "</div>";
@@ -96,17 +100,19 @@
         ?>
     </div>
 
-    <!-- Left controls -->
-    <a class="left carousel-control" href="#productsCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
-    </a>
+    <div class="controllers">
+        <!-- Left controls -->
+        <a class="left carousel-control" href="#productsCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
 
-    <!-- Right controls -->
-    <a class="right carousel-control" href="#productsCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
-    </a>
+        <!-- Right controls -->
+        <a class="right carousel-control" href="#productsCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 
   </div>
 </div>

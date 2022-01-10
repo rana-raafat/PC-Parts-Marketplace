@@ -155,7 +155,7 @@
                                 <div class="chat-header clearfix">
                                     <img src="<?php echo $header_rows['imagePath'];?>" alt="profile picture"  width='75' height='75' class="img-circle">
                                     <div class="chat-about">
-                                        <h6> <?php echo $header_rows['username'];?> </h6>
+                                        <h4> <?php echo $header_rows['username'];?> </h4>
                                         <div class="job"><i class="fa fa-user"></i> <?php echo $header_rows['userType'];?> </div>                                            
                                     </div>
                                 </div>
