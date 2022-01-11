@@ -1,6 +1,5 @@
 <html>
 <head>
-    <link rel="stylesheet" href="Style.css">
     <title>Delete Product</title>
 </head>
 <body>
@@ -30,11 +29,14 @@
                 printf("Error: %s\n", mysqli_error($con));
                 exit();
             }
-            header("Location:home.php");
+            echo "<script>window.location.href='Home.php'</script>";
             $con->close();
         }
         else if(isset($_POST['No'])){
-            header("Location:home.php");
+            echo "<script> 
+                    $('#signOutModal .close').click(); 
+                    window.history.go(-1);
+                 </script>";        
         }
     ?>
     

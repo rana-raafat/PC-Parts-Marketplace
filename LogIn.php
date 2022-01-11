@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Log In </title>
     </head>
     <body>
@@ -49,8 +48,8 @@ if(isset($_POST['Submit'])){ //check if form was submitted
             $_SESSION["address"]=$row['address'];
             $_SESSION["imagePath"]=$row['imagePath'];
             $_SESSION["userType"]=$row['userType'];
-            header("Location:Home.php");
-            
+
+            echo "<script>window.location.href='Home.php'</script>";
         }
         else{
             echo "Invalid Email or Password";
