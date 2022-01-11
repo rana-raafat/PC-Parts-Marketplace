@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2022 at 01:33 PM
+-- Generation Time: Jan 11, 2022 at 08:31 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -265,10 +265,24 @@ CREATE TABLE `productsuggestion` (
 --
 
 CREATE TABLE `review` (
+  `id` int(10) UNSIGNED NOT NULL,
   `productID` int(10) UNSIGNED NOT NULL,
   `customerID` int(10) UNSIGNED NOT NULL,
-  `reviewText` text DEFAULT NULL,
+  `reviewText` varchar(255) DEFAULT NULL,
   `starRating` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviewreply`
+--
+
+CREATE TABLE `reviewreply` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `reviewID` int(10) UNSIGNED NOT NULL,
+  `userID` int(10) UNSIGNED NOT NULL,
+  `reviewText` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -407,8 +421,17 @@ ALTER TABLE `productsuggestion`
 -- Indexes for table `review`
 --
 ALTER TABLE `review`
-  ADD PRIMARY KEY (`productID`,`customerID`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `productID` (`productID`),
   ADD KEY `customerID` (`customerID`);
+
+--
+-- Indexes for table `reviewreply`
+--
+ALTER TABLE `reviewreply`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reviewID` (`reviewID`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `survey`
@@ -467,6 +490,18 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `productsuggestion`
 --
 ALTER TABLE `productsuggestion`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reviewreply`
+--
+ALTER TABLE `reviewreply`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -553,6 +588,13 @@ ALTER TABLE `productsuggestion`
 ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `reviewreply`
+--
+ALTER TABLE `reviewreply`
+  ADD CONSTRAINT `reviewreply_ibfk_1` FOREIGN KEY (`reviewID`) REFERENCES `review` (`id`),
+  ADD CONSTRAINT `reviewreply_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `survey`
