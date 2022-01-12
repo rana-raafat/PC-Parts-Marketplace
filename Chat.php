@@ -50,7 +50,7 @@
 	                else{
                         $plist_sql= $sql;
 		            }
-
+                    //pepols list 
                     $plist_result = mysqli_query($conn,$plist_sql);
                     if(!$plist_result){
                         echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
