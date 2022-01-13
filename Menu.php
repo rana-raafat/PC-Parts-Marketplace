@@ -56,6 +56,8 @@
                     -->
                     <li><a href='SurveyResults.php'>Survey Results</a></li>
 
+                    <li><a href='AuditorComments.php'>Auditor Comments</a></li>
+
                     <?php
                     }
 
