@@ -15,35 +15,58 @@
 
 
         
-        //i had this in the messages page initially but figured there was no point writing it there, sorry about that
-        //didn't mean to write anything in here since i am technically not supposed to work on this page. this code is supposed to be the last
-        //thing in the page btw
-        //REMINDER: STILL NEED TO TEST IT
-        $conn = new mysqli("localhost","root","", "project");
-        if(!$conn)
+        
+        $con = new mysqli("localhost","root","", "project");
+        if(!$con)
         {
             echo "couldn't connect to the DataBase<br>";
             die();
         }
-
-        $investigationsql = "SELECT * FROM investigationrequest ORDER BY id DESC LIMIT 1";
-        $invResult = $conn->query($investigationsql);
-        if($invResult->num_rows == 0){
-            echo "Error request not found<br>";
+        if(isset($_GET['id']))
+        $HRid=$_GET['id'];
+        
+     
+         $sql2="SELECT username FROM `users` WHERE userType='administrator'";
+         $result2 = mysqli_query($con,$sql2);
+        if ($result2->num_rows == 0) {
+            echo "There are no Administrators at the moment<br>";
         }
-        else if($invRow = $invResult->fetch_assoc()){
-            $invesigationLink = 'Investigation requested <a href="ViewInvestigationRequest.php?id=' . $invRow['id'] . '"">click here </a> to view';
-            //don't sanatize this cause it needs to stay as a link obviously
-            $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $invRow['auditorID'] ."','". $invRow['hrID'] ."','". $invesigationLink ."','0') " ;
-            $surveyResult = mysqli_query($conn,$survey);
-            if(!$surveyResult){
-                echo "couldn't insert survey into the DataBase<br>";
-                printf("Error: %s\n", mysqli_error($conn));
-                die();
+        else{
+           
+           echo"<form method='post'>"; 
+            echo "<Select name='admins'style='color:black;>";
+            echo "<option value='' selected>Choose Admin</option>";
+            while($row = $result2->fetch_assoc()){
+                echo "<option value='". $row['username'] ."'>". $row['username'] ."</option>";
             }
-            $conn->close();
-            echo "<script>window.location.href='Messages.php?id=".$_GET['id']."</script>";
-        }
+            echo "</Select>";
+            echo "<br>";echo "<br>";echo "<br>";echo "Write your problem";echo "<br>";
+            
+              echo "<textarea name='textarea' id='Textarea1'style='color:black; rows='5' cols='30'></textarea>";
+              echo "<input type='Submit' name='submit'>";
+              echo"<br>";
+              echo"</form>"; 
+              if(isset($_POST["submit"])){
+                $reason=$_POST["textarea"];
+                $admin=$_POST["admins"];
+                $sql="SELECT id FROM `users` WHERE username='$admin'";
+                $result=mysqli_query($con,$sql);
+                $row2=$result->fetch_assoc();
+                echo"$row2[id]";
+                $insert="INSERT INTO investigationrequest( auditorID, hrID, adminID, reason) VALUES  ('".$_SESSION['id']."','$HRid','" . $row2['id'] . "','" . $reason . "')";
+                $result3=mysqli_query($con,$insert);
+                if (!$result3) {
+                    printf("Error: %s\n", mysqli_error($con));
+                    exit();
+                }
+                echo "$reason <br>";
+               echo"$admin";    
+              }
+               
+            }
+         
+    
+       
 
         
         ?>
