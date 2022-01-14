@@ -684,6 +684,14 @@ h3.product-price{
     animation: glow2 2s ease-in-out infinite;
 }
 
+h4,h5{
+    font-family: notoSerif;
+    font-weight: lighter;
+    text-shadow: 1px 1px 1px gray;
+    animation: glow2 2s ease-in-out infinite;
+  
+}
+
 h4.product-dsc{
     font-family: notoSerif;
     font-weight: lighter;
