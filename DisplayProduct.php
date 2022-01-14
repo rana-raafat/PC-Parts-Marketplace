@@ -417,7 +417,7 @@
                 echo "<br><button><a href='AllReviews.php' class='href-btn'>View all reviews</a></button>"; //page not made yet
             }
             else{
-                echo "<br>No current reviews for this product<br>";
+                echo "<p>No current reviews for this product</p>";
             }
         }
         else{

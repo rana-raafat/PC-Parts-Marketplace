@@ -695,9 +695,9 @@ h4.product-dsc{
 }
 
 p.desc{
-    font-size: medium;
+    /*font-size: medium;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: whitesmoke;
+    color: whitesmoke;*/
     border: 2px solid whitesmoke ;
     background-color: black;
     width: 750px;
@@ -706,14 +706,20 @@ p.desc{
 }
 
 p.review{
-    font-size: medium;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: whitesmoke;
+    /*font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;*/
+    
     border: 2px solid whitesmoke ;
     /*background-color: lightgray;*/
     width: 350px;
     padding: 1%;
     border-radius:  1px 20px 20px 20px;
+}
+
+p{
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: whitesmoke;
 }
 
 .profile-icon{
