@@ -28,7 +28,16 @@
         }     
     }
     </script>
-    <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);">
+
+
+
+
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-6 mx-auto">
+            <div class="carda h-100 border-primary justify-content-center">
+                <div>
+    <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);"class="form-horizontal">
     <?php 
 
         $con = new mysqli("localhost", "root", "", "project");
@@ -46,7 +55,7 @@
                 printf("Error: %s\n", mysqli_error($con));
                 exit();
             }
-            header("Location:home.php");
+            echo "<script>window.location.href='Home.php'</script>";
             $con->close();
         }
         else{
@@ -87,5 +96,10 @@
     ?>
     
     </form>
+    </div>
+        </div>
+        </div>
+        </div>
+        </div>
 </body>
 </html>

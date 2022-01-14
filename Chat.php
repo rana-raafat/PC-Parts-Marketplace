@@ -17,39 +17,10 @@
 
                 <!------------------------------------------------- list ------------------------------------------------->
 
-                <script>
-                function Search(){
-                    //console.log('change');
-                    <?php
-                    if(!empty($_POST['search']))
-                        $search_value = $_POST['search'];
-                    else
-                            $search_value = "";
-                    ?>
-                    //document.forms["searchForUsername"].submit();
-                }
-                </script>
-
                 <div class="people-list chat-column">
-
-      			    <form action="" method="post" name="searchForUsername">
-                        <div class="input-group">
-                            <input type="search" name="search" placeholder="Search" value="<?php echo $search_value; ?>" oninput='Search()'>
-                            <span class="input-group-btn">
-                                <button class="btn btn-basic search" type="submit" name="submitSearch">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-
 	                <?php
-		            if($search_value!=""){
-                        $plist_sql= $sql . " AND username LIKE '%".$search_value;
-                    }
-	                else{
-                        $plist_sql= $sql;
-		            }
+		           
+                    $plist_sql= $sql;
 
                     $plist_result = mysqli_query($conn,$plist_sql);
                     if(!$plist_result){
@@ -90,9 +61,6 @@
                         else{
 
                             $plist_exc_sql = "SELECT * FROM  message, users WHERE messageID=".$plist_row['messageID']." AND users.id=".$plist_row['recepientID'];
-		                    if($search_value!=""){
-                                $plist_exc_sql= $plist_exc_sql . " AND username LIKE '%".$search_value;
-                            }
                 
                             $plist_exc_result = mysqli_query($conn,$plist_exc_sql);
                             if(!$plist_exc_result){
@@ -155,7 +123,7 @@
                                 <div class="chat-header clearfix">
                                     <img src="<?php echo $header_rows['imagePath'];?>" alt="profile picture"  width='75' height='75' class="img-circle">
                                     <div class="chat-about">
-                                        <h4> <?php echo $header_rows['username'];?> </h4>
+                                        <h6> <?php echo $header_rows['username'];?> </h6>
                                         <div class="job"><i class="fa fa-user"></i> <?php echo $header_rows['userType'];?> </div>                                            
                                     </div>
                                 </div>
@@ -230,8 +198,8 @@
 
                             <div class="box-footer">
                                 <form action="" method="post">
-                                    <div class="input-group">
-              					        <input type="text" name="txt" placeholder="Type Message ..." class="form-control txtToBeSent">
+                                    <div class="input-group txtToBeSent">
+              					        <input type="text" name="txt" placeholder="Type Message ..." class="form-control">
 
                           				<span class="input-group-btn">
                         				    <button type="submit" name="send" class="btn send">Send</button>

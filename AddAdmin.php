@@ -34,7 +34,7 @@
                         }
                     }
                     else{
-                        header("Location:Home.php");
+                        echo "<script>window.location.href='Home.php'</script>";
                     }
                 }
                 else{

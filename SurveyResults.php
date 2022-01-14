@@ -1,5 +1,11 @@
 <html>
-    
+<head>
+        <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
     <?php   
         session_start();
         include "Menu.php";
@@ -16,14 +22,14 @@
             echo "couldn't search inside the DataBase<br>";
             die();
         }
-        echo "<table border='1'>
+     /*   echo "<table border='1'>
             <tr>
 
             <th>Name </th>
 
             <th>CustomerID </th>
 
-            <th>rating</th>
+            <th>Rating</th>
 
             <th>Suggested Improvements</th>
 
@@ -31,6 +37,48 @@
 
 
             </tr>";
+*/
+            ?>
+        <body>
+
+        <table class="content-table">
+        
+        <thead>
+          <tr >
+            <th >Name </th>
+
+            <th>CustomerID </th>
+
+            <th>Rating</th>
+
+            <th>Suggested Improvements</th>
+
+            <th>age</th>
+    
+            </tr>
+            </thead>
+            <tbody>
+					<tr>
+						<td>John</td>
+						<td>Salma</td>
+						<td>Ahmed</td>
+					</tr>
+					<tr>
+						<td>Michael</td>
+						<td>Salwa</td>
+						<td>Saed</td>
+					</tr>
+					<tr>
+						<td>Asma</td>
+						<td>Lobna</td>
+						<td>Mohammed</td>
+					</tr>
+				</tbody>
+    </table>
+
+    </body>
+
+            <?php
         while($row = $result->fetch_assoc()){
 
             echo "<tr>";
@@ -56,9 +104,9 @@
 
             echo "</tr>";
 
-            //header("Location:Home.php");
+            //echo "<script>window.location.href='Home.php'</script>";
         }
-        echo "</table>";
+       // echo "</table>";
 
     $conn->close();     
             

@@ -24,11 +24,11 @@
                 if($row = $result->fetch_assoc()){
                     echo "<div class='container'>";
                     echo "<div class='card justify-content-center'>";
-                    echo "<div class='profile'>";
+                    echo "<div class='profile'>";          
+                    echo "<h1>" . $row['username'] . "</h1>";
+                    echo "<br>";
                     echo "<img src='". $row['imagePath']. "' alt='profilepic' class='profile-image'>";
-                    echo "<br>";
-                    echo "<text class='header'> Username: </text>" . $row['username'];
-                    echo "<br>";
+                    echo "<br><br>";
                     if(isset($_SESSION['id'])){
                         if($_SESSION['userType']=='administrator'){
                             if($row['userType']=='administrator'){
@@ -88,7 +88,7 @@
                                 
                                 ?>
                                 <form method='post' action=<?php echo 'InvestigationRequest.php?id=' . $row['id']; ?>>
-                                <input type='submit' name='investigation' value='Request Ivenstigation'>
+                                <input type='submit' name='investigation' value='Request Investigation'>
                                 </form>
                                 <?php
                             }

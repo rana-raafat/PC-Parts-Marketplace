@@ -70,7 +70,7 @@
             }
             if(isset($_POST['exit']))
             {
-                header("Location:Home.php");
+                echo "<script>window.location.href='Home.php'</script>";
             }
             
         }
