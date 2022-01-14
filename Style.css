@@ -497,12 +497,12 @@ align-content: center;
     margin: 25px 0;
     font-size: 0.9em;
     min-width: 400px;
-    border-radius: 5px 5px 0 0 ;
+    border-radius: 15px 15px 15px 15px ;
     overflow: hidden;
-    box-shadow: 0 0 20px rgb(255, 0, 0);
+    box-shadow: 0 0 20px rgb(255, 255, 255);
 }
-.content-table thead tr {
-    background-color:rgb(253, 0, 0);
+.content-table thead tr th {
+    background-color:#222;
     color:#ffffff;
     text-align:left;
     font-weight: bold;
@@ -510,25 +510,28 @@ align-content: center;
 .content-table th,
 .content-table td{
     padding: 12px 15px;
-    color: red;
+       
+
+    /*color: rgb(255, 255, 255);*/
 }
 .content-table tbody tr {
-    border-bottom: 1px solid #777;
+    border-bottom: 1px solid rgb(0, 0, 0); 
 }
 .content-table tbody tr:nth-of-type(even){
-background-color: aqua;
+background-color: #222;
+color: rgb(255, 255, 255);
+
 }
+
+.content-table tbody tr:nth-of-type(odd){
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    }
+
 .content-table tbody tr:last-of-type{
     border-bottom :2px solid #ffffff;
 }
-.testlol{
-    text-align: center;
-    color: aqua;
-}
-.testlol th{
-    text-align: center;
-    color: aqua;
-}
+
 /*******************************************************************************************************************************/
 
 
