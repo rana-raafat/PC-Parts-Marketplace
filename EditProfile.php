@@ -42,7 +42,8 @@
             if(isset($_POST['submit'])){
                 $con = mysqli_connect("localhost","root","","project");
                 if(!$con){ //maybe here we can throw an exception? instead of using die()
-                    echo "connection error<br>";
+                    echo "connection error";
+                    echo "<br>";
                     die();
                 }
                 $email = $_POST["email"];
@@ -50,11 +51,11 @@
                     $emailError='Please enter a valid email';
                 }
                 else{
-                    $checkUsername="SELECT * FROM users WHERE username='" . $_POST['username'] . "'";
+                    $checkUsername="SELECT * FROM users WHERE username='" . $_POST['username'] . "' AND username!='" . $_SESSION['username'] . "'";
                     $UsernameResult = $con->query($checkUsername);
 
                     if($UsernameResult->num_rows > 0){
-                        $usernameError = "Username already taken<br>";
+                        $usernameError = "Username already taken";
                     }
                     else{
                         $imagePath=$_SESSION['imagePath'];
@@ -66,21 +67,26 @@
                             $imagePath=$target_file;
                         }
                         else if($_FILES["profilepic"]["size"]>1000000){
-                            echo "Error: Image size is too large<br>";
+                            echo "Error: Image size is too large";
+                            echo "<br>";
                         }
                         else if($imageType != "jpeg" && $imageType != "jpg" && $imageType != "png"){
-                            echo "Error: Incorrect file type, Please enter a jpg, jpeg or png<br>";
+                            echo "Error: Incorrect file type, Please enter a jpg, jpeg or png";
+                            echo "<br>";
                         }
                         else{
                             if(move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_file)){
                                 $imagePath=$target_file;
                             }
                             else{
-                                echo "Error uploading image<br>";
+                                echo "Error uploading image";
+                                echo "<br>";
                             }
                         }
 
-                        $updatesql = "UPDATE users SET username='" . $_POST['username'] . "', password='" . $_POST['password'] . "', email='" 
+                        $encryptedPass = md5($_POST['password']);
+
+                        $updatesql = "UPDATE users SET username='" . $_POST['username'] . "', password='" . $encryptedPass . "', email='" 
                         . $_POST['email'] . "', address='" . $_POST['address'] . "', imagePath='" . $imagePath . "'";
                         //$updateResult = $con->query($updatesql);
                     }
@@ -88,15 +94,62 @@
                 $con->close();
             }
 
-            echo "<img src='" . $_SESSION['imagePath'] ."'><input type='file' name='profilepic'><br>";
-            echo "<input type='text' name='username' value='" . $_SESSION['username'] . "'>" . $usernameError ;
-            echo "<br><br><input type='text' name='email' value='". $_SESSION['email'] ."'>". $emailError ."<br><br>";
-            echo "<input type='password' name='password' value='" . $_SESSION['password'] . "' min='8'><br><br>" ;
-            echo "<input type='text' name='address' value='" . $_SESSION['address'] . "'><br><br>" ;
-            echo "<input type='submit' name='submit'><br>";
+            echo "<div class='container'>";
+            echo "<div class='card justify-content-center'>";
+            echo "<div class='profile'>";
+            echo "<img src='" . $_SESSION['imagePath'] ."' class='profile-image'>";
+            echo "<br>";
+            echo "<input type='file' name='profilepic'>";
+            echo "<br><br>";
+            echo "<text class='header'> Username </text>";
+            echo "<br>";
+            echo "<input type='text' name='username' value='" . $_SESSION['username'] . "'>";
+            echo "<br>";
+            if(!empty($usernameError)){
+            ?>
+            <div class='alert alert-danger'>               
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <?php echo $usernameError ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>
+            <?php
+            }
+            echo "<br>";
+            echo "<text class='header'> Email </text>";
+            echo "<br>";
+            echo "<input type='text' name='email' value='". $_SESSION['email'] ."'>";
+            echo "<br>";
+            if(!empty($emailError)){
+            ?>
+            <div class='alert alert-danger'>               
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <?php echo $emailError ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>
+            <?php 
+            }           
+            echo "<br>";
+            echo "<text class='header'> Password </text>";
+            echo "<br>";
+            echo "<input type='password' name='password' value='" . $_SESSION['password'] . "' min='8'>";
+            echo "<br><br>";
+            echo "<text class='header'> Address </text>";
+            echo "<br>";
+            echo "<input type='text' name='address' value='" . $_SESSION['address'] . "'>";
+            echo "<br><br>";
+            echo "<input type='submit' name='submit'>";
+            echo "<br><br>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
         }
         else{
-            echo "Error: please log in to your account<br>";
+            echo "Error: please log in to your account";
+            echo "<br>";
         }
         ?>
         </form>

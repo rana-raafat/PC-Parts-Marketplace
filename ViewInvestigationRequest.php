@@ -9,7 +9,7 @@
         include "Menu.php";
 
         if(isset($_POST['exit'])){
-            header("Location:Home.php");
+            echo "<script>window.location.href='Home.php'</script>";
         }
         if(isset($_GET['id'])){
             $con = new mysqli("localhost","root","", "project");

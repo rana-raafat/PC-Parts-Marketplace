@@ -53,20 +53,39 @@
         
     }
 </script>
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-6 mx-auto">
+            <div class="carda h-100 border-primary justify-content-center">
+                <div>
+<form action="" method="post" onsubmit="return validate(this);"class="form-horizontal"> 
+<h3>Feedback</h3><br>
+<label class="form-check-label">Please rate your experience</label>
 
-<form action="" method="post" onsubmit="return validate(this);">
-    Please rate your experience
-    <input type="radio" name="rating" value="1">1</input>
-    <input type="radio" name="rating" value="2">2</input>
-    <input type="radio" name="rating" value="3">3</input>
-    <input type="radio" name="rating" value="4">4</input>
-    <input type="radio" name="rating" value="5">5</input>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="rating" id="exampleRadios1" value="1" >
+  <label class="form-check-label">1</label>
+  <input class="form-check-input" type="radio" name="rating" id="exampleRadios1" value="2" >
+  <label class="form-check-label">2</label>
+  <input class="form-check-input" type="radio" name="rating" id="exampleRadios1" value="3" >
+  <label class="form-check-label">3</label>
+  <input class="form-check-input" type="radio" name="rating" id="exampleRadios1" value="4" >
+  <label class="form-check-label">4</label>
+  <input class="form-check-input" type="radio" name="rating" id="exampleRadios1" value="5" >
+  <label class="form-check-label">5</label>
+
+</div>
     <br>
-    Suggested Improvements:
-    <textarea name="review" class="form-control"></textarea>
-    What is your Age?
+    <label >Suggested Improvements:</label><br>
+    <textarea name="review" class="form-control"></textarea><br>
+    <label >What is your age?</label>
     <input type="text" name="Age" class="form-control">
     <input type="submit" value="submit" name="submit">
+    <input type="reset" > <br><br>
 </form>   
-
+</div>
+</div>
+</div>
+</div>
+</div>
 </html>

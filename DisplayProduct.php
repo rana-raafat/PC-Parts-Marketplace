@@ -1,6 +1,5 @@
 <html>
 <head>
-    <link rel="stylesheet" href="Style.css">
     <title>Product page</title>
 </head>
 <body>
@@ -71,9 +70,10 @@
                             echo "Error updating order<br>";
                         }
                     }   
+                    echo "<meta http-equiv='refresh' content='0'>";
                 }
             }
-            //header("Location:DisplayProduct.php?id=".$id);
+            //echo "<script>window.location.href='DisplayProduct.php?id=".$id'</script>";
             //$con->close();
         }
         
@@ -92,7 +92,7 @@
                     //add to cart button, adds product as a row in cartitem table 
                     ?>
                     <form id='addCart' method='post' action=''> 
-                    <input type='number' name='amount' min='1' max='50' value='0'>
+                    <input type='number' name='amount' min='1' max='50' value='1'>
                     <button type='submit' name='addButton' value='addButton'>Add to Cart</button></form>
                     <?php
                     echo $itemError;
@@ -152,7 +152,7 @@
                     echo "Error inserting in the review table<br>";
                 }
                 else{
-                    //header("Location:DisplayProduct.php?id=".$id);
+                    //echo "<script>window.location.href='DisplayProduct.php'</script>";
                     ?>
                     <script>
                         $(document).ready(function() {
@@ -177,7 +177,7 @@
                     echo "Error updating the product table<br>";
                 }
                 else{
-                    //header("Location:DisplayProduct.php?id=".$id);
+                    //echo "<script>window.location.href='DisplayProduct.php?id=".$id'</script>";
                     ?>
                     <script>
                         $(document).ready(function() {
@@ -201,7 +201,7 @@
                     echo "Error decrementing the reviews in product table<br>";
                 }
                 else{
-                    //header("Location:DisplayProduct.php?id=".$id);
+                    //echo "<script>window.location.href='DisplayProduct.php?id=".$id'</script>";
                     ?>
                     <script>
                         $(document).ready(function() {

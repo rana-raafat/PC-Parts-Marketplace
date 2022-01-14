@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Profile </title>
     </head>
     <body>
@@ -10,33 +9,40 @@
 
         $con = new mysqli("localhost", "root", "", "project");
         if(!$con){ //exception
-            echo "connection error<br>";
+            echo "connection error"; 
+            echo "<br>";
             die();
         }
         if(isset($_GET['id'])){
             $sql="SELECT * FROM users WHERE id='". $_GET['id'] ."'";
             $result=$con->query($sql);
             if($result->num_rows == 0){
-                echo "Error: profile not found<br>";
+                echo "Error: profile not found";
+                echo "<br>";
             }
             else{
                 if($row = $result->fetch_assoc()){
-                    echo "<img src='". $row['imagePath']. "' alt='profilepic' width='150' height='150'><br>";
-                    echo "Username: " . $row['username'] . "<br>";
+                    echo "<div class='container'>";
+                    echo "<div class='card justify-content-center'>";
+                    echo "<div class='profile'>";          
+                    echo "<h1>" . $row['username'] . "</h1>";
+                    echo "<br>";
+                    echo "<img src='". $row['imagePath']. "' alt='profilepic' class='profile-image'>";
+                    echo "<br><br>";
                     if(isset($_SESSION['id'])){
                         if($_SESSION['userType']=='administrator'){
                             if($row['userType']=='administrator'){
                                 //if they open an admin's profile they have a button that can delete this admin
-                                echo "<a href='RemoveAdmin.php?id=". $row['id'] ."'><button type='submit' name='removeadmin'> Remove admin </button></a>";
+                                echo "<a href='RemoveAdmin.php?id=". $row['id'] ."'><input type='submit' name='removeadmin' value='Remove admin'></a>";
                             }
                             else if($row['userType']=='customer'){
                                 //if they open a customer's profile they have a button that can make this customer an admin
-                                echo "<a href='AddAdmin.php?id=". $row['id'] ."'><button type='submit' name='addadmin'> Add admin </button></a>";
+                                echo "<a href='AddAdmin.php?id=". $row['id'] ."'><input type='submit' name='addadmin' value='Add admin'></a>";
 
                                 //can see messages the customer SENT NOT MADE YETTTT
                                 ?>
                                 <form method='post' action=<?php echo 'ChatHistory.php?id=' . $row['id']; ?>>
-                                <button type='submit' name='customerchat'> Chat History </button>
+                                <input type='submit' name='customerchat' value='Chat History'>
                                 </form>
                                 <?php
                             }
@@ -46,7 +52,7 @@
                                 //can see messages between admin and customers
                                 ?>
                                 <form method='post' action=<?php echo 'ChatHistory.php?id=' . $row['id']; ?>>
-                                <button type='submit' name='adminchat'> Chat History </button>
+                                <input type='submit' name='adminchat' value='Chat History'>
                                 </form>
                                 <?php
                                 //redirects to show message history
@@ -64,14 +70,15 @@
                                     $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $row['id'] ."','". $link ."','0') " ;
                                     $surveyResult = mysqli_query($con,$survey);
                                     if(!$surveyResult){
-                                        echo "couldn't insert survey into the DataBase<br>";
+                                        echo "couldn't insert survey into the DataBase";
+                                        echo "<br>";
                                         printf("Error: %s\n", mysqli_error($con));
                                         die();
                                     }
                                 }
                                 ?>
                                 <form method='post' action=''>
-                                <button type='submit' name='sendsurvey'> Send Survey </button>
+                                <input type='submit' name='sendsurvey' value='Send Survey'>
                                 </form>
                                 <?php
                             }
@@ -81,7 +88,7 @@
                                 
                                 ?>
                                 <form method='post' action=<?php echo 'InvestigationRequest.php?id=' . $row['id']; ?>>
-                                <button type='submit' name='investigation'> Request Ivenstigation </button>
+                                <input type='submit' name='investigation' value='Request Investigation'>
                                 </form>
                                 <?php
                             }
@@ -89,42 +96,59 @@
                         else if($_SESSION['userType']=='customer'){
                             if($row['userType']!='customer'){
                                 //if they open a profile that isn't a customer have a 'Message' button
-                                echo "<a href='Messages.php?id=". $row['id'] ."'><button type='submit' name='message'> Message </button></a>";
+                                echo "<a href='Messages.php?id=". $row['id'] ."'><input type='submit' name='message' value='Messagbutton'></a>";
                             }
                         }
                     }
+                    echo "</div>";
+                    echo "</div>";
+                    echo "</div>";
                 }
             }
         }
         else if(isset($_SESSION['id'])){
-            echo "<img src='". $_SESSION['imagePath']. "' alt='profilepic' width='150' height='150'><br><br>";
-            echo "Username: " . $_SESSION['username'] . "<br><br>";
-            echo "Email: " . $_SESSION['email'] . "<br><br>";
-            echo "Password: " . $_SESSION['password'] . "<br><br>";
-            echo "Address: " . $_SESSION['address'] . "<br><br>";
+            echo "<div class='container'>";
+            echo "<div class='card justify-content-center'>";
+            echo "<div class='profile'>";
+            echo "<h1>" . $_SESSION['username'] . "</h1>";
+            echo "<br>";
+            echo "<img src='". $_SESSION['imagePath']. "' alt='profilepic' class='profile-image'>";
+            echo "<br><br>";
+            echo "<text class='header'> Email: </text>" . $_SESSION['email'];
+            echo "<br><br>";
+            echo "<text class='header'> Address: </text>" . $_SESSION['address'];
+            echo "<br><br>";
+
 
             if($_SESSION['userType']!='customer'){
-                echo "Position: " . ucfirst($_SESSION['userType']) . "<br><br>";
+                echo "<text class='header'> Position: </text>" . ucfirst($_SESSION['userType']);
+                echo "<br><br>";
 
                 if($_SESSION['userType']=='administrator'){
                     $penaltysql="SELECT penalties FROM administrator WHERE id='". $_SESSION['id'] ."'";
                     $penaltyResult=$con->query($penaltysql);
-                    echo "Number of penalties: ";
+                    echo "<text class='header'> Number of penalties: </text>";
+                    echo "<br>";
                     if($penaltyResult->num_rows == 0){
-                        echo "Error: penalty row not found<br>";
+                        echo "Error: penalty row not found";
+                        echo "<br>";
                     }
                     if($penaltyrow = $penaltyResult->fetch_assoc()){
-                        echo $penaltyrow['penalties'] . "<br><br>";
+                        echo $penaltyrow['penalties'];
+                        echo "<br><br>";
                     }
                     $reasonsql="SELECT * FROM penalty WHERE adminID='". $_SESSION['id'] ."'";
                     $reasonResult=$con->query($reasonsql);
-                    echo "Reasons for penalties:<br>";
+                    echo "<text class='header'> Reasons for penalties: </text>";
+                    echo "<br>";
                     if($reasonResult->num_rows == 0){
-                        echo "None<br>";
+                        echo "None.";
+                        echo "<br>";
                     }
                     $counter=1;
                     while($reasonrow = $reasonResult->fetch_assoc()){
-                        echo $counter . ") " . $reasonrow['reason'] . "<br>";
+                        echo $counter . ") " . $reasonrow['reason'];
+                        echo "<br>";
                         $counter++;
                     }
                 }
@@ -133,21 +157,35 @@
                     $hrResult=$con->query($hrsql);
                     
                     if($hrResult->num_rows == 0){
-                        echo "Error: hr row not found<br>";
+                        echo "Error: hr row not found";
+                        echo "<br>";
                     }
                     if($hrRow = $hrResult->fetch_assoc()){
-                        echo "Number of penalties given: " . $hrRow['penaltiesGiven'] . "<br>";
-                        echo "Number of investigations made: " . $hrRow['investigationsMade'] . "<br>";
+                        echo "<text class='header'> Number of penalties given: </text>";
+                        echo "<br>";
+                        echo $hrRow['penaltiesGiven'];
+                        echo "<br><br>";
+                        echo "<text class='header'> Number of investigations made: </text>";
+                        echo "<br>";
+                        echo $hrRow['investigationsMade'];
+                        echo "<br>";
                     }
                 }
             }
             ?>
-            <a href='EditProfile.php'><button type='submit' name='edit' value='edit'>Edit profile</button></a>
-            <a href='delete.php'><button type='submit' name='edit' value='edit'> Delete profile </button></a>
+            <br>
+            <a href='EditProfile.php'><button type='submit' name='edit'>Edit profile <span class="glyphicon glyphicon glyphicon-pencil"></span></button></a>
+            <!--
+            <a href='delete.php'><input type='submit' name='edit' value='Delete profile'></a>
+            -->
             <?php
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
         } 
         else{
-            echo "Error please try again<br>";
+            echo "Error please try again";
+            echo "<br>";
         }
         $con->close();
         ?>

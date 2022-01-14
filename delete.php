@@ -3,37 +3,35 @@
 		<title>Delete Account</title>
 	</head>
 	<body>
-	<?php
-		session_start();
-		include_once "Menu.php";
-		
-		// Create connection
-		if(isset($_POST['Yes'])) {
+		<?php
+			session_start();
+            include "Menu.php";
 
-			$conn = new mysqli("localhost","root","", "project");
-			//echo $_SESSION['email'];
-			$sql="DELETE FROM users WHERE email ='". $_SESSION['email'] . "'";
-			$result=mysqli_query($conn,$sql);
-			if(!$result){
-				//throw exception maybe? that says Database error or sth
+			// Create connection
+			if(isset($_POST['Yes'])) {
+
+				$conn = new mysqli("localhost","root","", "project");
+				//echo $_SESSION['email'];
+				$sql="DELETE FROM users WHERE email ='". $_SESSION['email'] . "'";
+				$sql2="DELETE FROM orders WHERE customerID ='". $_SESSION['id'] . "'";
+				$result=mysqli_query($conn,$sql);
+				$result2=mysqli_query($conn,$sql2);
+				if(!$result || !$result2){
+					//throw exception maybe? that says Database error or sth
+					echo "error deleting";
+				}
+				else{
+					session_destroy();
+					echo "<script>window.location.href='Home.php'</script>";
+				}
+    	    }
+        	if(isset($_POST['No'])) {
+				echo "<script> 
+						$('#signOutModal .close').click(); 
+						window.history.go(-1);
+			 		  </script>";     
 			}
-			else{
-				session_destroy();
-				header("Location:home.php");
-			}
-        }
-        if(isset($_POST['No'])) {
-            header("Location:home.php");
-        }
-	?>
-
-	<form action="" method="post">
-
-		Are you sure you want to delete your account Yes/No<br>
-
-        <input type="submit" name="Yes" value="Yes"/>
-        <input type="submit" name="No" value="No"/>
-	</form>
+		?>
 	</body>
 </html>
 

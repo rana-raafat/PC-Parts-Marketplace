@@ -1,6 +1,5 @@
 <html>
 <head>
-    <link rel="stylesheet" href="Style.css">
     <title>Adding product</title>
 </head>
 <body>
@@ -104,8 +103,8 @@
         }
         else{
             echo "Product added successfully<br>";
-            //header("Location:addproduct.php");
-            header("Location:home.php");
+            //echo "<script>window.location.href='addproduct.php'</script>";
+            echo "<script>window.location.href='Home.php'</script>";
         }
     }
     $con->close();

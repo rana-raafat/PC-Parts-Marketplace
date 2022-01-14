@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title>Add an Admin</title>
     </head>
     <body>
@@ -35,7 +34,7 @@
                         }
                     }
                     else{
-                        header("Location:Home.php");
+                        echo "<script>window.location.href='Home.php'</script>";
                     }
                 }
                 else{

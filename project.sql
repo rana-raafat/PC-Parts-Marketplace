@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 01, 2022 at 10:45 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Generation Time: Jan 14, 2022 at 04:43 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -45,6 +46,20 @@ INSERT INTO `administrator` (`id`, `penalties`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `auditorcomment`
+--
+
+CREATE TABLE `auditorcomment` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `auditorID` int(10) UNSIGNED NOT NULL,
+  `messageID` int(10) UNSIGNED NOT NULL,
+  `commentText` text DEFAULT NULL,
+  `readStatus` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cartitem`
 --
 
@@ -54,6 +69,16 @@ CREATE TABLE `cartitem` (
   `productID` int(10) UNSIGNED NOT NULL,
   `amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cartitem`
+--
+
+INSERT INTO `cartitem` (`orderID`, `customerID`, `productID`, `amount`) VALUES
+(4, 12, 12, 3),
+(8, 16, 23, 1),
+(8, 16, 32, 2),
+(8, 16, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -89,6 +114,13 @@ CREATE TABLE `investigationrequest` (
   `reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `investigationrequest`
+--
+
+INSERT INTO `investigationrequest` (`id`, `auditorID`, `hrID`, `adminID`, `reason`) VALUES
+(1, 8, 2, 4, 'Rude behavior when replying to customers.');
+
 -- --------------------------------------------------------
 
 --
@@ -96,9 +128,10 @@ CREATE TABLE `investigationrequest` (
 --
 
 CREATE TABLE `message` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `messageID` int(10) UNSIGNED NOT NULL,
   `senderID` int(10) UNSIGNED NOT NULL,
   `recepientID` int(10) UNSIGNED NOT NULL,
+  `auditorFlag` tinyint(1) DEFAULT NULL,
   `messageText` text DEFAULT NULL,
   `readStatus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -107,8 +140,10 @@ CREATE TABLE `message` (
 -- Dumping data for table `message`
 --
 
-INSERT INTO `message` (`id`, `senderID`, `recepientID`, `messageText`, `readStatus`) VALUES
-(1, 8, 15, 'Kindly take <a href=\"survey.php\">this survey</a>.', 1);
+INSERT INTO `message` (`messageID`, `senderID`, `recepientID`, `auditorFlag`, `messageText`, `readStatus`) VALUES
+(1, 8, 16, 1, 'Kindly take <a href=\"survey.php\">this survey</a>', 1),
+(2, 16, 8, 0, 'done', 0),
+(3, 8, 12, 0, 'Kindly take <a href=\"survey.php\">this survey</a>', 0);
 
 -- --------------------------------------------------------
 
@@ -131,11 +166,11 @@ INSERT INTO `orders` (`id`, `customerID`, `numberOfProducts`, `completed`) VALUE
 (1, 9, 0, 0),
 (2, 10, 0, 0),
 (3, 11, 0, 0),
-(4, 12, 0, 0),
+(4, 12, 1, 0),
 (5, 13, 0, 0),
 (6, 14, 0, 0),
 (7, 15, 0, 0),
-(8, 16, 0, 0),
+(8, 16, 3, 0),
 (9, 17, 0, 0),
 (10, 18, 0, 0);
 
@@ -257,10 +292,24 @@ CREATE TABLE `productsuggestion` (
 --
 
 CREATE TABLE `review` (
+  `id` int(10) UNSIGNED NOT NULL,
   `productID` int(10) UNSIGNED NOT NULL,
   `customerID` int(10) UNSIGNED NOT NULL,
-  `reviewText` text DEFAULT NULL,
+  `reviewText` varchar(255) DEFAULT NULL,
   `starRating` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviewreply`
+--
+
+CREATE TABLE `reviewreply` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `reviewID` int(10) UNSIGNED NOT NULL,
+  `userID` int(10) UNSIGNED NOT NULL,
+  `reviewText` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -286,7 +335,7 @@ CREATE TABLE `survey` (
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
+  `password` varchar(225) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(50) DEFAULT NULL,
   `imagePath` varchar(255) DEFAULT NULL,
@@ -298,24 +347,24 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `address`, `imagePath`, `userType`) VALUES
-(1, 'Sarah', 'sarahpass', 'sarah@mail.com', 'Nasr City', 'resources/images/ProfilePictures/hr1.jpg', 'hrpartner'),
-(2, 'Hady', 'hadypass', 'hady@mail.com', 'Maadi', 'resources/images/ProfilePictures/hr2.jpg', 'hrpartner'),
-(3, 'Dina', 'dinapass', 'dina@mail.com', 'Obour', 'resources/images/ProfilePictures/admin1.jpg', 'administrator'),
-(4, 'John', 'johnpass', 'john@mail.com', 'Nasr City', 'resources/images/ProfilePictures/admin2.jpg', 'administrator'),
-(5, 'Mona', 'monapass', 'mona@mail.com', '6th of October', 'resources/images/ProfilePictures/admin3.png', 'administrator'),
-(6, 'Mohamed', 'mohamedpass', 'mohamed@mail.com', 'Obour', 'resources/images/ProfilePictures/admin4.png', 'administrator'),
-(7, 'Arsany', 'arsanypass', 'arsany@mail.com', 'Obour', 'resources/images/ProfilePictures/auditor1.jpg', 'auditor'),
-(8, 'Mazen', 'mazenpass', 'mazen@mail.com', 'Nasr City', 'resources/images/ProfilePictures/auditor2.jpg', 'auditor'),
-(9, 'Ayman', 'aymanpass', 'ayman@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer1.png', 'customer'),
-(10, 'Mostafa', 'mostafapass', 'mostafa@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer2.png', 'customer'),
-(11, 'Laila', 'lailapass', 'laila@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer3.png', 'customer'),
-(12, 'Farida', 'faridapass', 'farida@mail.com', 'Obour', 'resources/images/ProfilePictures/customer4.png', 'customer'),
-(13, 'Rahma', 'rahmapass', 'rahma@mail.com', '6th of October', 'resources/images/ProfilePictures/customer5.png', 'customer'),
-(14, 'Sayed', 'sayedpass', 'sayed@mail.com', 'Obour', 'resources/images/ProfilePictures/customer6.png', 'customer'),
-(15, 'Helmy', 'helmypass', 'helmy@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer7.png', 'customer'),
-(16, 'Reem', 'reempass', 'reem@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer8.png', 'customer'),
-(17, 'Wael', 'waelpass', 'wael@mail.com', 'Obour', 'resources/images/ProfilePictures/customer9.png', 'customer'),
-(18, 'Khaled', 'khaledpass', 'khaled@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer10.png', 'customer');
+(1, 'Sarah', '501612faff7f69259b8d263116a299f2', 'sarah@mail.com', 'Nasr City', 'resources/images/ProfilePictures/hr1.jpg', 'hrpartner'),
+(2, 'Hady', 'f1a15dbf6d85d92329ee59bd6dac88e0', 'hady@mail.com', 'Maadi', 'resources/images/ProfilePictures/hr2.jpg', 'hrpartner'),
+(3, 'Dina', '7a8b32c09f759fbc131ee48094f45c26', 'dina@mail.com', 'Obour', 'resources/images/ProfilePictures/admin1.jpg', 'administrator'),
+(4, 'John', '3bffe7a2bc163d273184e8902afe66b7', 'john@mail.com', 'Nasr City', 'resources/images/ProfilePictures/admin2.jpg', 'administrator'),
+(5, 'Mona', 'ec597cae68ee2489846132fc330c1d6e', 'mona@mail.com', '6th of October', 'resources/images/ProfilePictures/admin3.png', 'administrator'),
+(6, 'Mohamed', 'a6ba8aa79a862ac2adc06b86d702b5b5', 'mohamed@mail.com', 'Obour', 'resources/images/ProfilePictures/admin4.png', 'administrator'),
+(7, 'Arsany', '4c9068a2d012cf552ce72d2e5db963f3', 'arsany@mail.com', 'Obour', 'resources/images/ProfilePictures/auditor1.jpg', 'auditor'),
+(8, 'Mazen', 'b75f837755db2313fbcaa612daf9afdb', 'mazen@mail.com', 'Nasr City', 'resources/images/ProfilePictures/auditor2.jpg', 'auditor'),
+(9, 'Ayman', '0dc03efd2e07d077f67c285919eea6e7', 'ayman@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer1.png', 'customer'),
+(10, 'Mostafa', '0b742a325a584e413e0b9478337eb62b', 'mostafa@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer2.png', 'customer'),
+(11, 'Laila', 'e3f269c6cf359bf211f734647c72e938', 'laila@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer3.png', 'customer'),
+(12, 'Farida', '626a5d8f0e3d7820ec9647a5e102d50e', 'farida@mail.com', 'Obour', 'resources/images/ProfilePictures/customer4.png', 'customer'),
+(13, 'Rahma', '3b8a073fe11859eb285ef8646d64e632', 'rahma@mail.com', '6th of October', 'resources/images/ProfilePictures/customer5.png', 'customer'),
+(14, 'Sayed', 'dbbf3063c5aea9512c646285dbb43d42', 'sayed@mail.com', 'Obour', 'resources/images/ProfilePictures/customer6.png', 'customer'),
+(15, 'Helmy', 'fd82b32013d092effd6fedcb1afb81f0', 'helmy@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer7.png', 'customer'),
+(16, 'Reem', 'c6bcd95edc1a4686a690059e7c4a184e', 'reem@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer8.png', 'customer'),
+(17, 'Wael', 'bddf98c7056ab76cc1df3f9deb2c5bc4', 'wael@mail.com', 'Obour', 'resources/images/ProfilePictures/customer9.png', 'customer'),
+(18, 'Khaled', 'eab3b507da4581fcc1e61e4d7d5263b7', 'khaled@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer10.png', 'customer');
 
 --
 -- Indexes for dumped tables
@@ -326,6 +375,14 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `address`, `imagePat
 --
 ALTER TABLE `administrator`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `auditorcomment`
+--
+ALTER TABLE `auditorcomment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auditorID` (`auditorID`),
+  ADD KEY `messageID` (`messageID`);
 
 --
 -- Indexes for table `cartitem`
@@ -354,7 +411,7 @@ ALTER TABLE `investigationrequest`
 -- Indexes for table `message`
 --
 ALTER TABLE `message`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`messageID`),
   ADD KEY `senderID` (`senderID`),
   ADD KEY `recepientID` (`recepientID`);
 
@@ -391,8 +448,17 @@ ALTER TABLE `productsuggestion`
 -- Indexes for table `review`
 --
 ALTER TABLE `review`
-  ADD PRIMARY KEY (`productID`,`customerID`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `productID` (`productID`),
   ADD KEY `customerID` (`customerID`);
+
+--
+-- Indexes for table `reviewreply`
+--
+ALTER TABLE `reviewreply`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reviewID` (`reviewID`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `survey`
@@ -412,16 +478,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `auditorcomment`
+--
+ALTER TABLE `auditorcomment`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `investigationrequest`
 --
 ALTER TABLE `investigationrequest`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -448,6 +520,18 @@ ALTER TABLE `productsuggestion`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `reviewreply`
+--
+ALTER TABLE `reviewreply`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
@@ -468,6 +552,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `administrator`
   ADD CONSTRAINT `administrator_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `auditorcomment`
+--
+ALTER TABLE `auditorcomment`
+  ADD CONSTRAINT `auditorcomment_ibfk_1` FOREIGN KEY (`auditorID`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `auditorcomment_ibfk_2` FOREIGN KEY (`messageID`) REFERENCES `message` (`messageID`);
 
 --
 -- Constraints for table `cartitem`
@@ -524,6 +615,13 @@ ALTER TABLE `productsuggestion`
 ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `reviewreply`
+--
+ALTER TABLE `reviewreply`
+  ADD CONSTRAINT `reviewreply_ibfk_1` FOREIGN KEY (`reviewID`) REFERENCES `review` (`id`),
+  ADD CONSTRAINT `reviewreply_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `survey`

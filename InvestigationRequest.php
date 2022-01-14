@@ -42,7 +42,7 @@
                 die();
             }
             $conn->close();
-            header("Location:Messages.php?id=".$_GET['id']);
+            echo "<script>window.location.href='Messages.php?id=".$_GET['id']."</script>";
         }
 
         
