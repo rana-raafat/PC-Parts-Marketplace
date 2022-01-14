@@ -192,6 +192,8 @@ input[type=checkbox], input[type=radio]{
     transform: translate(-85%, 0%);
 }
 
+/******************************************************* SEARCH BAR ***************************************************************/
+
 .searchbar{
     float: left;
 }
@@ -224,6 +226,13 @@ input[type=checkbox], input[type=radio]{
     border: none !important;
     outline: none !important;
 }
+
+/******************************************************** MODAL **********************************************************/
+
+.modal.close{
+    float: right;
+}
+
 .modal-content{
     font-size: 125%;
     background: #222;
@@ -316,7 +325,7 @@ input[type=checkbox], input[type=radio]{
 
 .chat .chat-history .message {
     color: #444;
-    padding: 18px 20px;
+    padding: 6px 15px;
     line-height: 26px;
     font-size: 16px;
     border-radius: 5rem;
@@ -389,7 +398,7 @@ input.form-control.txtToBeSent{
 
 .send{
     border-radius: 3rem;
-    padding: 15px 15px;
+    padding: 6px 15px;
 }
 
 .send:hover{   

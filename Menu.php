@@ -174,7 +174,7 @@
                         <i class="glyphicon glyphicon-search"></i>
                     </button>
 
-                </form>
+                  </form>
 
             </ul>
         </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2022 at 11:05 PM
+-- Generation Time: Jan 14, 2022 at 04:43 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -75,8 +75,10 @@ CREATE TABLE `cartitem` (
 --
 
 INSERT INTO `cartitem` (`orderID`, `customerID`, `productID`, `amount`) VALUES
+(4, 12, 12, 3),
 (8, 16, 23, 1),
-(8, 16, 32, 2);
+(8, 16, 32, 2),
+(8, 16, 36, 1);
 
 -- --------------------------------------------------------
 
@@ -112,6 +114,13 @@ CREATE TABLE `investigationrequest` (
   `reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `investigationrequest`
+--
+
+INSERT INTO `investigationrequest` (`id`, `auditorID`, `hrID`, `adminID`, `reason`) VALUES
+(1, 8, 2, 4, 'Rude behavior when replying to customers.');
+
 -- --------------------------------------------------------
 
 --
@@ -133,7 +142,8 @@ CREATE TABLE `message` (
 
 INSERT INTO `message` (`messageID`, `senderID`, `recepientID`, `auditorFlag`, `messageText`, `readStatus`) VALUES
 (1, 8, 16, 1, 'Kindly take <a href=\"survey.php\">this survey</a>', 1),
-(2, 16, 8, 0, 'done', 0);
+(2, 16, 8, 0, 'done', 0),
+(3, 8, 12, 0, 'Kindly take <a href=\"survey.php\">this survey</a>', 0);
 
 -- --------------------------------------------------------
 
@@ -156,11 +166,11 @@ INSERT INTO `orders` (`id`, `customerID`, `numberOfProducts`, `completed`) VALUE
 (1, 9, 0, 0),
 (2, 10, 0, 0),
 (3, 11, 0, 0),
-(4, 12, 0, 0),
+(4, 12, 1, 0),
 (5, 13, 0, 0),
 (6, 14, 0, 0),
 (7, 15, 0, 0),
-(8, 16, 2, 0),
+(8, 16, 3, 0),
 (9, 17, 0, 0),
 (10, 18, 0, 0);
 
@@ -477,13 +487,13 @@ ALTER TABLE `auditorcomment`
 -- AUTO_INCREMENT for table `investigationrequest`
 --
 ALTER TABLE `investigationrequest`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `orders`
