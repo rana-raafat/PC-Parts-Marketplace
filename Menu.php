@@ -17,6 +17,9 @@
 
 <!------------------------------------------------------ LEFT SIDE ------------------------------------------------------>
 
+          <!---------------------------------------------- Always Visible ----------------------------------------------->
+
+
             <div class="navbar-header">
                 <a class="navbar-brand" href='Home.php'>Website Name</a>
             </div>
@@ -25,9 +28,9 @@
 
                 <li><a href="Home.php">Home</a></li>
 
-                <!--DIRECTING TO CATEGORY RESULTS NOT DONE YET-->
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Products<span class="caret"></span></a>
                   <ul class="dropdown-menu">
+                  <li><a href="Category.php?cat=All">All</a></li>
                     <li><a href="Category.php?cat=Motherboard">Motherboard</a></li>
                     <li><a href="Category.php?cat=RAM">RAM</a></li>
                     <li><a href="Category.php?cat=Graphics">Graphics Card</a></li>
@@ -40,7 +43,7 @@
                 <?php
                 //session_start();    
 
-                /*----------------------------------------- If Signed In -----------------------------------------*/
+                /*--------------------------------------- Only If Signed In ---------------------------------------*/
 
                 if(!empty($_SESSION['username'])){      
                     /*---------------------------------------- If Auditor ----------------------------------------*/
@@ -48,14 +51,11 @@
                     if($_SESSION['userType'] == "auditor"){
                     ?>
 
-                    <li><a href='survey.php'>Survey</a></li>
-                    <!-- 
-                    i think this should be a "send survey" button instead of a link to the survey
-                    where when it is clicked it shows a list of customers, the auditor selects a number of them (using checkbox)
-                    and the survey link is sent to these customers as a message
-                    -->
+                    <li><a href='SendSurvey.php'>Send Survey</a></li>
                     <li><a href='SurveyResults.php'>Survey Results</a></li>
-
+                    <!--
+                    <li><a href='investigationRequest.php'>Request Investigation</a></li>
+                    -->
                     <li><a href='AuditorComments.php'>Auditor Comments</a></li>
 
                     <?php
@@ -72,6 +72,9 @@
 
                     else if($_SESSION['userType'] == "hrpartner"){
                       ?>
+                        <!--
+                          <li><a href='ViewInvestigationRequest.php'>View Investigation Requests</a></li>
+                        -->
                         <li><a href='Penalty.php'>Penalties</a></li>
                       <?php
                     }  
@@ -118,7 +121,7 @@
                 }
                 else{
 
-                /*---------------------------------------- If Not Signed In ----------------------------------------*/
+                /*-------------------------------------- Only If NOT Signed In --------------------------------------*/
 
                         ?>  
 
@@ -134,7 +137,7 @@
                 ?>
                         
             
-            <!--------------------------------------------------------- In both cases --------------------------------------------------------->
+            <!--------------------------------------------- Also Always Visible --------------------------------------------->
        
                 <form class="searchbar" action="SearchResults.php" method="get">
 

@@ -15,7 +15,10 @@
             }
             
             $search=$_GET['cat'];
-            $sql= "SELECT * FROM product WHERE category LIKE '%" . $search . "%'";
+            if($search == "All")
+                $sql= "SELECT * FROM product";
+            else
+                $sql= "SELECT * FROM product WHERE category LIKE '%" . $search . "%'";
             $result = mysqli_query($con,$sql);
             if ($result->num_rows == 0) {
                 echo "No products found<br>";

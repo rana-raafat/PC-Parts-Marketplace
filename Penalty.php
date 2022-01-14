@@ -101,13 +101,13 @@
                                     echo "Error deleting from users table<br>";
                                 }
                                 else{
-                                    header("Location:Home.php");
+                                    echo "<script>window.location.href='Home.php'</script>";
                                 }
                             }
                         }
                     }
                     else{
-                        header("Location:Home.php");
+                        echo "<script>window.location.href='Home.php'</script>";
                     }
                 }
             }

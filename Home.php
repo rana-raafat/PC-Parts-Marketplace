@@ -78,7 +78,7 @@
                             echo "<br><br>";
                             echo "<div class='carousel-caption nowrap'>";
                                 echo $row['price'] . " LE";
-                                echo "<br>";
+                                echo "<br><br>";
                                 $averageRating = 0;
                                 if($row['numberOfReviews']>0){
                                     $averageRating = (1.0*$row['1star'] + 2.0*$row['2stars'] + 3.0*$row['3stars'] + 4.0*$row['4stars'] + 5.0*$row['5stars']) / $row['numberOfReviews'];

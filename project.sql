@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2022 at 08:31 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Generation Time: Jan 13, 2022 at 11:05 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -69,6 +70,14 @@ CREATE TABLE `cartitem` (
   `amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `cartitem`
+--
+
+INSERT INTO `cartitem` (`orderID`, `customerID`, `productID`, `amount`) VALUES
+(8, 16, 23, 1),
+(8, 16, 32, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -110,13 +119,21 @@ CREATE TABLE `investigationrequest` (
 --
 
 CREATE TABLE `message` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `messageID` int(10) UNSIGNED NOT NULL,
   `senderID` int(10) UNSIGNED NOT NULL,
   `recepientID` int(10) UNSIGNED NOT NULL,
   `auditorFlag` tinyint(1) DEFAULT NULL,
   `messageText` text DEFAULT NULL,
   `readStatus` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`messageID`, `senderID`, `recepientID`, `auditorFlag`, `messageText`, `readStatus`) VALUES
+(1, 8, 16, 1, 'Kindly take <a href=\"survey.php\">this survey</a>', 1),
+(2, 16, 8, 0, 'done', 0);
 
 -- --------------------------------------------------------
 
@@ -143,7 +160,7 @@ INSERT INTO `orders` (`id`, `customerID`, `numberOfProducts`, `completed`) VALUE
 (5, 13, 0, 0),
 (6, 14, 0, 0),
 (7, 15, 0, 0),
-(8, 16, 0, 0),
+(8, 16, 2, 0),
 (9, 17, 0, 0),
 (10, 18, 0, 0);
 
@@ -384,7 +401,7 @@ ALTER TABLE `investigationrequest`
 -- Indexes for table `message`
 --
 ALTER TABLE `message`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`messageID`),
   ADD KEY `senderID` (`senderID`),
   ADD KEY `recepientID` (`recepientID`);
 
@@ -466,7 +483,7 @@ ALTER TABLE `investigationrequest`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -531,7 +548,7 @@ ALTER TABLE `administrator`
 --
 ALTER TABLE `auditorcomment`
   ADD CONSTRAINT `auditorcomment_ibfk_1` FOREIGN KEY (`auditorID`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `auditorcomment_ibfk_2` FOREIGN KEY (`messageID`) REFERENCES `message` (`id`);
+  ADD CONSTRAINT `auditorcomment_ibfk_2` FOREIGN KEY (`messageID`) REFERENCES `message` (`messageID`);
 
 --
 -- Constraints for table `cartitem`

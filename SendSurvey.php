@@ -19,7 +19,7 @@
             $error='';
 
             if(isset($_POST['exit'])){
-                header("Location:Home.php");
+                echo "<script>window.location.href='Home.php'</script>";
             }
 
             if(isset($_POST['submit'])){
@@ -31,7 +31,7 @@
                     $link = 'Kindly take <a href="survey.php">this survey</a>';
                     //don't sanatize this cause it needs to stay as a link obviously
                     for($i=0;$i<sizeof($customersArray);$i++){
-                        $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $customersArray[$i] ."','". $link ."','0') " ;
+                        $survey="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $customersArray[$i] ."','0','". $link ."','0') " ;
                         $surveyResult = mysqli_query($conn,$survey);
                         if(!$surveyResult){
                             echo "couldn't insert survey into the DataBase<br>";
@@ -40,7 +40,7 @@
                         }
                     }
                     $conn->close();
-                    header("Location:Home.php");
+                    echo "<script>window.location.href='Home.php'</script>";
                 }
             }
 

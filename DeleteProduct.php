@@ -34,7 +34,7 @@
         }
         else if(isset($_POST['No'])){
             echo "<script> 
-                    $('#signOutModal .close').click(); 
+                    //$('#signOutModal .close').click(); 
                     window.history.go(-1);
                  </script>";        
         }

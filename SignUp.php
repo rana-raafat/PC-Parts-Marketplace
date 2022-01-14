@@ -133,7 +133,7 @@ if(isset($_POST["submit"])){
                     }
                     else{
                         echo "Account creation successful<br>";
-                        //header("Location:Home.php");
+                        //echo "<script>window.location.href='Home.php'</script>";
                         ?>
                         <script>
                         $(document).ready(function() {

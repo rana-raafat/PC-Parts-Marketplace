@@ -56,7 +56,7 @@
 
             echo "</tr>";
 
-            //header("Location:Home.php");
+            //echo "<script>window.location.href='Home.php'</script>";
         }
         echo "</table>";
 

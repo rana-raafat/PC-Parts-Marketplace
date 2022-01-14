@@ -46,7 +46,7 @@
                 printf("Error: %s\n", mysqli_error($con));
                 exit();
             }
-            header("Location:home.php");
+            echo "<script>window.location.href='Home.php'</script>";
             $con->close();
         }
         else{
