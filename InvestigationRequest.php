@@ -42,7 +42,7 @@
                 die();
             }
             $conn->close();
-            header("Location:Messages.php?id=".$_GET['id']);
+            //header("Location:Messages.php?id=".$_GET['id']);
         }
 
         

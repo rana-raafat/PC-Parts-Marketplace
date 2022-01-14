@@ -10,6 +10,10 @@
         if(isset($_GET['submitSearch'])){
 
             $con = new mysqli("localhost", "root", "", "project");
+            if(!$con){ //exception?
+                echo "connection error<br>";
+                die();
+            }
             $search=$_GET['searchQuery'];
             $sql= "SELECT * FROM product WHERE name LIKE '%" . $search . "%'";
             $result = mysqli_query($con,$sql);

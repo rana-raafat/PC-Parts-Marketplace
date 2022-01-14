@@ -19,13 +19,13 @@
                 }
 
                 $totalPrice=0;
-                $orderIDsql = "SELECT id FROM orders WHERE customerID='" . $_SESSION['id'] . "' AND completed='0'";
+                $orderIDsql = "SELECT orderID FROM orders WHERE customerID='" . $_SESSION['id'] . "' AND completed='0'";
                 $orderIDresult = $con->query($orderIDsql);//not tested
                 if($orderIDresult->num_rows == 0){
                     echo "Error: order not found<br>";
                 }
                 else if($orderRow = $orderIDresult->fetch_assoc()){
-                    $sql= "SELECT * FROM cartitem WHERE customerID='". $_SESSION['id'] . "' AND orderID='" . $orderRow['id'] . "'";
+                    $sql= "SELECT * FROM cartitem WHERE customerID='". $_SESSION['id'] . "' AND orderID='" . $orderRow['orderID'] . "'";
                     $result = mysqli_query($con,$sql);	
                     
                     if (!$result) { //exception here

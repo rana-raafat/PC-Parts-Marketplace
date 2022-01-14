@@ -7,7 +7,7 @@
         session_start();
         include "Menu.php";
     ?>
-    <form method="post" action="">
+    <form method="post" action="DeleteProdcut.php">
         Are you sure you want to delete this product?<br>
         <input type="submit" name="Yes" value="Yes">
         <input type="submit" name="No" value="No">

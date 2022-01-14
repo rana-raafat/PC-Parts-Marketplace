@@ -4,6 +4,11 @@
     font-family: xirod;
 }
 
+@font-face {
+    src: url(resources/fonts/NotoSerif-Regular.ttf);
+    font-family: notoSerif;
+}
+
 @keyframes glow {
     from {
         background: linear-gradient(45deg,red 0%, green 50%, blue 100%); 
@@ -45,7 +50,9 @@ body{
     background: black;
     color: white;
     line-height: 1.5;
-    font-size: 15px
+    font-size: 15px;
+    background-image: url("resources/images/bg2.jpg");
+    background-position: center;
 }
 
 h1, h2, h3{
@@ -110,9 +117,21 @@ input[type=file] {
     display: unset;
 }
 
+input[type=number]{
+    border-radius: 1rem;
+    color: black;
+     padding: 3px ;
+}
+
 textarea{
     width: 500px; 
-    height: 250px;
+    height: 150px;
+    border-radius: 3rem;
+    background: white;
+    color: black;
+    padding: 5px 20px;
+    margin: 10px 0;
+    font-size: 100%;
 }
 
 input[type=search]::-webkit-search-cancel-button {
@@ -126,9 +145,13 @@ input[type=search]::-webkit-search-cancel-button {
     color: #333;
 }
 
-a:hover, a:visited, a:link, a:active
+ a:visited, a:link, a:active
 {
-    color: grey; 
+    color: lightcyan;
+    text-decoration: none;
+}
+a:hover{
+    color: lightsteelblue;
     text-decoration: none;
 }
 
@@ -471,7 +494,7 @@ input.form-control.txtToBeSent{
     padding:25px;
     text-align: center;
     width: 500px;
-    height: 500px;
+    /*height: 500px;*/
     overflow-y:auto;
 }
 
@@ -499,3 +522,126 @@ input.form-control.txtToBeSent{
     
     ::-webkit-scrollbar-thumb:hover {
     background:lightgray }
+
+/**********************************************************************************************************************/
+.product-img{
+  text-align: center;
+}
+.product-img-border{
+  border: 10px solid;
+  border-color: white;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+a.href-btn{
+    color: black;
+}
+
+a.href-btn:hover{
+    color: white;
+}
+
+h1.product-name, h3.product-name{
+    font-family: notoSerif;
+    font-weight: lighter;
+    text-shadow: 1px 1px 1px purple, 1px 1px 1px white;
+    animation: glow2 2s ease-in-out infinite alternate;
+   
+}
+h3.product-price{
+    font-family: notoSerif;
+    font-weight: lighter;
+    text-shadow: 1px 1px 1px gray;
+    animation: glow2 2s ease-in-out infinite;
+}
+
+h4.product-dsc{
+    font-family: notoSerif;
+    font-weight: lighter;
+}
+
+.product-btn{
+    justify-content: space-between;
+    text-align: center;
+}
+.product-btn:hover{
+    color: white;
+}
+
+p.desc{
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: whitesmoke;
+    border: 2px solid whitesmoke ;
+    background-color: black;
+    width: 750px;
+    padding: 1%;
+    border-radius:  5px 30px;
+}
+
+p.review{
+    font-size: medium;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: whitesmoke;
+    border: 2px solid whitesmoke ;
+    /*background-color: lightgray;*/
+    width: 350px;
+    padding: 1%;
+    border-radius:  1px 20px 20px 20px;
+}
+
+.profile-icon{
+    border-radius: 25px;
+    width: 45px;
+    height: 45px;
+}
+
+.reply-btn{
+    border-radius: 3rem;
+    color: black;
+    background: white;
+    font-size: 100%;
+    height: 25px;
+    margin: 1px 2px;
+    width: auto;
+    padding: 1px 10px;
+    padding-bottom: 2px;
+    text-align: center;
+}
+.reply-btn:hover{
+    background: transparent;
+    color: white;
+    font-size: 100%;
+}
+
+.reply-div{
+    margin-left: 45px;
+    margin-right: 0px;
+}
+
+select{
+    background: white;
+    color: black;
+    border-radius: 0.5rem;
+    padding: 2px;
+    /*font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;*/
+}
+
+.search-ordr{    
+   /* justify-content: space-between;*/
+    background: transparent;
+    color: white;
+    padding-bottom: 18px;
+}
+
+.search-ordr:hover{    
+    color: grey;
+    font-size: unset !important;
+}
+
+.orders-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 76px;
+}

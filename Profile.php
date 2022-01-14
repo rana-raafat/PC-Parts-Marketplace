@@ -175,9 +175,9 @@
             ?>
             <br>
             <a href='EditProfile.php'><button type='submit' name='edit'>Edit profile <span class="glyphicon glyphicon glyphicon-pencil"></span></button></a>
-            <!--
+         
             <a href='delete.php'><input type='submit' name='edit' value='Delete profile'></a>
-            -->
+          
             <?php
             echo "</div>";
             echo "</div>";

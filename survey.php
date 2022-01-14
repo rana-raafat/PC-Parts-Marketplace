@@ -63,7 +63,7 @@
     <input type="radio" name="rating" value="5">5</input>
     <br>
     Suggested Improvements:
-    <textarea name="review" class="form-control"></textarea>
+    <textarea name="review" class="form-control" maxlength='255'></textarea>
     What is your Age?
     <input type="text" name="Age" class="form-control">
     <input type="submit" value="submit" name="submit">
