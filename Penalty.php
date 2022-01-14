@@ -43,21 +43,41 @@
                 }
                 else{
                     ?>
-                    <form action='' method='post' onsubmit="return validate(this);">
+                    <div class="container h-100">
+                        <div class="row align-items-center h-100">
+                            <div class="col-6 mx-auto">
+                                 <div class="carda h-100 border-primary justify-content-center">
+                                     
+                                      <div>
+                    <form action='' method='post' onsubmit="return validate(this);" class ="form-horizontal">
+                    <h3>Penalties</h3><br><br>
+                    <label>Please select the Admininstrator this penalty will be given to: </label>
+                    
                     <?php
-                    echo "Please select the Admininstrator this penalty will be given to: <select name='admin'>";
+                    echo "<select name='admin'>";
                     echo "<option value='' selected>Choose Admin</option>";
                     while($row = $result->fetch_assoc()){
                         echo $row['id'];
                         echo "<option value='". $row['id'] ."'>". $row['username'] . "</option>";
                     }
                     echo "</select>";
-                    echo "<br><br>Input reason for penalty: ";
-                    echo "<input type='text' name='reason' placeholder='Enter reason'><br><br>";
-                    echo "<input type='submit' value='submit' name='submit'>";
+                    echo "<br><br>";
                 }
                 ?>
+                    <label for="reason">REASON FOR PENALTY:</label>
+                    <input type="text" class="form-control" name="reason" placeholder="Enter Reason" >
+                    <input type="submit"  value="Submit" name ="Submit">
+                    <input type="reset" > <br>
+
+
+
+
                 </form>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
                 <?php
                 if(isset($_POST['submit'])){
                     $insertsql= "INSERT INTO penalty(adminID, hrID,reason) VALUES('". $_POST['admin'] ."','". $_SESSION['id']."','". $_POST['reason'] ."')";

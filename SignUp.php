@@ -1,6 +1,11 @@
 <html>
     <head>
         <title> Sign Up </title>
+        <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
         <?php 
@@ -32,20 +37,41 @@
     }
     </script>
 
-        <h1>Sign Up</h1>
-        <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
-            Image: <br>
-            <input type="file" name="profilepic"><br>
-            Username: <br>
-            <input type="text" name="username" placeholder="Enter your username" maxlength=25><br>
-            Email: <br>
-            <input type="text" name="email" placeholder="Enter your email address"><br>
-            Password: <br>
-            <input type="password" name="password" placeholder="Enter your password" maxlength=50 minlength=8><br>
-            Address: <br>
-            <input type="text" name="address" placeholder="Enter your delivery address"><br>
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-6 mx-auto">
+            <div class="carda h-100 border-primary justify-content-center">
+                <div>
+        <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" class="form-horizontal">
+        <h1>Sign Up</h1><br><br>
+<div class ="form-group">
+            <label for="profilepic">Profile Picture:</label> <br>
+            <input type="file" name="profilepic" class="form-control-file" ><br>
+            
+</div>
+<div class ="form-group">
+            <label for="Username">Username:</label><br>
+            <input type="text" name="username" placeholder="Enter your username" maxlength=25 class="form-control"><br>
+</div>
+<div class ="form-group">
+            <label for="Email">Email:</label><br>
+            <input type="text" name="email" placeholder="Enter your email address" class="form-control"><br>
+</div>         
+<div class ="form-group">
+            <label for="Password">Password:</label><br>
+            <input type="password" name="password" placeholder="Enter your password" maxlength=50 minlength=8 class="form-control"><br>
+</div>
+<div class ="form-group">
+            <label for="Address">Address:</label><br>
+            <input type="text" name="address" placeholder="Enter your delivery address"  class="form-control" ><br>
+</div>
             <input type="submit" name="submit"><br>
         </form>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
 
 
 <?php 

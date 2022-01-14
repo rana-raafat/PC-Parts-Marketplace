@@ -452,6 +452,67 @@ input.form-control.txtToBeSent{
     vertical-align: baseline;
     padding-right: 10px;
 }
+.carda{
+background-color: #222;
+margin: 50px;
+border-radius: 3rem;
+height: max-content;
+text-align: center;
+align-content: center;
+
+}
+.form-horizontal{
+  /*padding: 50px;*/
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.form-control{
+    align-content: center;
+    text-align: center;
+}
+.redtext{
+    color: red;
+}
+.content-table {
+    border-collapse:collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0 ;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgb(255, 0, 0);
+}
+.content-table thead tr {
+    background-color:rgb(253, 0, 0);
+    color:#ffffff;
+    text-align:left;
+    font-weight: bold;
+}
+.content-table th,
+.content-table td{
+    padding: 12px 15px;
+    color: red;
+}
+.content-table tbody tr {
+    border-bottom: 1px solid #777;
+}
+.content-table tbody tr:nth-of-type(even){
+background-color: aqua;
+}
+.content-table tbody tr:last-of-type{
+    border-bottom :2px solid #ffffff;
+}
+.testlol{
+    text-align: center;
+    color: aqua;
+}
+.testlol th{
+    text-align: center;
+    color: aqua;
+}
+/*******************************************************************************************************************************/
 
 
     /*
