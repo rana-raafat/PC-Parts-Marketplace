@@ -74,7 +74,7 @@
                         die();
                     }
                     $con->close();
-                    echo "<script>window.location.href='Messages.php?id=".$_GET['id']."</script>";
+                    echo "<script>window.location.href='chat.php?id=".$_GET['id']."</script>";
                     
                 }
             }
