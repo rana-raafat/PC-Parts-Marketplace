@@ -55,9 +55,9 @@ if($_SESSION['userType']=='auditor')
                     echo $unique_admin_usertype[$i]." ";
                     
 ?>
-                <form method="Post" action="AuditorComments.php">
+                <form method="Post" action="AdminChats.php">
                     
-               <!-- <a href=AuditorComments.php?id=<?php //echo $unique_admin_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
+               <!-- <a href=MakeCommentsOnChats.php?id=<?php //echo $unique_admin_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
                <?php
                  echo"<input type=hidden name=uAdminId value=".$unique_admin_IDS[$i].">";       
                ?>
@@ -177,7 +177,21 @@ if($_SESSION['userType']=='auditor')
     <tr>
         <td><?php echo $unique_customer_id_arr[$i]; ?></td>
         <td><?php echo $unique_customer_name_arr[$i]; ?></td>
-        <td><a href=Chat.php?id=<?php echo $unique_customer_id_arr[$i]; ?> >Message</a></td>
+        <!--<td><a href=Chat.php?id=<?php //echo $unique_customer_id_arr[$i]; ?> >Message</a></td>-->
+        
+        <form method="Post" action="MakeCommentsOnChats.php">
+                    
+                    <!-- <a href=MakeCommentsOnChats.php?id=<?php //echo $unique_admin_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
+                    <?php
+                    if( isset($_POST['submitted']) ){
+                      echo"<input type=hidden name=uCustomerId value=".$unique_customer_id_arr[$i].">";
+                      echo"<input type=hidden name=uAdminId2 value=".$_POST['uAdminId'].">";
+                    }      
+                    ?>
+                     
+                        <td> <input type="submit" name="uCustomerId_uAdminIdSubmitted"> </td>
+        </form>
+
         <td><?php echo $unique_customer_usertype_arr[$i]; ?></td>
         <td><?php echo $unique_customer_image_arr[$i]; ?></td>
     
@@ -186,10 +200,12 @@ if($_SESSION['userType']=='auditor')
     <?php
     
         }
-    
         echo"</table>";
+
+        
+   
         $conn->close(); 
-    }
+}
     ?>          
     
             

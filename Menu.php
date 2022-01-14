@@ -63,7 +63,8 @@
                     <!--
                     <li><a href='investigationRequest.php'>Request Investigation</a></li>
                     -->
-                    <li><a href='AuditorComments.php'>Auditor Comments</a></li>
+                    <li><a href='AdminChats.php'>Admin Chats</a></li>
+                    <li><a href='DisplayAuditorComments.php'>Display Auditor Comments</a></li>
 
                     <?php
                     }
@@ -73,6 +74,7 @@
                     else if($_SESSION['userType'] == "administrator"){
                         ?>
                         <li><a href='AddProduct.php'>Add a Product</a></li>
+
                         <?php
                     }
                     /*--------------------------------------- If HR Partner ---------------------------------------*/
