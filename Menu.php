@@ -7,6 +7,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="Style.css">
+        <?php
+          $conn = new mysqli("localhost", "root", "", "project");
+          if(!$conn){
+              echo "connection error<br>";
+              die();
+          }
+        ?>
 	</head>
   <body>
 
@@ -105,16 +112,36 @@
                         /*-------------------------------------- If Customer --------------------------------------*/
 
                        if($_SESSION['userType'] == "customer"){
+                          
+                          $cart_items_sql = "SELECT COUNT('productID') as cartItems FROM cartitem WHERE customerId=".$_SESSION['id'];
+                          $cart_items_result = mysqli_query($conn,$cart_items_sql);	
+                          if(!$cart_items_result){
+                              echo "error in cart items query";
+                          }
+
+                          if($cart_items_row = $cart_items_result->fetch_assoc()){           
                           ?>
-                          <li><a href="Cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+                          <li><a href="Cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart  <span class="badge"><?php echo $cart_items_row['cartItems']; ?></span> </a></li>
                           <?php
+                          }
                         }
                           ?>
 
                         <!----------------------------------------- Shared ----------------------------------------->
-
-                        <li><a href="Chat.php"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox</a></li>
-
+                        <?php
+                        
+                        $inbox_notif_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND recepientID=".$_SESSION['id'];
+                        $inbox_notif_result = mysqli_query($conn,$inbox_notif_sql);	
+                        if(!$inbox_notif_result){
+                            echo "error in cart items query";
+                        }
+                        
+                        if($inbox_notif_row = $inbox_notif_result->fetch_assoc()){   
+                          ?>  
+                          <li><a href="Chat.php"><span class="glyphicon glyphicon glyphicon-inbox"></span> Inbox <span class="badge"><?php echo $inbox_notif_row['unread_messages']; ?></span></a></li>
+                          <?php
+                        }
+                        ?>
                     </ul>
 
                     <?php
@@ -205,7 +232,9 @@
     </div>
   </div>
 
-
+  <?php
+    $conn->close();
+  ?>
 </body>
 
 </html>

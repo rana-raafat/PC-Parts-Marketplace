@@ -51,11 +51,11 @@
                     $emailError='Please enter a valid email';
                 }
                 else{
-                    $checkUsername="SELECT * FROM users WHERE username='" . $_POST['username'] . "'";
+                    $checkUsername="SELECT * FROM users WHERE username='" . $_POST['username'] . "' AND username!='" . $_SESSION['username'] . "'";
                     $UsernameResult = $con->query($checkUsername);
 
                     if($UsernameResult->num_rows > 0){
-                        $usernameError = "Username already taken<br>";
+                        $usernameError = "Username already taken";
                     }
                     else{
                         $imagePath=$_SESSION['imagePath'];
@@ -105,13 +105,33 @@
             echo "<br>";
             echo "<input type='text' name='username' value='" . $_SESSION['username'] . "'>";
             echo "<br>";
-            echo $usernameError;
+            if(!empty($usernameError)){
+            ?>
+            <div class='alert alert-danger'>               
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <?php echo $usernameError ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>
+            <?php
+            }
             echo "<br>";
             echo "<text class='header'> Email </text>";
             echo "<br>";
             echo "<input type='text' name='email' value='". $_SESSION['email'] ."'>";
             echo "<br>";
-            echo $emailError;
+            if(!empty($emailError)){
+            ?>
+            <div class='alert alert-danger'>               
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <?php echo $emailError ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> 
+            </div>
+            <?php 
+            }           
             echo "<br>";
             echo "<text class='header'> Password </text>";
             echo "<br>";

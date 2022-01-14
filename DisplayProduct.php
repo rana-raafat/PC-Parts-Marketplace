@@ -70,6 +70,7 @@
                             echo "Error updating order<br>";
                         }
                     }   
+                    echo "<meta http-equiv='refresh' content='0'>";
                 }
             }
             //echo "<script>window.location.href='DisplayProduct.php?id=".$id'</script>";
