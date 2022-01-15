@@ -32,11 +32,9 @@
 
 
 
-<div class="container h-100">
-    <div class="row align-items-center h-100">
-        <div class="col-6 mx-auto">
-            <div class="carda h-100 border-primary justify-content-center">
-                <div>
+<div class="container">
+            <div class="card justify-content-center">
+                <div class="carda">
     <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);"class="form-horizontal">
     <?php 
 
@@ -99,7 +97,6 @@
     </div>
         </div>
         </div>
-        </div>
-        </div>
+
 </body>
 </html>

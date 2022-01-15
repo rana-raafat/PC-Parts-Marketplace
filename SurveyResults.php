@@ -19,10 +19,10 @@
             die();
         }
         ?>
- <div class="container">
+        <div class="container">
             <div class="card justify-content-center">
-                <div class="SurveyResults">
-                    <h3>Survey Results</h3>
+                <div class="carda">
+                    <h3 style="text-align: center";>Survey Results</h3>
                     <table class="content-table">
                         <tr>
 
