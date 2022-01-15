@@ -10,18 +10,26 @@
 session_start();
 include "Menu.php";
 ?>
-<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);'>
-        Image: 
-        <input type="file" name="productpic"><br>
-        Name:
-        <input type="text" name="name" placeholder="Enter product name"><br>
-        Link:<br>
-        <input type="url" name="link"style="color:black";><br>
-        Description: <br>
+<div class="container">
+            <div class="card justify-content-center">
+                <div class="carda">
+                    <h1>Suggest A Product</h1>
+<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);'class="form-horizontal">
+<div class ="form-group">
+            <label>Image:</label><br>
+            <input type="file" name="productpic" class="form-control"><br> 
+            <label>Name:</label><br>
+            <input type="text" name="name" placeholder="Enter product name" class="form-control"><br> 
+            <label>Link:</label><br>
+            <input type="url" name="link" placeholder="The link for the product" style="color:black" class="form-control"><br> 
+            <label>Description:</label><br>
         <textarea name="description" rows="4" cols="30" style="color:black";></textarea><br>
         <input type='Submit' name='submit'>
 
         </form>
+</div>
+</div>
+</div>
 <?php 
 
 $con = new mysqli("localhost", "root", "", "project");
