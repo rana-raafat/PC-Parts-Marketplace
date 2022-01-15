@@ -58,6 +58,11 @@
                 }
             }
             $result = mysqli_query($con,$sql);
+            if(!$result){
+                echo "sql error<br>";
+                printf("Error: %s\n", mysqli_error($con));
+                die();
+            }
             if ($result->num_rows == 0) {
                 echo "No orders found<br>";
             }
