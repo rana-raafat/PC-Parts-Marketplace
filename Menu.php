@@ -124,7 +124,7 @@
 
                        if($_SESSION['userType'] == "customer"){
                           
-                          $cart_items_sql = "SELECT COUNT('productID') as cartItems FROM cartitem WHERE customerId=".$_SESSION['id'];
+                          $cart_items_sql = "SELECT COUNT('productID') as cartItems FROM cartitem,orders WHERE cartitem.customerID=".$_SESSION['id'] . " AND cartitem.orderID=orders.orderID AND orders.completed='0'";
                           $cart_items_result = mysqli_query($conn,$cart_items_sql);	
                           if(!$cart_items_result){
                               echo "error in cart items query";
@@ -145,7 +145,7 @@
                         $inbox_notif_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND recepientID=".$_SESSION['id'];
                         $inbox_notif_result = mysqli_query($conn,$inbox_notif_sql);	
                         if(!$inbox_notif_result){
-                            echo "error in cart items query";
+                            echo "error in unread messages query";
                         }
                         
                         if($inbox_notif_row = $inbox_notif_result->fetch_assoc()){   

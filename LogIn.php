@@ -28,7 +28,7 @@
                         <label for="Password">Password:</label>
                         <input type="Password" name="Password" id="Password" placeholder="********" class="form-control">
 
-                        <div class='alert alert-danger' id="EmailAlert" style="visibility: hidden" >               
+                        <div class='alert alert-danger' id="PasswordAlert" style="visibility: hidden" >               
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             <label id="PasswordError"></label>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

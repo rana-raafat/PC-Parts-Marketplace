@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2022 at 04:43 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Generation Time: Jan 16, 2022 at 12:41 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -75,10 +74,28 @@ CREATE TABLE `cartitem` (
 --
 
 INSERT INTO `cartitem` (`orderID`, `customerID`, `productID`, `amount`) VALUES
-(4, 12, 12, 3),
-(8, 16, 23, 1),
-(8, 16, 32, 2),
-(8, 16, 36, 1);
+(3, 11, 6, 1),
+(1, 9, 10, 1),
+(7, 15, 11, 1),
+(1, 9, 12, 1),
+(3, 11, 14, 3),
+(4, 12, 17, 2),
+(2, 10, 18, 4),
+(7, 15, 19, 1),
+(8, 16, 21, 3),
+(1, 9, 24, 1),
+(4, 12, 26, 1),
+(8, 16, 27, 1),
+(7, 15, 29, 1),
+(2, 10, 30, 1),
+(10, 18, 30, 2),
+(2, 10, 33, 2),
+(7, 15, 34, 1),
+(2, 10, 36, 2),
+(8, 16, 38, 2),
+(8, 16, 39, 1),
+(4, 12, 41, 1),
+(2, 10, 44, 1);
 
 -- --------------------------------------------------------
 
@@ -119,7 +136,7 @@ CREATE TABLE `investigationrequest` (
 --
 
 INSERT INTO `investigationrequest` (`id`, `auditorID`, `hrID`, `adminID`, `reason`) VALUES
-(1, 8, 2, 4, 'Rude behavior when replying to customers.');
+(1, 7, 1, 4, 'Rude behaviour towards customers');
 
 -- --------------------------------------------------------
 
@@ -141,9 +158,11 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`messageID`, `senderID`, `recepientID`, `auditorFlag`, `messageText`, `readStatus`) VALUES
-(1, 8, 16, 1, 'Kindly take <a href=\"survey.php\">this survey</a>', 1),
-(2, 16, 8, 0, 'done', 0),
-(3, 8, 12, 0, 'Kindly take <a href=\"survey.php\">this survey</a>', 0);
+(1, 7, 1, 0, 'Investigation requested <a href=\"ViewInvestigationRequest.php?id=1\"\">click here </a> to view', 0),
+(2, 16, 3, 0, 'A new product was suggested <a href=\"DisplaySuggestions.php\">Click Here</a> to view', 0),
+(3, 16, 4, 0, 'A new product was suggested <a href=\"DisplaySuggestions.php\">Click Here</a> to view', 0),
+(4, 16, 5, 0, 'A new product was suggested <a href=\"DisplaySuggestions.php\">Click Here</a> to view', 0),
+(5, 16, 6, 0, 'A new product was suggested <a href=\"DisplaySuggestions.php\">Click Here</a> to view', 0);
 
 -- --------------------------------------------------------
 
@@ -152,7 +171,7 @@ INSERT INTO `message` (`messageID`, `senderID`, `recepientID`, `auditorFlag`, `m
 --
 
 CREATE TABLE `orders` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `orderID` int(10) UNSIGNED NOT NULL,
   `customerID` int(10) UNSIGNED NOT NULL,
   `numberOfProducts` int(11) DEFAULT NULL,
   `completed` tinyint(1) DEFAULT NULL
@@ -162,17 +181,20 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customerID`, `numberOfProducts`, `completed`) VALUES
-(1, 9, 0, 0),
-(2, 10, 0, 0),
-(3, 11, 0, 0),
-(4, 12, 1, 0),
+INSERT INTO `orders` (`orderID`, `customerID`, `numberOfProducts`, `completed`) VALUES
+(1, 9, 3, 0),
+(2, 10, 6, 1),
+(3, 11, 2, 1),
+(4, 12, 3, 0),
 (5, 13, 0, 0),
 (6, 14, 0, 0),
-(7, 15, 0, 0),
-(8, 16, 3, 0),
+(7, 15, 4, 1),
+(8, 16, 4, 0),
 (9, 17, 0, 0),
-(10, 18, 0, 0);
+(10, 18, 1, 0),
+(11, 11, 0, 0),
+(12, 10, 0, 0),
+(13, 15, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -225,7 +247,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`, `imagePath`, `1star
 (1, 'Gigabyte A320M-S2H', 'Supports AMD 3rd Gen Ryzen™/ 2nd Gen Ryzen™/ 1st Gen Ryzen™/ Athlon™ with Radeon™ Vega Graphics/ Athlon X4 Processors<br>\nDual Channel Non-ECC Unbuffered DDR4, 2 DIMMs <br>\nUltra-Fast PCIe Gen3 x4 M.2 with PCIe NVMe & SATA mode support <br>\nHigh Quality Audio Capacitors and Audio Noise Guard<br>', 1250.00, 'resources/images/ProductsPictures/Gigabyte A320M-S2H.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
 (2, 'GIGABYTE B560 AORUS PRO', 'Dual Channel DDR4, 4 DIMMs,Intel 2.5G GbE LAN<br>\n11th Generation Intel® Core™ i9 processors / Intel® Core™ i7 processors / Intel® Core™ i5 processors<br>\n1 x DisplayPort<br>\n1 x HDMI port<br>', 3000.00, 'resources/images/ProductsPictures/GIGABYTE B560 AORUS PRO.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
 (3, 'Gigabyte X570 AORUS Elite', 'AMD X570 AORUS Motherboard with 12+2 Phases Digital VRM with DrMOS<br>\r\nAdvanced Thermal Design with Enlarge Heatsink, Dual PCIe 4.0 M.2 with Single Thermal Guard<br>\r\nIntel® GbE LAN with cFosSpeed, Front USB Type-C, RGB Fusion 2.0<br>', 4000.00, 'resources/images/ProductsPictures/Gigabyte X570 AORUS Elite.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
-(4, 'Gigabyte Z390 MASTER', 'Intel Z390 AORUS Motherboard with 12 Phases IR Digital VRM, Fins-Array Heatsink<br>\r\nRGB Fusion 2.0, 802.11ac Wireless, Triple M.2 with Thermal Guards, ESS SABRE HIFI 9118<br>\r\nIntel® GbE LAN with cFosSpeed, Front & Rear USB 3.1 Gen 2 Type-C<br>', 6500.00, 'resources/images/ProductsPictures/Gigabyte Z390 MASTER.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
+(4, 'Gigabyte Z390 MASTER', 'Intel Z390 AORUS Motherboard with 12 Phases IR Digital VRM, Fins-Array Heatsink<br>\r\nRGB Fusion 2.0, 802.11ac Wireless, Triple M.2 with Thermal Guards, ESS SABRE HIFI 9118<br>\r\nIntel® GbE LAN with cFosSpeed, Front & Rear USB 3.1 Gen 2 Type-C<br>', 6500.00, 'resources/images/ProductsPictures/Gigabyte Z390 MASTER.jpg', 0, 0, 0, 0, 1, 1, 'Motherboard'),
 (5, 'MSI A520M PRO', 'AMD A520 Chipset, 2x DDR4 memory slots, support up to 64GB<br>\r\nDual channel memory architecture, Supports non-ECC UDIMM memory<br>\r\nSupports RAID 0, RAID 1 and RAID 10 for SATA storage devices<br>', 1500.00, 'resources/images/ProductsPictures/MSI A520M PRO.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
 (6, 'MSI B450M Bazooka Plus', 'Lightning Fast Game experience with 1x TURBO M.2, Store MI technology<br>\r\nMSI extended PWM and enhanced circuit design ensures even high-end processors to run in full speed.<br>\r\nCore Boost with premium layout and fully digital power design to support more cores and provide better performance.<br>', 2000.00, 'resources/images/ProductsPictures/MSI B450M Bazooka Plus.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
 (7, 'MSI MAG Z490 TOMAHAWK', 'Intel® Z490 Chipset<br>\r\n4 x DDR4 memory slots, support up to 128GB<br>\r\n1x USB 3.2 Gen 2 10Gbps Type-A port on the back panel<br>\r\n7x USB 3.2 Gen 1 5Gbps (4 Type-A ports on the back panel<br> \r\n2 ports through the internal USB connector, 1 Type-C internal connector<br>', 4000.00, 'resources/images/ProductsPictures/MSI MAG Z490 TOMAHAWK.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
@@ -277,13 +299,18 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`, `imagePath`, `1star
 CREATE TABLE `productsuggestion` (
   `id` int(10) UNSIGNED NOT NULL,
   `customerID` int(10) UNSIGNED NOT NULL,
-  `hrID` int(10) UNSIGNED NOT NULL,
-  `adminID` int(10) UNSIGNED NOT NULL,
   `imagePath` varchar(255) DEFAULT NULL,
   `productLink` varchar(255) DEFAULT NULL,
   `productname` varchar(255) DEFAULT NULL,
   `productDescription` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `productsuggestion`
+--
+
+INSERT INTO `productsuggestion` (`id`, `customerID`, `imagePath`, `productLink`, `productname`, `productDescription`) VALUES
+(1, 16, 'resources/images/SuggestedProducts/default.jpg', 'No link', 'Lenovo legion', 'A cool laptop');
 
 -- --------------------------------------------------------
 
@@ -309,7 +336,7 @@ CREATE TABLE `reviewreply` (
   `id` int(10) UNSIGNED NOT NULL,
   `reviewID` int(10) UNSIGNED NOT NULL,
   `userID` int(10) UNSIGNED NOT NULL,
-  `reviewText` varchar(255) DEFAULT NULL
+  `replyText` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -419,7 +446,7 @@ ALTER TABLE `message`
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`id`,`customerID`),
+  ADD PRIMARY KEY (`orderID`,`customerID`),
   ADD KEY `customerID` (`customerID`);
 
 --
@@ -441,8 +468,7 @@ ALTER TABLE `product`
 --
 ALTER TABLE `productsuggestion`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customerID` (`customerID`),
-  ADD KEY `adminID` (`adminID`);
+  ADD KEY `customerID` (`customerID`);
 
 --
 -- Indexes for table `review`
@@ -493,13 +519,13 @@ ALTER TABLE `investigationrequest`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `orderID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `penalty`
@@ -517,19 +543,19 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `productsuggestion`
 --
 ALTER TABLE `productsuggestion`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reviewreply`
 --
 ALTER TABLE `reviewreply`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `survey`
@@ -566,7 +592,7 @@ ALTER TABLE `auditorcomment`
 ALTER TABLE `cartitem`
   ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`productID`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `cartitem_ibfk_2` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `cartitem_ibfk_3` FOREIGN KEY (`orderID`) REFERENCES `orders` (`id`);
+  ADD CONSTRAINT `cartitem_ibfk_3` FOREIGN KEY (`orderID`) REFERENCES `orders` (`orderID`);
 
 --
 -- Constraints for table `hrpartner`
@@ -606,8 +632,7 @@ ALTER TABLE `penalty`
 -- Constraints for table `productsuggestion`
 --
 ALTER TABLE `productsuggestion`
-  ADD CONSTRAINT `productsuggestion_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `productsuggestion_ibfk_2` FOREIGN KEY (`adminID`) REFERENCES `administrator` (`id`);
+  ADD CONSTRAINT `productsuggestion_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `review`
