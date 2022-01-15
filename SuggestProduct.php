@@ -32,11 +32,15 @@
         return true;
     }
 </script>
-<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);'>
-        Image: 
-        <input type="file" name="productpic"><br>
-        Name:
-        <input type="text" name="name" placeholder="Enter product name">
+<div class="container">
+            <div class="card justify-content-center">
+                <div class="carda">
+<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);' class="form-horizontal">
+<div class ="form-group">
+        <label>Image:</label> 
+        <input type="file" name="productpic" ><br>
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Enter product name"  class="form-control">
         <div class='alert alert-danger' id="NameAlert" style="visibility: hidden">               
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <label id="NameError"></label>
@@ -44,9 +48,9 @@
                 <span aria-hidden="true">&times;</span>
             </button> 
         </div><br>
-        Link:<br>
-        <input type="url" name="link"style="color:black"><br><br>
-        Description: <br>
+        <label>Link:</label><br>
+        <input type="url" name="link" placeholder="The link for the product" style="color:black"  class="form-control"><br><br>
+        <label>Description:</label> <br>
         <textarea name="description" rows="4" cols="30" style="color:black" maxlength='255'></textarea>
         <div class='alert alert-danger' id="DescAlert" style="visibility: hidden" >               
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -58,6 +62,10 @@
         <input type='Submit' name='submit'>
 
 </form>
+</div>
+</div>
+</div>
+
 <?php 
 
 $con = new mysqli("localhost", "root", "", "project");

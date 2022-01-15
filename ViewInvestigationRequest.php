@@ -35,7 +35,7 @@
                     echo "Error: Auditor not found<br>";
                 }
                 else if($auditorRow = $auditorResult->fetch_assoc()){
-                    echo "This investigation was requested by: " . $auditorRow['username'] . "<br>";
+                    echo "This investigation was requested by: " . $auditorRow['username'] . "<br><br>";
                 }
 
                 $hrsql = "SELECT username FROM users WHERE id='" . $requestRow['hrID'] . "'";
@@ -44,7 +44,7 @@
                     echo "Error: Hr not found<br>";
                 }
                 else if($hrRow = $hrResult->fetch_assoc()){
-                    echo "This request was sent to: " . $hrRow['username'] . "<br>";
+                    echo "This request was sent to: " . $hrRow['username'] . "<br><br>";
                 }
 
                 $adminsql = "SELECT username FROM users WHERE id='" . $requestRow['adminID'] . "'";
@@ -53,11 +53,11 @@
                     echo "Error: Admin not found<br>";
                 }
                 else if($adminRow = $adminResult->fetch_assoc()){
-                    echo "This investigation will be made into: " . $adminRow['username'] . "<br>";
+                    echo "This investigation will be made into: " . $adminRow['username'] . "<br><br>";
                 }
 
                 echo "Reason for investigation: " . $requestRow['reason'] . "<br>";
-                echo "<form method='post' action=''><input type='submit' name='exit' value='exit'/><form><br>";
+                echo "<form method='post' action=''><input type='submit' name='exit' value='exit'/><form><br><br>";
             }
 
             $con->close();
