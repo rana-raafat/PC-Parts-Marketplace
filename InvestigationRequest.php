@@ -80,8 +80,19 @@
                         printf("Error: %s\n", mysqli_error($con));
                         die();
                     }
-                    $con->close();
-                    echo "<script>window.location.href='chat.php?id=".$_GET['id']."'</script>";
+                    else{
+                        $updatehr="UPDATE hrpartner SET investigationsMade=investigationsMade+1";
+                        $updateResult = mysqli_query($con,$updatehr);
+                        if(!$updateResult){
+                            echo "couldn't insert survey into the DataBase<br>";
+                            printf("Error: %s\n", mysqli_error($con));
+                            die();
+                        }
+                        else{
+                            $con->close();
+                            echo "<script>window.location.href='chat.php?id=".$_GET['id']."'</script>";
+                        }
+                    }
                     
                 }
             }
