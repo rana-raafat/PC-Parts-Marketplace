@@ -3,11 +3,15 @@
         <link rel="stylesheet" href="Style.css">
         <title> View Investigation Request </title>
     </head>
-    <body>
-        <?php
+    <?php
         session_start();
         include "Menu.php";
-
+        ?>
+    <body>
+    <div class="container">
+            <div class="card justify-content-center">
+                <div class="carda">
+        <?php
         if(isset($_POST['exit'])){
             echo "<script>window.location.href='Home.php'</script>";
         }
@@ -62,5 +66,8 @@
             echo "Error: invalid link<br>";
         }
         ?>
+        </div>
+        </div>
+        </div>
     </body>
 </html>
