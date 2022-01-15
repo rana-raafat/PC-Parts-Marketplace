@@ -25,17 +25,20 @@
         }     
     }
     </script>
+            <div class="container">
+            <div class="card justify-content-center">
+                <div class="carda">
     <h1>Add a Product</h1>
-    <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" >
-        Image: 
+    <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);"class="form-horizontal" >
+    <label>Image:</label> 
         <input type="file" name="productpic"><br>
-        Name:
+        <label>Name:</label>
         <input type="text" name="name" placeholder="Enter product name"><br>
-        Description: <br>
+        <label>Describtion:</label> <br>
         <textarea name="description" rows="4" cols="30">Enter description here</textarea><br><br>
-        Price: <br>
+        <label>Price:</label> <br>
         <input type="number" name="price" min="0" step="0.01" value="0"><br><br>
-        Select a category: <br>
+        <label>Select a category:</label> <br>
         <input type="radio" name="category" value="Motherboard" checked> Motherboard <br>
         <input type="radio" name="category" value="RAM"> RAM <br>
         <input type="radio" name="category" value="Graphics Card"> Graphics Card <br>
@@ -44,6 +47,9 @@
         <input type="radio" name="category" value="Processor"> Processor <br>
         <input type="submit" name="submit"><br>
     </form>
+</div>
+</div>
+</div>
 <?php 
     if(isset($_POST["submit"])){
         
