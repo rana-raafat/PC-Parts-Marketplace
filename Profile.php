@@ -174,9 +174,8 @@
             }
             ?>
             <br>
-            <a href='EditProfile.php'><button type='submit' name='edit'>Edit profile <span class="glyphicon glyphicon glyphicon-pencil"></span></button></a>
-         
-            <a href='delete.php'><input type='submit' name='edit' value='Delete profile'></a>
+            <a href='EditProfile.php'><button type='submit' name='edit'>Edit Profile <span class="glyphicon glyphicon glyphicon-pencil"></span></button></a>
+            <a data-toggle="modal" data-target="#deleteAccountModal"><button type='submit' name='delete'>Delete Account <i class="glyphicon glyphicon-trash"></i></button></a>
           
             <?php
             echo "</div>";

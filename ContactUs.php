@@ -15,25 +15,59 @@ if(!$con){
     echo "connection error<br>";
     die();
 }
-$sql= "SELECT username,userType,id FROM users WHERE userType='hrpartner' OR userType='auditor' OR userType='administrator'";
+$sql= "SELECT imagePath,username,userType,id FROM users WHERE userType='hrpartner' OR userType='auditor' OR userType='administrator'";
 $result = mysqli_query($con,$sql);
 if ($result->num_rows == 0) {
     echo "No results found<br>";
 }
-
-echo "<table border='2'><tr> <th>Name</th> <th>Position</th><th>Message</th></tr>";
-while($row = $result->fetch_assoc()){
-    
-            echo "<td> " . $row['username'] . " </td>";
-            echo " <td> " . $row['userType'] . "</td>";
-            echo "<td><a href=Chats.php?id ='". $row['id'] . "'>click here </a></td>";
-           
-            echo "</tr>";
-}
 ?>
-  <button onclick="location.href='SuggestProduct.php'">Suggest a Product</button>
-<br><br>
-<h4>any problems contact us through here</h2>
+        <div class='container'>
+            <div class='card justify-content-center'>
+                <div class="ContactUs">
+                    <div class="List">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Name</th> 
+                                    <th>Position</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                while($row = $result->fetch_assoc()){
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <?php
+                                            echo "<img src=". $row['imagePath']. " class='user-pic-icon'><img>";
+                                            echo $row['username'];
+                                            ?> 
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-user"></i>
+                                            <?php
+                                            echo $row['userType'];
+                                            ?> 
+                                        </td>
+                                        <td> 
+                                            <?php
+                                            echo "<a href=Chat.php?id=". $row['id'] . ">Send a Message</a>";
+                                            ?> 
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <button onclick="location.href='SuggestProduct.php'">Suggest a Product</button>
+                    <br>
+                </div>
+            </div>
+        </div>
 
     </body>
 </html>

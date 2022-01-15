@@ -114,7 +114,34 @@
                 if($_SESSION['userType'] == "administrator"){
                     echo "<div class='product-btn'>";
                     echo "<button><a href='EditProduct.php?id=" . $row['id'] . "' class='href-btn'> Edit Product </a></button> ";
-                    echo "<button><a href='DeleteProduct.php?id=" . $row['id'] . "' class='href-btn'>Delete Product</a></button></div>";
+
+                    ?>
+                    <!-------------------------------------------------- Delete Product Modal -------------------------------------------------->
+                    <div class="container">
+                        <div class="modal fade" id="deleteProductModal" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h3 class="modal-title">Delete Product</h3>
+                            </div>
+
+                            <div class="modal-body">
+                                <form action="DeleteProduct.php?id=<?php echo $row['id']; ?>" method="post">
+                                    Are you sure you want to delete this product?<br>
+                                    <input type="submit" name="Yes" value="Yes">
+                                    <input type="submit" name="No" value="No">
+                                </form>
+                            </div>
+
+                            </div>      
+                        </div>
+                        </div>
+                    </div>
+                    <?php
+
+                    echo "<button><a data-toggle='modal' data-target='#deleteProductModal' class='href-btn'>Delete Product</a></button></div>";
                 }
             }
             echo "<div class='product-img'>";
@@ -137,7 +164,8 @@
             echo "<h3 class='product-price'><i>" . $row['price'] . " LE</i></h3>";
             if($row['numberOfReviews']>0){
                 $averageRating = (1.0*$row['1star'] + 2.0*$row['2stars'] + 3.0*$row['3stars'] + 4.0*$row['4stars'] + 5.0*$row['5stars']) / $row['numberOfReviews'];
-                echo "<h4 class='product-dsc'><a href='AllReviews.php'>Average Rating :</a> ";
+                //echo "<h4 class='product-dsc'><a href='AllReviews.php'>Average Rating :</a> ";
+                echo "<h4 class='product-dsc'><a href='#reviews'>Average Rating :</a> ";
                 for($i=1; $i<= 5; $i++){
                     if($i<=$averageRating)
                         echo "<i class='fa fa-star'></i>";
@@ -333,92 +361,94 @@
             }
             echo "<h3 class='product-price'>Reviews: </h3><br>";
             //need to add rating and reviews and such here
-            if($row['numberOfReviews']>0){
-                
-                //output a few of the reviews and have a view-all-reviews button that redirects to a page with all the reviews for this product
-                $selectReviews = "SELECT * FROM review WHERE productID='" . $id . "'";
-                if(isset($_SESSION['id'])){
-                    $selectReviews = "SELECT * FROM review WHERE productID='" . $id . "' AND customerID <>'" . $_SESSION['id'] . "'";
-                }
-                $selectReviewResult = $con->query($selectReviews);
-                $counter=0;
-                while($reviews=$selectReviewResult->fetch_assoc()){
-                    if($counter==2){
-                        break;
+            echo  "<div id='reviews'>";
+                if($row['numberOfReviews']>0){
+                    
+                    //output a few of the reviews and have a view-all-reviews button that redirects to a page with all the reviews for this product
+                    $selectReviews = "SELECT * FROM review WHERE productID='" . $id . "'";
+                    if(isset($_SESSION['id'])){
+                        $selectReviews = "SELECT * FROM review WHERE productID='" . $id . "' AND customerID <>'" . $_SESSION['id'] . "'";
                     }
-                    $usernameSql = "SELECT username,imagePath FROM users WHERE id='" . $reviews['customerID'] . "'";
-                    $usernameResult = $con->query($usernameSql);
-                    if($username=$usernameResult->fetch_assoc()){
-                        //echo the reviews
-                        echo "<img src='" . $username['imagePath'] . "' class='profile-icon'> ";
-                        echo "<b><a href='profile.php?id=". $reviews['customerID'] ."'>" . $username['username'] . "</a></b><br>";
-                        
-                        for($i=1; $i<= 5; $i++){
-                            if($i<=$reviews['starRating'])
-                                echo "<i class='fa fa-star'></i>";
-                            else
-                                echo "<i class='fa fa-star-o'></i>";
+                    $selectReviewResult = $con->query($selectReviews);
+                    $counter=0;
+                    while($reviews=$selectReviewResult->fetch_assoc()){
+                        if($counter==2){
+                            break;
                         }
-                        echo " ". $reviews['starRating'] . " stars<br><p class='review'>" . $reviews['reviewText']."</p>";
-                        $counter++;
-                        //if the user clicked on reply show the textarea
-                        echo "<form id='reply' method='post' action=''>";
-                        if(isset($_POST['addreply']) && !isset($_POST['viewreplies'])){
-                            echo "<img src='" . $_SESSION['imagePath'] . "' class='profile-icon'> ";
-                            echo "<b>" . $_SESSION['username'] . "</b>";
-                            ?>
-                            <form method='post' action='' onsubmit='return validateReply(this);'><br>
-                                <textarea name='replyText' rows='4' cols='50' maxlength='255' autofocus wrap='hard'>Write a reply...</textarea><br>
-                                <button type='submit' name='reply' value='<?php echo $_POST['addreply']; ?>'>Post Reply</button>
-                            </form>
-                            <?php
-                        }//if the user is logged in show the reply button next to each message
-                        else if(isset($_SESSION['id'])){
-                            if($_SESSION['userType']=='administrator' || $_SESSION['userType']=='customer'){
-                                ?>
-                                <button type='submit' class='reply-btn' name='addreply' value='<?php echo $reviews['id']; ?>'>Reply</button>
-                                <?php
+                        $usernameSql = "SELECT username,imagePath FROM users WHERE id='" . $reviews['customerID'] . "'";
+                        $usernameResult = $con->query($usernameSql);
+                        if($username=$usernameResult->fetch_assoc()){
+                            //echo the reviews
+                            echo "<img src='" . $username['imagePath'] . "' class='profile-icon'> ";
+                            echo "<b><a href='profile.php?id=". $reviews['customerID'] ."'>" . $username['username'] . "</a></b><br>";
+                            
+                            for($i=1; $i<= 5; $i++){
+                                if($i<=$reviews['starRating'])
+                                    echo "<i class='fa fa-star'></i>";
+                                else
+                                    echo "<i class='fa fa-star-o'></i>";
                             }
-                        }
-                        $replies_sql="SELECT * FROM reviewreply WHERE reviewID='" . $reviews['id'] . "'";//get all replies to this review</form>
-                        $repliesresult=$con->query($replies_sql);
-                        if($repliesresult->num_rows > 0){//if there are replies
-                            if(isset($_POST['viewreplies'])){//if the users clicks on view replies button
-                                echo "<div class='reply-div'>";
-                                while($replyrows = $repliesresult->fetch_assoc()){ //get all replies
-                                    $reply_usernamesql = "SELECT * FROM users WHERE id='" . $replyrows['userID'] . "'"; //select username
-                                    $reply_username_result = $con->query($reply_usernamesql);
-                                    
-                                    if($reply_username_result->num_rows > 0){ //if the query returned a username
-                                        if($username_row = $reply_username_result->fetch_assoc()){
-                                            
-                                            echo "<img src='" . $username_row['imagePath'] . "' class='profile-icon'> ";
-                                            echo "<b><a href='profile.php?id=". $username_row['id'] ."'>" . $username_row['username'] . "</a></b><br>";
-                                            echo "<p class='review'>" . $replyrows['replyText'] . "</p><br>";
+                            echo " ". $reviews['starRating'] . " stars<br><p class='review'>" . $reviews['reviewText']."</p>";
+                            $counter++;
+                            //if the user clicked on reply show the textarea
+                            echo "<form id='reply' method='post' action=''>";
+                            if(isset($_POST['addreply']) && !isset($_POST['viewreplies'])){
+                                echo "<img src='" . $_SESSION['imagePath'] . "' class='profile-icon'> ";
+                                echo "<b>" . $_SESSION['username'] . "</b>";
+                                ?>
+                                <form method='post' action='' onsubmit='return validateReply(this);'><br>
+                                    <textarea name='replyText' rows='4' cols='50' maxlength='255' autofocus wrap='hard'>Write a reply...</textarea><br>
+                                    <button type='submit' name='reply' value='<?php echo $_POST['addreply']; ?>'>Post Reply</button>
+                                </form>
+                                <?php
+                            }//if the user is logged in show the reply button next to each message
+                            else if(isset($_SESSION['id'])){
+                                if($_SESSION['userType']=='administrator' || $_SESSION['userType']=='customer'){
+                                    ?>
+                                    <button type='submit' class='reply-btn' name='addreply' value='<?php echo $reviews['id']; ?>'>Reply</button>
+                                    <?php
+                                }
+                            }
+                            $replies_sql="SELECT * FROM reviewreply WHERE reviewID='" . $reviews['id'] . "'";//get all replies to this review</form>
+                            $repliesresult=$con->query($replies_sql);
+                            if($repliesresult->num_rows > 0){//if there are replies
+                                if(isset($_POST['viewreplies'])){//if the users clicks on view replies button
+                                    echo "<div class='reply-div'>";
+                                    while($replyrows = $repliesresult->fetch_assoc()){ //get all replies
+                                        $reply_usernamesql = "SELECT * FROM users WHERE id='" . $replyrows['userID'] . "'"; //select username
+                                        $reply_username_result = $con->query($reply_usernamesql);
+                                        
+                                        if($reply_username_result->num_rows > 0){ //if the query returned a username
+                                            if($username_row = $reply_username_result->fetch_assoc()){
+                                                
+                                                echo "<img src='" . $username_row['imagePath'] . "' class='profile-icon'> ";
+                                                echo "<b><a href='profile.php?id=". $username_row['id'] ."'>" . $username_row['username'] . "</a></b><br>";
+                                                echo "<p class='review'>" . $replyrows['replyText'] . "</p><br>";
+                                            }
+                                        }
+                                        else{
+                                            echo "<br>Error user not found";
                                         }
                                     }
-                                    else{
-                                        echo "<br>Error user not found";
-                                    }
+                                    echo "</div>";
                                 }
-                                echo "</div>";
+                                else if(!isset($_POST['addreply'])) { //if there are replies + the user didn't click on view replies, show the view replies button <form method='post' action=''> 
+                                    ?>
+                                    
+                                    <button type='submit' class='reply-btn' name='viewreplies' value='<?php echo $reviews['id']; ?>'>View replies</button>
+                                    <?php
+                                }
                             }
-                            else if(!isset($_POST['addreply'])) { //if there are replies + the user didn't click on view replies, show the view replies button <form method='post' action=''> 
-                                ?>
-                                
-                                <button type='submit' class='reply-btn' name='viewreplies' value='<?php echo $reviews['id']; ?>'>View replies</button>
-                                <?php
-                            }
+                            //echo "<br><br>";
+                            echo "</form>";
                         }
-                        //echo "<br><br>";
-                        echo "</form>";
                     }
+                    //echo "<br><button><a href='AllReviews.php' class='href-btn'>View all reviews</a></button>"; //page not made yet
                 }
-                echo "<br><button><a href='AllReviews.php' class='href-btn'>View all reviews</a></button>"; //page not made yet
-            }
-            else{
-                echo "<p>No current reviews for this product</p>";
-            }
+                else{
+                    echo "<p>No current reviews for this product</p>";
+                }
+            echo "</div>";
         }
         else{
             echo "Product missing<br>";
@@ -428,6 +458,7 @@
         $con->close();
     
     ?>
+
 
 </body>
 </html>

@@ -220,14 +220,16 @@
 
         <?php
         if(isset($_POST['send'])) {
-            $sql2="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $_GET['id'] ."','". $_POST['txt'] ."','0') " ;
-            $result2 = mysqli_query($conn,$sql2);
-            if(!$result2){
-                echo "couldn't insert into the DataBase<br>";
-                die();
+            if(!empty($_POST['txt'])){
+                $sql2="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $_GET['id'] ."','". $_POST['txt'] ."','0') " ;
+                $result2 = mysqli_query($conn,$sql2);
+                if(!$result2){
+                    echo "couldn't insert into the DataBase<br>";
+                    die();
+                }
+                $conn->close();
+                echo "<script>window.location.href='Chat.php?id=". $_GET['id']."'</script>";
             }
-            $conn->close();
-            echo "<script>window.location.href='Chat.php?id=". $_GET['id']."'</script>";
         }
         ?>
 

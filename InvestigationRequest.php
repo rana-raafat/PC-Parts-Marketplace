@@ -31,7 +31,12 @@
                 echo "Error hr not found<br>";
             }
             $hrname=$hrresult->fetch_assoc();
-            echo "<h4>HRPartner Name: </h4><p class='review'>". $hrname['username'] ."</p><br>";
+            echo "<div class='container'>";
+            echo "<div class='card justify-content-center'>";
+            echo "<div class='investigationRequest'>";
+            echo "<h4>HRPartner Name </h4>";
+            echo"<p class='review'>". $hrname['username'] ."</p>";
+            echo "<br><br>";
             echo"<form method='post'>"; 
             echo "<h4>Select admin: </h4><Select name='admins'style='color:black;>";
             echo "<option value='' selected>Choose Admin</option>";
@@ -39,10 +44,12 @@
                 echo "<option value='". $row['username'] ."'>". $row['username'] ."</option>";
             }
             echo "</Select>";
-            echo "<br>";echo "<br>";echo "<br>";echo "<h4>Write your problem:</h4>";
+            echo "<br><br>";
+            echo "<h4>Write your problem:</h4>";
             
-            echo "<textarea name='textarea' id='Textarea1'style='color:black; rows='5' cols='30'></textarea>";
-            echo "<br><input type='Submit' name='submit'>";
+            echo "<textarea name='textarea''style='color:black; rows='5' cols='30'></textarea>";
+            echo "<br><br>";
+            echo "<input type='Submit' name='submit'>";
             echo"<br>";
             echo"</form>"; 
             if(isset($_POST["submit"])){
@@ -78,6 +85,10 @@
                     
                 }
             }
+            
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
             
         }
     

@@ -11,6 +11,7 @@
         <div class="container">
             <div class="card">
                 <div class="sendSurvey">
+                    <div class="list">
                 <?php
                     if(isset($_SESSION['id'])){
                         $conn = new mysqli("localhost","root","", "project");
@@ -74,6 +75,7 @@
                                 echo "<br>";
                             }
                         }
+                        echo "</div>";
                         echo "<br>";
                         echo "<input type='submit' name='submit'>" ;
                         echo "<input type='submit' name='exit' value='exit'/>";
