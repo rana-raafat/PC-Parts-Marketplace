@@ -6,13 +6,6 @@
     <?php 
         session_start();
         include "Menu.php";
-    ?>
-    <form method="post" action="DeleteProdcut.php">
-        Are you sure you want to delete this product?<br>
-        <input type="submit" name="Yes" value="Yes">
-        <input type="submit" name="No" value="No">
-    </form>
-    <?php 
         
         if(isset($_POST['Yes'])){
             $con = new mysqli("localhost", "root", "", "project");
@@ -29,17 +22,18 @@
                 printf("Error: %s\n", mysqli_error($con));
                 exit();
             }
-            echo "<script>window.location.href='Home.php'</script>";
+            else{
+                echo "<script>window.location.href='Home.php'</script>";
+            }
             $con->close();
         }
         else if(isset($_POST['No'])){
             echo "<script> 
-                    //$('#signOutModal .close').click(); 
+                    $('#deleteProductModal .close').click(); 
                     window.history.go(-1);
-                 </script>";        
+                 </script>";
         }
     ?>
     
-    </form>
 </body>
 </html>

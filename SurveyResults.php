@@ -1,11 +1,7 @@
 <html>
-<head>
-        <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <head>
     </head>
+    <body>
     <?php   
         session_start();
         include "Menu.php";
@@ -22,92 +18,58 @@
             echo "couldn't search inside the DataBase<br>";
             die();
         }
-     /*   echo "<table border='1'>
-            <tr>
+        ?>
+ <div class="container">
+            <div class="card justify-content-center">
+                <div class="SurveyResults">
+                    <h3>Survey Results</h3>
+                    <table class="content-table">
+                        <tr>
 
-            <th>Name </th>
+                            <th>Customer </th>
 
-            <th>CustomerID </th>
+                            <th>Rating</th>
 
-            <th>Rating</th>
+                            <th>Suggested Improvements</th>
 
-            <th>Suggested Improvements</th>
-
-            <th>age</th>
+                            <th>age</th>
 
 
-            </tr>";
-*/
-            ?>
-        <body>
+                        </tr>
+                        <?php
+                        while($row = $result->fetch_assoc()){
 
-        <table class="content-table">
-        
-        <thead>
-          <tr >
-            <th >Name </th>
+                            echo "<tr>";
 
-            <th>CustomerID </th>
+                            echo "<td>";
+                            $sql2="SELECT username,imagePath FROM users WHERE id='" . $row['customerID'] . "'";
+                            $result2 = mysqli_query($conn,$sql2);
+                            if(!$result2){
+                                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                                die();
+                            }
+                            while($rows = $result2->fetch_assoc()){
+                                echo "<img src=". $rows['imagePath']. " class='user-pic-icon'><img>";
+                                echo  $rows['username'];
+                            }
+                            echo "</td>";
+                                                
+                            echo "<td>" . $row['rating'] . "<i class='fa fa-star'></i></td>";
+                        
+                            echo "<td>" . $row['improvement'] . "</td>";
+                        
+                            echo "<td>" . $row['age'] . "</td>";
 
-            <th>Rating</th>
+                            echo "</tr>";
 
-            <th>Suggested Improvements</th>
-
-            <th>age</th>
-    
-            </tr>
-            </thead>
-            <tbody>
-					<tr>
-						<td>John</td>
-						<td>Salma</td>
-						<td>Ahmed</td>
-					</tr>
-					<tr>
-						<td>Michael</td>
-						<td>Salwa</td>
-						<td>Saed</td>
-					</tr>
-					<tr>
-						<td>Asma</td>
-						<td>Lobna</td>
-						<td>Mohammed</td>
-					</tr>
-				</tbody>
-    </table>
-
-    </body>
-
-            <?php
-        while($row = $result->fetch_assoc()){
-
-            echo "<tr>";
-
-            $sql2="SELECT username FROM users WHERE id='" . $row['customerID'] . "'";
-            $result2 = mysqli_query($conn,$sql2);
-            if(!$result2){
-                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                die();
-            }
-    
-            while($rows = $result2->fetch_assoc()){
-                echo "<td>" . $rows['username'] . "</td>";
-            }
-           
-            echo "<td>" . $row['customerID'] . "</td>";
-          
-            echo "<td>" . $row['rating'] . "</td>";
-          
-            echo "<td>" . $row['improvement'] . "</td>";
-          
-            echo "<td>" . $row['age'] . "</td>";
-
-            echo "</tr>";
-
-            //echo "<script>window.location.href='Home.php'</script>";
-        }
-       // echo "</table>";
-
+                            //echo "<script>window.location.href='Home.php'</script>";
+                        }
+                        ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    <?php
     $conn->close();     
             
     ?>

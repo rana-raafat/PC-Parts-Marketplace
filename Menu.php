@@ -68,7 +68,16 @@
 
                     <?php
                     }
+                    /*------------------------------------- If Customer -------------------------------------*/
 
+                    else if($_SESSION['userType'] == "customer"){
+                    ?>
+
+                      <li><a href='ContactUs.php'>Contact Us</a></li>
+                    
+                    <?php
+                    }
+                    
                     /*------------------------------------- If Administrator -------------------------------------*/
 
                     else if($_SESSION['userType'] == "administrator"){
@@ -104,9 +113,9 @@
 
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="Profile.php">Profile</a></li>  
+                            <li><a href="Profile.php">Profile</a></li>                              
+                            <!--<li><a data-toggle="modal" data-target="#deleteAccountModal">Delete Account</a></li>-->
                             <li><a data-toggle="modal" data-target="#signOutModal">Sign Out</a></li>
-                            <li><a data-toggle="modal" data-target="#deleteAccountModal">Delete Account</a></li>
                         </ul>
                         
                         <?php
@@ -124,6 +133,7 @@
                           if($cart_items_row = $cart_items_result->fetch_assoc()){           
                           ?>
                           <li><a href="Cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart  <span class="badge"><?php echo $cart_items_row['cartItems']; ?></span> </a></li>
+                          
                           <?php
                           }
                         }
