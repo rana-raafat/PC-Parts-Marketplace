@@ -109,6 +109,10 @@ h1, h2, h3{
     font-family: xirod;
     letter-spacing: 2px;
 }
+.header2{
+    font-size: 17px;
+    font-weight:bolder;
+}
 
 .container {
     width: fit-content;
@@ -143,7 +147,7 @@ a:visited, a:link, a:active{
 
 /***************************************************** FORM INPUTS ****************************************************/
 
-input[type=text],input[type=password], input[type=search]{
+input[type=text],input[type=password], input[type=search],input[type=url]{
     border-radius: 3rem;
     background: white;
     color: black;
@@ -182,7 +186,7 @@ input[type=number]{
 }
 
 textarea{
-    width: 500px; 
+    width: 480px;
     height: 150px;
     border-radius: 3rem;
     background: white;
@@ -213,9 +217,17 @@ input[type=checkbox], input[type=radio]{
 }
 
 /******************************************************** MENU *************************************************************/
+.logo{ 
+    width: 355px;
+    height: 105px;
+    position: absolute;
+    mix-blend-mode: color;
+    left: -55px;
+}
 
 .navbar-custom{
     border-radius: 1.5rem;
+    padding: 10px;
 }
 .navbar-custom .navbar-brand{
     font-size: 200%;
@@ -240,7 +252,8 @@ input[type=checkbox], input[type=radio]{
 /******************************************************* SEARCH BAR ***************************************************************/
 
 .searchbar{
-    float: left;
+    position: absolute;
+    right: 0px
 }
 
 .search{    
@@ -298,10 +311,21 @@ input[type=checkbox], input[type=radio]{
     overflow-y:auto;
 }
 
+.read{
+    font-style:italic;
+}
+.unread{
+    font-weight: bolder;
+    text-decoration: underline red !important;
+}
+
 .people-list .chat-list li {
     padding: 10px 15px;
 }
 
+.people-list .chat-list li {
+    padding: 10px 15px;
+}
 .people-list .chat-list li:hover {
     background: #efefef;
     color: #222;
@@ -534,6 +558,10 @@ input.form-control.txtToBeSent{
     color: #222;
     text-shadow: 1px 1px 1px dimgray;
 }
+.carousel-caption2{
+    
+    font-family: fangsong;
+}
 
 .carousel-caption.nowrap{
     white-space: nowrap;
@@ -566,7 +594,7 @@ input.form-control.txtToBeSent{
     padding:25px;
     text-align: center;
     width: 500px;
-    /*height: 500px;*/
+    /*height: 450px;*/
     overflow-y:auto;
 }
 
@@ -633,6 +661,8 @@ input.form-control.txtToBeSent{
 }
 
 .close{
+    padding: unset;
+    padding-left: 10px;
     font-size: 15px;
     float: right;
 }
@@ -648,22 +678,22 @@ input.form-control.txtToBeSent{
     margin:25px;
     text-align: center;
     width: 800px;
-    height: 550px;
+    height: 500px;
 }
 
 .List{
-    padding:50px;
+    padding:25px;
     height: 450px;
     overflow-y: auto;
 }
 
-/***************************************************** INVESTIGATION ******************************************************/
+/***************************************************** ... ******************************************************/
 
-.investigationRequest{
+.form-container{
     text-align: center;
     padding:25px;
     margin:25px;
-    width: 740px;
+    width: 640px;
     height: 540px;
     overflow-y: auto;
 }
@@ -678,13 +708,13 @@ h1.center{
     align-content: center;
     text-align: center;
     height: 520px;
-    /*width: 400px;*/
     min-width: 400px;
+    max-width: 850px;
     margin: 25px;
     overflow-y: auto;
     background: #222;
     border-radius: 15px 15px 15px 15px ;
-    padding: 15px;
+    padding: 25px;
 }
 .cardb{
     align-content: center;
@@ -692,6 +722,7 @@ h1.center{
     height: 520px;
     /*width: 400px;*/
     min-width: 400px;
+    max-width: 850px;
     margin: 25px;
     overflow-y: auto;
     background: #222;
@@ -756,13 +787,12 @@ color: rgb(255, 255, 255);
 /*****************************************************************************************************************************/
 
 .product-img{
-  text-align: center;
-}
-.product-img-border{
-  border: 10px solid;
-  border-color: white;
-  border-radius: 25px;
-  padding: 20px;
+  width: 750px;
+  height: 500px;
+  border-radius: 3rem;
+  /*border: 5px solid white;*/
+  /*padding: 10px;*/
+  animation: box_glow 3s ease-in-out infinite alternate;
 }
 
 a.href-btn{
@@ -775,29 +805,28 @@ a.href-btn:hover{
 
 h1.product-name, h3.product-name{
     font-family: notoSerif;
-    font-weight: lighter;
+    font-weight: bold;
     text-shadow: 1px 1px 1px purple, 1px 1px 1px white;
     animation: glow2 2s ease-in-out infinite alternate;
    
 }
-h3.product-price{
+
+.product-price{
     font-family: notoSerif;
     font-weight: lighter;
     text-shadow: 1px 1px 1px gray;
-    animation: glow2 2s ease-in-out infinite;
+    animation: unset;
+    /*animation: glow2 2s ease-in-out infinite;*/
 }
 
 h4,h5{
     font-family: notoSerif;
     font-weight: lighter;
     text-shadow: 1px 1px 1px gray;
-    animation: glow2 2s ease-in-out infinite;
-  
 }
 
-h4.product-dsc{
-    font-family: notoSerif;
-    font-weight: lighter;
+.product-dsc{
+    animation: glow2 2s ease-in-out infinite;
 }
 
 .product-btn{
@@ -815,8 +844,9 @@ p.desc{
     border: 2px solid whitesmoke ;
     background-color: black;
     width: 750px;
-    padding: 1%;
+    padding: 20px;
     border-radius:  5px 30px;
+    /*font-family: inherit;*/
 }
 
 p.review{
@@ -826,7 +856,7 @@ p.review{
     border: 2px solid whitesmoke ;
     /*background-color: lightgray;*/
     width: 350px;
-    padding: 1%;
+    padding: 10px;
     border-radius:  1px 20px 20px 20px;
     display: inline-block;
 }

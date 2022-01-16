@@ -2,8 +2,8 @@
     <head>
         <title>Auditor comments</title>
     </head>
-<body>
-<?php 
+    <body>
+        <?php 
            session_start();
            include "Menu.php";
            if($_SESSION['userType']=='auditor')
@@ -25,41 +25,46 @@
                }
    
                // just to display the name of the customer and display it at the top
-               if($fetch_auditorName = $result3->fetch_assoc()){
-                   echo "<h1>".$fetch_auditorName['username']."</h1>";
-               }
+                if($fetch_auditorName = $result3->fetch_assoc()){
+                    echo "<div class='container'>";
+                    echo "<h1> All Comments </h1>";
+                    echo "</div>";
+                }
    
    
-               $fetch_messages_sql="SELECT * FROM auditorcomment";
-               $result = mysqli_query($conn,$fetch_messages_sql);
-               if(!$result)
-               {
-                   echo "couldn't read the messages from the DataBase<br>";
-                   die();
-               }
-   
-               while($row = $result->fetch_assoc())
-               {   
-                   $fetch_adminName_sql="SELECT username FROM users WHERE id='" . $row['auditorID'] . "'";
-                   $result3 = mysqli_query($conn,$fetch_adminName_sql);
-                   if(!$result3)
-                   {
-                       echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                       die();
-                   }
-                   
-                   while($fetch_auditorName = $result3->fetch_assoc())
-                   {
-                       echo "Message ID:".$row['messageID'].":      ";
-                       echo "Auditor Name:      ".$fetch_auditorName['username'];
-                       echo"    :   ";
-                       echo $row['commentText'];
-                       echo"<br>";
-                   }
-               
-               }
-               $conn->close();
+                $fetch_messages_sql="SELECT * FROM auditorcomment";
+                $result = mysqli_query($conn,$fetch_messages_sql);
+                if(!$result)
+                {
+                    echo "couldn't read the messages from the DataBase<br>";
+                    die();
+                }
+                echo "<div class='container'><div class='card justify-content-center'><div class='carda'><table class='content-table'>";
+                echo "<tr><th> MessageID </th> <th>Auditor Name</th> <th>Comment</th> </tr>";
+                while($row = $result->fetch_assoc())
+                {   
+                    $fetch_adminName_sql="SELECT username FROM users WHERE id='" . $row['auditorID'] . "'";
+                    $result3 = mysqli_query($conn,$fetch_adminName_sql);
+                    if(!$result3)
+                    {
+                        echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                        die();
+                    }
+                    echo "<tr>";
+                    while($fetch_auditorName = $result3->fetch_assoc())
+                    {
+                        echo "<td>".$row['messageID']."</td>";
+                        echo "<td>".$fetch_auditorName['username']."</td>";
+                      
+                        echo "<td>". $row['commentText']."</td>";
+                     
+                    }
+                    echo "</tr>";
+                    
+                }
+                echo "</table></div></div>";
+                $conn->close();
             }
-?>
-</body>
+        ?>
+    </body>
 </html>

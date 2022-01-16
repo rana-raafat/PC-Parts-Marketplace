@@ -21,87 +21,19 @@
 
       <nav class="navbar navbar-inverse navbar-custom">
         <div class="container-fluid">
-
-<!------------------------------------------------------ LEFT SIDE ------------------------------------------------------>
-
-          <!---------------------------------------------- Always Visible ----------------------------------------------->
-
+          
 
             <div class="navbar-header">
-                <a class="navbar-brand" href='Home.php'>Website Name</a>
+                <img src="resources\images\style\logo\dribbble.png" class="logo"></img>
+                <br>
+                <a href='Home.php' class="navbar-brand">Neo-Pad</a>
             </div>
 
-            <ul class="nav navbar-nav">
+        <!------------------------------------------------------ RIGHT SIDE ------------------------------------------------------>
 
-                <li><a href="Home.php">Home</a></li>
-
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Products<span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                  <li><a href="Category.php?cat=All">All</a></li>
-                    <li><a href="Category.php?cat=Motherboard">Motherboard</a></li>
-                    <li><a href="Category.php?cat=RAM">RAM</a></li>
-                    <li><a href="Category.php?cat=Graphics">Graphics Card</a></li>
-                    <li><a href="Category.php?cat=Fan">Fan</a></li>
-                    <li><a href="Category.php?cat=HDD">HDD/SSD</a></li>
-                    <li><a href="Category.php?cat=Processor">Processor</a></li>
-                  </ul>
-                </li>
-
-                <?php
-                //session_start();    
-
-                /*--------------------------------------- Only If Signed In ---------------------------------------*/
-
-                if(!empty($_SESSION['username'])){      
-                    /*---------------------------------------- If Auditor ----------------------------------------*/
- 
-                    if($_SESSION['userType'] == "auditor"){
-                    ?>
-
-                    <li><a href='SendSurvey.php'>Send Survey</a></li>
-                    <li><a href='SurveyResults.php'>Survey Results</a></li>
-                    <!--
-                    <li><a href='investigationRequest.php'>Request Investigation</a></li>
-                    -->
-                    <li><a href='AdminChats.php'>Admin Chats</a></li>
-                    <li><a href='DisplayAuditorComments.php'>Display Auditor Comments</a></li>
-
-                    <?php
-                    }
-                    /*------------------------------------- If Customer -------------------------------------*/
-
-                    else if($_SESSION['userType'] == "customer"){
-                    ?>
-
-                      <li><a href='ContactUs.php'>Contact Us</a></li>
-                    
-                    <?php
-                    }
-                    
-                    /*------------------------------------- If Administrator -------------------------------------*/
-
-                    else if($_SESSION['userType'] == "administrator"){
-                        ?>
-                        <li><a href='AddProduct.php'>Add a Product</a></li>
-
-                        <li><a href='DisplayCustomersList.php'>DisplayCustomersList</a></li>
-                        <?php
-                    }
-                    /*--------------------------------------- If HR Partner ---------------------------------------*/
-
-                    else if($_SESSION['userType'] == "hrpartner"){
-                      ?>
-                        <!--
-                          <li><a href='ViewInvestigationRequest.php'>View Investigation Requests</a></li>
-                        -->
-                        <li><a href='Penalty.php'>Penalties</a></li>
-                      <?php
-                    }  
-                    ?>
-                    </ul>
-
-<!------------------------------------------------------ RIGHT SIDE ------------------------------------------------------>
-
+        <?php
+                if(!empty($_SESSION['username'])){   
+                ?>   
                     <!------------------------------------------- Shared ------------------------------------------->
 
                     <ul class="nav navbar-nav navbar-right">
@@ -175,21 +107,105 @@
                     <?php
                 }
                 ?>
-                        
+
+                <!------------------------------------- Also Always Visible --------------------------------------> 
+                  <br><br>
+                    <ul class="nav navbar-nav navbar-right">
+                        <form class="searchbar" action="SearchResults.php" method="get">
+
+                            <input type="text" name="searchQuery" placeholder="Search for a product">
+
+                            <button class="btn btn-basic search" type="submit" name="submitSearch">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+
+                        </form>  
+                    </ul>
+
+                </ul>  
+
+        
+<!------------------------------------------------------ LEFT SIDE ------------------------------------------------------>
+
+          <!---------------------------------------------- Always Visible ----------------------------------------------->
+            <ul class="nav navbar-nav navbar-left">
             
-            <!--------------------------------------------- Also Always Visible --------------------------------------------->
-       
-                <form class="searchbar" action="SearchResults.php" method="get">
+                <li><a href="Home.php">Home</a></li>
 
-                    <input type="text" name="searchQuery" placeholder="Search for a product">
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Products<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                  <li><a href="Category.php?cat=All">All</a></li>
+                    <li><a href="Category.php?cat=Motherboard">Motherboard</a></li>
+                    <li><a href="Category.php?cat=RAM">RAM</a></li>
+                    <li><a href="Category.php?cat=Graphics">Graphics Card</a></li>
+                    <li><a href="Category.php?cat=Fan">Fan</a></li>
+                    <li><a href="Category.php?cat=HDD">HDD/SSD</a></li>
+                    <li><a href="Category.php?cat=Processor">Processor</a></li>
+                  </ul>
+                </li>
 
-                    <button class="btn btn-basic search" type="submit" name="submitSearch">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
+                <?php
+                //session_start();    
 
-                  </form>
+                /*--------------------------------------- Only If Signed In ---------------------------------------*/
 
-            </ul>
+                if(!empty($_SESSION['username'])){      
+                    /*---------------------------------------- If Auditor ----------------------------------------*/
+ 
+                    if($_SESSION['userType'] == "auditor"){
+                    ?>
+
+                    <li><a href='SendSurvey.php'>Send Survey</a></li>
+                    <li><a href='SurveyResults.php'>Survey Results</a></li>
+                    <!--
+                    <li><a href='investigationRequest.php'>Request Investigation</a></li>
+                    -->
+                    <li><a href='AdminChats.php'>Admin Chats</a></li>
+                    <li><a href='DisplayAuditorComments.php'>Display Auditor Comments</a></li>
+
+                    <?php
+                    }
+                    /*------------------------------------- If Customer -------------------------------------*/
+
+                    else if($_SESSION['userType'] == "customer"){
+                    ?>
+
+                      <li><a href='SuggestProduct.php'>Suggest a Product</a></li>                    
+                    <?php
+                    }
+                    
+                    /*------------------------------------- If Administrator -------------------------------------*/
+
+                    else if($_SESSION['userType'] == "administrator"){
+                        ?>
+                        <li><a href='AddProduct.php'>Add a Product</a></li>
+                        <li><a href='SearchOrder.php'>Customers Orders</a></li>
+                        <li><a href='DisplayCustomersList.php'>DisplayCustomersList</a></li>
+
+                        <?php
+                    }
+                    /*--------------------------------------- If HR Partner ---------------------------------------*/
+
+                    else if($_SESSION['userType'] == "hrpartner"){
+                      ?>
+                        <!--
+                          <li><a href='ViewInvestigationRequest.php'>View Investigation Requests</a></li>
+                        -->
+                        <li><a href='Penalty.php'>Penalties</a></li>
+                      <?php
+                    }  
+                    ?>
+                    <!--------------------------------------- Shared --------------------------------------->
+                    <li><a href='ContactUs.php'>Contacts</a></li>
+
+                    </ul>
+                <?php
+                }
+                ?>
+
+                    
+
+
         </div>
       </nav>
 

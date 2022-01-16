@@ -44,7 +44,7 @@
         <h1>Sign Up</h1><br><br>
 <div class ="form-group">
             <label for="profilepic">Profile Picture:</label> <br>
-            <input type="file" name="profilepic" class="form-control-file" ><br>
+            <input type="file" name="profilepic" class="form-control-file" ><br><br>
             
 </div>
 <div class ="form-group">

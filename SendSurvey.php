@@ -61,6 +61,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button> 
                             </div>
+                            <br>
                             <?php
                         }
                         //echo "<input type='checkbox' name='customers[]' value='' hidden checked>";

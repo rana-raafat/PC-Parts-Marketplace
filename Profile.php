@@ -98,7 +98,7 @@
                         else if($_SESSION['userType']=='customer'){
                             if($row['userType']!='customer'){
                                 //if they open a profile that isn't a customer have a 'Message' button
-                                echo "<a href='chat.php?id=". $row['id'] ."'><input type='submit' name='message' value='Message'></a>";
+                                echo "<a href='Chat.php?id=". $row['id'] ."'><input type='submit' name='message' value='Message Button'></a>";
                             }
                         }
                         else if($_SESSION['userType']=='hrpartner'){

@@ -38,7 +38,9 @@
 <form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);' class="form-horizontal">
 <div class ="form-group">
         <label>Image:</label> 
+        <br>
         <input type="file" name="productpic" ><br>
+        <br><br>
         <label>Name:</label>
         <input type="text" name="name" placeholder="Enter product name"  class="form-control">
         <div class='alert alert-danger' id="NameAlert" style="visibility: hidden">               
@@ -49,9 +51,9 @@
             </button> 
         </div><br>
         <label>Link:</label><br>
-        <input type="url" name="link" placeholder="The link for the product" style="color:black"  class="form-control"><br><br>
+        <input type="url" name="link" placeholder="The link for the product" class="form-control"><br><br>
         <label>Description:</label> <br>
-        <textarea name="description" rows="4" cols="30" style="color:black" maxlength='255'></textarea>
+        <textarea name="description" style="width: 100%;"></textarea>
         <div class='alert alert-danger' id="DescAlert" style="visibility: hidden" >               
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <label id="DescError"></label>
@@ -104,7 +106,7 @@ if(isset($_POST["submit"])){
         $pic=$imagePath;
         $name=$_POST["name"];
         $link='No link';
-        if(isset($_POST["link"])){
+        if($_POST["link"]!=''){
             $link=$_POST["link"];
         }
         
@@ -137,7 +139,7 @@ if(isset($_POST["submit"])){
             }
         }
         $con->close();
-        //echo "<script>window.location.href='Home.php'</script>";
+        echo "<script>window.location.href='Home.php'</script>";
         
     }
 
