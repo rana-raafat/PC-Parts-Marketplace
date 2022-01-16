@@ -6,11 +6,11 @@
     <?php
         session_start();
         include "Menu.php";
-
         if(isset($_SESSION['id'])){
             if($_SESSION['userType']=='administrator'){
                 ?>
-                <form class='searchbar' action="" method="post">
+                <div class='container justify-content-center'>
+                <form class='' action="" method="post">
                     <input type="text" name="OrderQuery" placeholder="Search for an order">
                     <button class="btn btn-basic search-ordr" type="submit" name="submitOrder">
                         <i class="glyphicon glyphicon-search"></i></button> 
@@ -22,6 +22,8 @@
                     </select>
                     <button type="submit" name="showAll">Show All Orders</button><br><br>
                 </form>
+                </div>
+
                 <?php
             }
         }
@@ -81,7 +83,7 @@
             
         }
         if(isset($_POST['showAll'])){
-            echo "<br><br><br><div class='container'><div class='card justify-content-center'><div class='carda'>";
+            echo "<div class='container'><div class='card justify-content-center'><div class='carda'>";
             echo "<table border=2 class='table'>";
             echo "<thead><tr><th>Order ID</th><th>Customer</th> <th>Amount of Products</th> <th>Completed</th></tr></thead><tbody>";
             $allsql= "SELECT * FROM orders";
@@ -107,7 +109,7 @@
         else if(isset($_GET['id'])){
             //display order details
 
-            echo "<br><br><br><br><div class='container'><div class='card justify-content-center'><div class='carda'><h3>Order details</h3>";
+            echo "<div class='container'><div class='card justify-content-center'><div class='carda'><h3>Order details</h3>";
             $ordersql="SELECT * FROM orders WHERE orderID='" . $_GET['id'] . "'";
             $orderresult = mysqli_query($con,$ordersql);
             if (!$orderresult) {
