@@ -1,12 +1,14 @@
 <html>
 <head>
 <title>Admin chats</title>
-</head>
-<body>
+    </head>
+
+    <body>
 <?php
 
-session_start();
+session_start();  
 include "Menu.php";
+
 if($_SESSION['userType']=='auditor')
 {
     
@@ -52,26 +54,44 @@ if($_SESSION['userType']=='auditor')
                 }
                 
     }
+    ?>
+    <div class='container'>
+                        <div class='card justify-content-center'>
+                                <div class='carda'>
+                                    <table class='table table-responsive'>
+<?php
                 for($i=0;$i<sizeof($unique_admin_IDS);$i++)
                 {
-                    echo $unique_admin_images[$i]." ";
-                    echo $unique_admin_names[$i]." ";
-                    echo $unique_admin_IDS[$i]." ";
-                    echo $unique_admin_usertype[$i]." ";
+                        
+                    echo "<tr>";
+                    echo "<td><img src='". $unique_admin_images[$i]."'  class='user-pic-icon'><img>" .  $unique_admin_names[$i]."</td>";
+                    echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype[$i]." </td>";
                     
 ?>
-                <form method="Post" action="AdminChats.php">
+<td>
+                <form method="Post" action="AdminChats.php#2">
                     
                <!-- <a href=MakeCommentsOnChats.php?id=<?php //echo $unique_admin_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
                <?php
                  echo"<input type=hidden name=uAdminId value=".$unique_admin_IDS[$i].">";       
                ?>
                 
-                    <input type="submit" name="submitted">
+                    <button type="submit" name="submitted"><i class='fa fa-commenting'></i></button>
                 </form>
                 <br>
-  <?php                     
+                </td>
+  <?php                   
+                  echo "</tr>";
+  
                 }
+
+                ?>
+                 </table>
+                 </div>
+                                    </div>
+                                            </div>
+                                               <?php
+                
             }
 
             if( isset($_POST['submitted']) ){
@@ -82,15 +102,7 @@ if($_SESSION['userType']=='auditor')
                  die();
             }
         
-            echo "<table border='1'>
-                <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Chats</th>
-                <th>userType</th>
-                <th>ImagePath</th>
-                
-                </tr>";
+
                 $sql="SELECT * FROM message WHERE (senderID='".$_POST['uAdminId']."') OR ( recepientID='".$_POST['uAdminId']."')";
                 //$sql2="SELECT username, id FROM users WHERE username !='" . $_POST['username'] . "'";
                 $result = mysqli_query($conn,$sql);
@@ -98,7 +110,6 @@ if($_SESSION['userType']=='auditor')
                     echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                     die();
                 }
-                echo "<tr>";
 
                 $unique_customer_name_arr=array(); 
                 $unique_customer_id_arr=array();
@@ -173,17 +184,23 @@ if($_SESSION['userType']=='auditor')
                             }  
                         }
                 
-        }     
+        }        ?>
+        <div class='container'>
+                            <div class='card justify-content-center' id='2'>
+                                    <div class='carda'>
+                                        <table class='table table-responsive'>
+    <?php
     // mohamed mohamed mohamed hady farah hady
             for ($i=0;$i<sizeof($unique_customer_name_arr);$i++)
             {
+               
                        
-    ?>
-    <tr>
-        <td><?php echo $unique_customer_id_arr[$i]; ?></td>
-        <td><?php echo $unique_customer_name_arr[$i]; ?></td>
-        <!--<td><a href=Chat.php?id=<?php //echo $unique_customer_id_arr[$i]; ?> >Message</a></td>-->
-        
+echo"    <tr>";
+    echo "<td><img src='". $unique_customer_image_arr[$i]."'  class='user-pic-icon'><img>" .  $unique_customer_name_arr[$i]."</td>";
+                    echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype[$i]." </td>";
+                    ?>
+                            <!--<td><a href=Chat.php?id=<?php //echo $unique_customer_id_arr[$i]; ?> >Message</a></td>-->
+            <td>
         <form method="Post" action="MakeCommentsOnChats.php">
                     
                     <!-- <a href=MakeCommentsOnChats.php?id=<?php //echo $unique_admin_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
@@ -194,19 +211,23 @@ if($_SESSION['userType']=='auditor')
                     }      
                     ?>
                      
-                        <td> <input type="submit" name="uCustomerId_uAdminIdSubmitted"> </td>
+                        <button type="submit" name="uCustomerId_uAdminIdSubmitted"><i class='fa fa-commenting'></i></button>
+
         </form>
 
-        <td><?php echo $unique_customer_usertype_arr[$i]; ?></td>
-        <td><?php echo $unique_customer_image_arr[$i]; ?></td>
-    
+                </td>    
     </tr> 
     
     <?php
     
         }
-        echo"</table>";
-
+        ?>
+        </table>
+        </div>
+                           </div>
+                                   </div>
+                                      <?php
+       
         
    
         $conn->close(); 

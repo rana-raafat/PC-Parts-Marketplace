@@ -2,12 +2,11 @@
     <head>
         <title>Chats</title>
     </head>
-
     <body>
 <?php
-        session_start();
+        session_start(); 
         include "Menu.php";
-       
+
         $conn = new mysqli("localhost","root","", "project");
 
         $sql="SELECT * FROM message, users WHERE ( (senderID='".$_SESSION['id']."') OR ( recepientID='".$_SESSION['id']."') ) AND SenderID=users.id";

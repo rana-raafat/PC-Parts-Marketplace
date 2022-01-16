@@ -129,8 +129,11 @@
 
             $delete="DELETE FROM cartitem WHERE productID ='". $_POST['productID']. "' AND customerID='" . $_SESSION['id'] . "'";
             $result=mysqli_query($conn,$delete);
+<<<<<<< Updated upstream
 
+=======
             
+>>>>>>> Stashed changes
             $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts-1 WHERE orderID='" . $_POST['orderID'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
             $updateOrderResult = $conn->query($updateOrdersql);
 

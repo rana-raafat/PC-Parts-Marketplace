@@ -262,46 +262,6 @@
                     $reviewResult = $con->query($updateReview);
                     $updateRating = "UPDATE product SET " . $_POST['newRating'] . "=" . $_POST['newRating'] . " + 1, ". $stars . "=" . $stars . "-1 WHERE id='" . $id . "'";
                 
-                $decrement_reviews_sql = "UPDATE product SET " . $stars . "=" . $stars . "-1, numberOfReviews = numberOfReviews-1 WHERE id='" . $id . "'";
-                if(!$deleteResult){ //exception here
-                    echo "Error deleting from the review table<br>";
-                }
-                else {
-                    $decrementResult = $con->query($decrement_reviews_sql);
-                    if(!$decrementResult){ //exception here
-                        echo "Error decrementing the reviews in product table<br>";
-                    } 
-                    else{
-                        //header("Location:DisplayProduct.php?id=".$id);
-                        ?>
-                        <script>
-                            $(document).ready(function() {
-                                window.location.href = window.location.href;
-                            });
-                        </script>
-                        <?php
-                    }
-                }
-               
-            }
-            echo "<h3 class='product-price'>Reviews: </h3><br>";
-            //if the logged in user has reviewed this product remove the form and place a "edit review" option instead 
-            if(isset($_SESSION['id'])){
-                if($_SESSION['userType']=='customer'){
-                    if(!$reviewed){
-                        ?>
-                        <h4 class='product-dsc'>Rate this product:</h4>
-                        <form method='post' action='' onsubmit='return validate(this);'>
-                            <input type='radio' name='rating' value='' hidden checked>
-                            <input type='radio' name='rating' value='1star'>1 star 
-                            <input type='radio' name='rating' value='2stars'>2 stars
-                            <input type='radio' name='rating' value='3stars'>3 stars
-                            <input type='radio' name='rating' value='4stars'>4 stars
-                            <input type='radio' name='rating' value='5stars'>5 stars<br><br>
-                            <textarea name='review' rows='4' cols='50' maxlength='255'>Write a review...</textarea><br>
-                            <input type='submit' name='submitReview' value='submit'>
-                        </form>
-                        <?php
                     if(!$reviewResult){ //exception here
                         echo "Error updating the review table<br>";
                     }
@@ -322,11 +282,6 @@
                         }
                     }
                 }
-            }
-            
-            //need to add rating and reviews and such here
-            echo  "<div id='reviews'>";
-                if($row['numberOfReviews']>0){
                 else if(isset($_POST['deleteReview'])){
                     $deleteReview = "DELETE FROM review WHERE productID='" . $id . "' AND customerID='" . $_SESSION['id'] ."'";
                     $deleteResult = $con->query($deleteReview);
