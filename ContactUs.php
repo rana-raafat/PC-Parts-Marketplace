@@ -40,8 +40,8 @@ if ($result->num_rows == 0) {
                                     <tr>
                                         <td>
                                             <?php
-                                            echo "<img src=". $row['imagePath']. " class='user-pic-icon'><img>";
-                                            echo $row['username'];
+                                            echo "<img src=". $row['imagePath']. " class='user-pic-icon'>";
+                                            echo "<a href=profile.php?id=" . $row['id'] . "> " . $row['username'] . "</a>";
                                             ?> 
                                         </td>
                                         <td>
