@@ -26,9 +26,10 @@
     }
     </script>
             <div class="container">
-            <div class="card justify-content-center">
-                <div class="carda">
-    <h1>Add a Product</h1>
+            <div class="card justify-content-center"> 
+                <br><h1 class='center'>&nbsp;&nbsp; Add a Product</h1>
+                <div class="cardb">
+   
     <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);"class="form-horizontal" >
     <label>Image:</label> 
         <input type="file" name="productpic"><br>

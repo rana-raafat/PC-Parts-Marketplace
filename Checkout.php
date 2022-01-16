@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
-        <title> Contact Us </title>
+        <title> Checkout </title>
     </head>
     <body>
 
@@ -13,12 +13,15 @@ $con = new mysqli("localhost", "root", "", "project");
 
 if(!$con){
     echo "connection error<br>";
-    die();
-}?>
+    die();    
+}
+echo "Name: ". $_SESSION['username']."<br>";
+echo "Address: " . $_SESSION['address']."<br>";
+?>
 <form method='post'>
-<button onclick="location.href='Home.php'" name="purchasecomplete">Confirm Purchase</button>
-</form>
-<button onclick="location.href='Cart.php'">Negate Purchase</button>
+<button name="purchasecomplete">Confirm Purchase</button>
+
+<button onclick="location.href='Cart.php'">Negate Purchase</button></form>
 <?php
 $totalPrice=0;
 $sql= "SELECT  `productID` FROM `cartitem` WHERE `customerID`='". $_SESSION['id']."'";
@@ -30,15 +33,22 @@ $result2=mysqli_query($con,$sql2);
 $row2=$result2->fetch_assoc();
 $totalPrice+=$row2['price'];
 }
-echo " <br>Total Price:$totalPrice";
+echo " <br>Total Price: $totalPrice";
 if(isset($_POST["purchasecomplete"])){
     $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
     $result4 = mysqli_query($con,$sql4);
     
-    echo"Product Bought Successfully";
-    echo "<script>window.location.href='Home.php'</script>";
+    echo"<br>Products Bought Successfully<br>";
+    
     $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
     $result5 = mysqli_query($con,$sql5);
+    if(!$result5){
+        echo "error creating a new order<br>";
+    }
+    else{
+        echo "<script>window.location.href='Home.php'</script>";
+    }
+    
 }
 
 ?>

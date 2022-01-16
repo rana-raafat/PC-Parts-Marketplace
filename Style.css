@@ -670,10 +670,25 @@ input.form-control.txtToBeSent{
 
 /**********************************************************************************************************************/
 
+h1.center{
+    text-align: center;
+}
 
 .carda{
     align-content: center;
     text-align: center;
+    height: 520px;
+    /*width: 400px;*/
+    min-width: 400px;
+    margin: 25px;
+    overflow-y: auto;
+    background: #222;
+    border-radius: 15px 15px 15px 15px ;
+    padding: 15px;
+}
+.cardb{
+    align-content: center;
+    text-align: left;
     height: 520px;
     /*width: 400px;*/
     min-width: 400px;
