@@ -15,8 +15,8 @@
                 $uCustomerId=$_POST['uCustomerId'];
                 $uAdminId2=$_POST['uAdminId2'];
                 
-                //echo "<h1>".$uCustomerId."</h1>";
-                //echo  "<h1>".$uAdminId2."</h1>";
+                echo "<h1>".$uCustomerId."</h1>";
+                echo  "<h1>".$uAdminId2."</h1>";
 
             }
 
@@ -74,28 +74,31 @@
                 }
             
             }
-
-            if(isset($_POST['send'])) {
-
-                $sql2="INSERT INTO auditorcomment(auditorID,messageID,commentText,readStatus) VALUES('". $_SESSION['id'] ."','". $_POST['num'] ."','". $_POST['txt'] ."','1') " ;
-                $result2 = mysqli_query($conn,$sql2);
-                if(!$result2){
-                    echo "couldn't insert into the DataBase<br>";
-                    die();
-                }
-                $conn->close();
-                //echo "<script>window.location.href='test2.php'</script>"; 
-            }
-
-            if(isset($_POST['exit']))
-            {
-                header("Location:AuditorComments.php");
-            }
             
+                if(isset($_POST['send'])) {
 
+                    $sql2="INSERT INTO auditorcomment(auditorID,messageID,commentText,readStatus) VALUES('". $_SESSION['id'] ."','". $_POST['num'] ."','". $_POST['txt'] ."','1') " ;
+                    $result2 = mysqli_query($conn,$sql2);
+                    if(!$result2){
+                        echo "couldn't insert into the DataBase<br>";
+                        die();
+                    }
+                    $conn->close();
+                    //echo "<script>window.location.href='test2.php'</script>"; 
+                }
 
-        } 
+                if(isset($_POST['exit']))
+                {
+                    echo "<script>window.location.href='AdminChats.php'</script>";
+                }
+       
+            else
+            {
+                echo"please enter a number";
+            }
+    }
             ?>
+
 
             <form action="" method="post">
             
@@ -104,6 +107,7 @@
 
             please enter your comment:
             <input type="textarea" name="txt"><br>
+
             <input type=hidden name=uCustomerId value="<?php echo $uCustomerId; ?>" >
             <input type=hidden name=uAdminId2 value="<?php echo $uAdminId2; ?>" >
 
