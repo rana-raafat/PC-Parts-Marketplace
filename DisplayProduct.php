@@ -310,7 +310,7 @@
                 }
                
             }
-            
+            echo "<h3 class='product-price'>Reviews: </h3><br>";
             //if the logged in user has reviewed this product remove the form and place a "edit review" option instead 
             if(isset($_SESSION['id'])){
                 if($_SESSION['userType']=='customer'){
@@ -362,7 +362,7 @@
                     }
                 }
             }
-            echo "<h3 class='product-price'>Reviews: </h3><br>";
+            
             //need to add rating and reviews and such here
             echo  "<div id='reviews'>";
                 if($row['numberOfReviews']>0){

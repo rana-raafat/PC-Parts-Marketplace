@@ -241,8 +241,8 @@
         }
         else
         {
-            echo "seen succesfully<br>";
-            echo $user_id;
+            //echo "seen succesfully<br>";
+            //echo $user_id;
         }
         $conn->close();
 

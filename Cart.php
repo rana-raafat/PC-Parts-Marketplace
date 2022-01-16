@@ -130,7 +130,7 @@
             $delete="DELETE FROM cartitem WHERE productID ='". $_POST['productID']. "' AND customerID='" . $_SESSION['id'] . "'";
             $result=mysqli_query($conn,$delete);
 
-            $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts-1 WHERE id='" . $_POST['orderID'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
+            $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts-1 WHERE orderID='" . $_POST['orderID'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
             $updateOrderResult = $conn->query($updateOrdersql);
 
             if(!$result || !$updateOrderResult){
