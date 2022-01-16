@@ -29,9 +29,10 @@
             else{
                 echo "Please enter a number<br>";
             }
+            echo "<script>window.location.href='Home.php'</script>";
         }
         else{
-            echo"Please fill in the values";
+            //echo"Please fill in the values";
         }
     ?>
 
@@ -43,10 +44,10 @@
             fail+="Age is required\n";
         }
         if(form.rating.value==""){
-            fail+="pleasse select a rating\n";
+            fail+="please select a rating\n";
         }
         if(form.review.value==""){
-            fail+="pleasse select enter a review\n";
+            fail+="please enter an improvement suggestion\n";
         }
         if(fail == ""){
             return true;
@@ -64,7 +65,7 @@
             <div class="carda h-100 border-primary justify-content-center">
                 <div>
 <form action="" method="post" onsubmit="return validate(this);"class="form-horizontal"> 
-<h3>Feedback</h3><br>
+<h2>Feedback</h2><br>
 <label class="form-check-label">Please rate your experience</label>
 
 <div class="form-check">
@@ -84,7 +85,7 @@
     <label >Suggested Improvements:</label><br>
     <textarea name="review" class="form-control" maxlength='255'></textarea><br>
     <label >What is your age?</label>
-    <input type="text" name="Age" class="form-control">
+    <input type="number" name="Age" class="form-control">
     <input type="submit" value="submit" name="submit">
     <input type="reset" > <br><br>
 </form>   

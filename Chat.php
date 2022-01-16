@@ -221,7 +221,7 @@
         <?php
         if(isset($_POST['send'])) {
             if(!empty($_POST['txt'])){
-                $sql2="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $_GET['id'] ."','0','". $_POST['txt'] ."','0') " ;
+                $sql2='INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES("'. $_SESSION['id'] .'","'. $_GET['id'] .'","0","'. $_POST['txt'] .'","0")' ;
                 $result2 = mysqli_query($conn,$sql2);
                 if(!$result2){
                     echo "couldn't insert into the DataBase<br>";

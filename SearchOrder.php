@@ -50,7 +50,7 @@
                     break;
                 }
                 case 'product':{
-                    $sql="SELECT orderID,completed FROM product,cartitem,orders WHERE cartitem.productID=product.id AND orders.orderID=cartitem.orderID AND product.name LIKE '%" . $search . "%'";
+                    $sql="SELECT orders.orderID,orders.completed FROM product,cartitem,orders WHERE cartitem.productID=product.id AND orders.orderID=cartitem.orderID AND product.name LIKE '%" . $search . "%'";
                     break;
                 }
             }

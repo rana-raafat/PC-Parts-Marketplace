@@ -104,7 +104,7 @@ if(isset($_POST["submit"])){
         $pic=$imagePath;
         $name=$_POST["name"];
         $link='No link';
-        if(isset($_POST["link"])){
+        if($_POST["link"]!=''){
             $link=$_POST["link"];
         }
         
@@ -137,7 +137,7 @@ if(isset($_POST["submit"])){
             }
         }
         $con->close();
-        //echo "<script>window.location.href='Home.php'</script>";
+        echo "<script>window.location.href='Home.php'</script>";
         
     }
 
