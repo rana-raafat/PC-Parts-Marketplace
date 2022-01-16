@@ -31,22 +31,23 @@
                 <div class="cardb">
    
     <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);"class="form-horizontal" >
-    <label>Image:</label> 
-        <input type="file" name="productpic"><br>
-        <label>Name:</label>
-        <input type="text" name="name" placeholder="Enter product name"><br>
+    <label>Image:</label><br>
+        <input type="file" name="productpic"><br><br>
+        <label>Name:</label><br>
+        <input type="text" name="name" placeholder="Enter product name" class='form-control'><br>
         <label>Describtion:</label> <br>
-        <textarea name="description" rows="4" cols="30">Enter description here</textarea><br><br>
+        <textarea name="description" placeholder="Enter description here"></textarea><br><br>
         <label>Price:</label> <br>
-        <input type="number" name="price" min="0" step="0.01" value="0"><br><br>
+        <input type="number" name="price" min="0" step="0.25" value="0"><br><br>
         <label>Select a category:</label> <br>
         <input type="radio" name="category" value="Motherboard" checked> Motherboard <br>
         <input type="radio" name="category" value="RAM"> RAM <br>
         <input type="radio" name="category" value="Graphics Card"> Graphics Card <br>
         <input type="radio" name="category" value="Fan"> Fan <br>
         <input type="radio" name="category" value="HDD/SSD"> HDD/SSD <br>
-        <input type="radio" name="category" value="Processor"> Processor <br>
-        <input type="submit" name="submit"><br>
+        <input type="radio" name="category" value="Processor"> Processor <br><br>
+        <br>
+        <input type="submit" name="submit">
     </form>
 </div>
 </div>

@@ -27,7 +27,10 @@
                 echo "Error: Request not found<br>";
             }
             else if($requestRow = $requestResult->fetch_assoc()){
-                echo "<h1>Investigation Request " . $_GET['id'] . "</h1>";
+                echo "<h3>Investigation Request</h3>";
+                //echo "<br>";
+                echo "<text class='header'>Number " . $_GET['id'] . "</text>";
+                echo "<br><br>";
 
                 $auditorsql = "SELECT username FROM users WHERE id='" . $requestRow['auditorID'] . "'";
                 $auditorResult = $con->query($auditorsql);
@@ -35,7 +38,10 @@
                     echo "Error: Auditor not found<br>";
                 }
                 else if($auditorRow = $auditorResult->fetch_assoc()){
-                    echo "This investigation was requested by: " . $auditorRow['username'] . "<br><br>";
+                    echo "<text class='header2'><i class='glyphicon glyphicon-triangle-right'></i> This investigation was requested by: </text>"; 
+                    echo "<br>";
+                    echo "<i>" .$auditorRow['username'] . "</i>";
+                    echo "<br><br>";
                 }
 
                 $hrsql = "SELECT username FROM users WHERE id='" . $requestRow['hrID'] . "'";
@@ -44,7 +50,10 @@
                     echo "Error: Hr not found<br>";
                 }
                 else if($hrRow = $hrResult->fetch_assoc()){
-                    echo "This request was sent to: " . $hrRow['username'] . "<br><br>";
+                    echo "<text class='header2'><i class='glyphicon glyphicon-triangle-right'></i> This request was sent to: </text>";
+                    echo "<br>";
+                    echo "<i>" . $hrRow['username'] . "</i>";
+                    echo "<br><br>";
                 }
 
                 $adminsql = "SELECT username FROM users WHERE id='" . $requestRow['adminID'] . "'";
@@ -53,11 +62,17 @@
                     echo "Error: Admin not found<br>";
                 }
                 else if($adminRow = $adminResult->fetch_assoc()){
-                    echo "This investigation will be made into: " . $adminRow['username'] . "<br><br>";
+                    echo "<text class='header2'><i class='glyphicon glyphicon-triangle-right'></i> This investigation will be made into: </text>";
+                    echo "<br>";
+                    echo "<i>" . $adminRow['username'] . "</i>";
+                    echo "<br><br>";
                 }
 
-                echo "Reason for investigation: " . $requestRow['reason'] . "<br>";
-                echo "<form method='post' action=''><input type='submit' name='exit' value='exit'/><form><br><br>";
+                echo "<text class='header2'><i class='glyphicon glyphicon-triangle-right'></i> Reason for investigation: </text>";
+                echo "<br>";
+                echo "<i>" .$requestRow['reason'] . "</i>";
+                echo "<br><br>";
+                echo "<form method='post' action=''><input type='submit' name='exit' value='exit'/><form><br>";
             }
 
             $con->close();

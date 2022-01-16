@@ -59,7 +59,8 @@ if(isset($_POST["purchasecomplete"])){
 ?>
 <button name="purchasecomplete">Confirm Purchase</button>
 
-<button onclick="location.href='Cart.php'">Negate Purchase</button></form>
+<button onclick="location.href='Cart.php'">Go Back</button>
+</form>
 </div>
 </div>
 </div>

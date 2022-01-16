@@ -44,10 +44,21 @@
                                 ?>
 
                                 <a href="Chat.php?id=<?php echo $plist_row['id']?>">
-                                    <ul class="list-unstyled chat-list">
+                                    <ul class="list-unstyled chat-list">                              
                                         <li class="clearfix">
                                             <img src="<?php echo $plist_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
-                                            <div class="about">
+                                            <?php
+                                    if($plist_row['readStatus']==0){
+                                        ?>
+                                            <div class="about unread">
+                                        <?php
+                                    }
+                                    else{
+                                        ?>
+                                            <div class="about read">
+                                        <?php
+                                    }
+                                    ?>         
                                                 <div class="name"> <?php echo $plist_row['username'];?> </div>
                                                 <div class="job"><i class="fa fa-user"></i> <?php echo $plist_row['userType']; ?> </div>                                            
                                             </div>
@@ -82,13 +93,25 @@
                                     ?>
 
                                     <a href="Chat.php?id=<?php echo $plist_exc_row['id']?>">
-                                        <ul class="list-unstyled chat-list">
-                                            <li class="clearfix">
-                                                <img src="<?php echo $plist_exc_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
-                                                <div class="about">
+                                    <ul class="list-unstyled chat-list">                              
+                                        <li class="clearfix">
+                                            <img src="<?php echo $plist_exc_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
+                                            <?php
+                                    if($plist_exc_row['readStatus']==0){
+                                        ?>
+                                            <div class="about unread">
+                                        <?php
+                                    }
+                                    else{
+                                        ?>
+                                            <div class="about read">
+                                        <?php
+                                    }
+                                    ?>  
                                                     <div class="name"> <?php echo $plist_exc_row['username'];?> </div>
                                                     <div class="job"><i class="fa fa-user"></i> <?php echo $plist_exc_row['userType']; ?> </div>                                            
                                                 </div>
+                                                <br>
                                             </li>
                                         </ul>
                                     </a>
@@ -105,6 +128,13 @@
 
                     <?php
                     if(!empty($_GET['id'])){
+                        $user_id=$_SESSION['id'];
+                        $seen_message_sql="UPDATE message SET readStatus=1 WHERE recepientID=$user_id";
+                        $seen = mysqli_query($conn,$seen_message_sql);
+                        if(!$seen){
+                            echo "couldn't implement the seen sql<br>";
+                            die();
+                        }
                     ?>
                         <div class="chat chat-column">
                             <?php
@@ -232,18 +262,6 @@
             }
         }
 
-        $user_id=$_SESSION['id'];
-        $seen_message_sql="UPDATE message SET readStatus=1 WHERE recepientID=$user_id";
-        $seen = mysqli_query($conn,$seen_message_sql);
-        if(!$seen){
-            echo "couldn't implement the seen sql<br>";
-            die();
-        }
-        else
-        {
-            //echo "seen succesfully<br>";
-            //echo $user_id;
-        }
         $conn->close();
 
         ?>

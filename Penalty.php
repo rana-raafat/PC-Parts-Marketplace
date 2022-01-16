@@ -43,15 +43,14 @@
                 }
                 else{
                     ?>
-                    <div class="container h-100">
-                        <div class="row align-items-center h-100">
-                            <div class="col-6 mx-auto">
-                                 <div class="carda h-100 border-primary justify-content-center">
+                    <div class="container">
+                        <div class="card justify-content-center">
+                                 <div class="form-container">
                                      
                                       <div>
                     <form action='' method='post' onsubmit="return validate(this);" class ="form-horizontal">
-                    <h3>Add a Penalty</h3><br><br>
-                    <label>Please select the Admininstrator this penalty will be given to: </label>
+                    <h3>Penalties</h3><br>
+                    <label>Select the Admininstrator this penalty will be given to: </label>
                     
                     <?php
                     echo "<select name='admin'>";
@@ -61,19 +60,18 @@
                         echo "<option value='". $row['id'] ."'>". $row['username'] . "</option>";
                     }
                     echo "</select>";
-                    echo "<br><br>";
+                    echo "<br><br><br>";
                 }
                 ?>
-                    <label for="reason">REASON FOR PENALTY:</label>
-                    <input type="text" class="form-control" name="reason" placeholder="Enter Reason" >
+                    <label for="reason">Reason for Penalty:</label>
+                    <textarea name="reason" placeholder="Enter Reason" ></textarea> <br><br>
                     <input type="submit"  value="Submit" name ="Submit">
-                    <input type="reset" > <br>
+                    <input type="reset"> <br>
 
 
 
 
                 </form>
-                </div>
                 </div>
                 </div>
                 </div>

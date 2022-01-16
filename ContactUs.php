@@ -52,7 +52,7 @@ if ($result->num_rows == 0) {
                                         </td>
                                         <td> 
                                             <?php
-                                            echo "<a href=Chat.php?id=". $row['id'] . ">Send a Message</a>";
+                                            echo "<a href=Chat.php?id=". $row['id'] . ">Send a Message <i class='fa fa-commenting'></i></a>";
                                             ?> 
                                         </td>
                                     </tr>
@@ -62,8 +62,6 @@ if ($result->num_rows == 0) {
                             </tbody>
                         </table>
                     </div>
-                    <br>
-                    <button onclick="location.href='SuggestProduct.php'">Suggest a Product</button>
                     <br>
                 </div>
             </div>

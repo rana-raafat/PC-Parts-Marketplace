@@ -33,7 +33,7 @@
             $hrname=$hrresult->fetch_assoc();
             echo "<div class='container'>";
             echo "<div class='card justify-content-center'>";
-            echo "<div class='investigationRequest'>";
+            echo "<div class='form-container'>";
             echo "<h4>HRPartner Name </h4>";
             echo"<p class='review'>". $hrname['username'] ."</p>";
             echo "<br><br>";

@@ -22,7 +22,7 @@
         ?>
         <div class="container">
             <div class="card justify-content-center">
-                <div class="carda">
+                <div class="SurveyResults">
                     <h3 style="text-align: center";>Survey Results</h3>
                     <table class="content-table">
                         <tr>
