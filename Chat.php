@@ -227,11 +227,27 @@
                     echo "couldn't insert into the DataBase<br>";
                     die();
                 }
-                $conn->close();
+                
                 echo "<script>window.location.href='Chat.php?id=". $_GET['id']."'</script>";
             }
         }
+
+        $user_id=$_SESSION['id'];
+        $seen_message_sql="UPDATE message SET readStatus=1 WHERE recepientID=$user_id";
+        $seen = mysqli_query($conn,$seen_message_sql);
+        if(!$seen){
+            echo "couldn't implement the seen sql<br>";
+            die();
+        }
+        else
+        {
+            echo "seen succesfully<br>";
+            echo $user_id;
+        }
+        $conn->close();
+
         ?>
+
 
     </body>
 </html>
