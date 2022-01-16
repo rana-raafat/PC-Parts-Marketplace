@@ -51,7 +51,10 @@
                                                         echo "Error: Product not found<br>";
                                                     }
                                                     else if($prodRow = $productResult->fetch_assoc()){ 
-                                                        $totalPrice+=$prodRow['price'];
+                                                        $crt="SELECT * FROM cartitem WHERE orderID='" . $row['orderID']  ."' AND productID='" . $row['productID'] ."'";
+                                                        $crtResult = mysqli_query($con,$crt);
+                                                        $crtrow=$crtResult->fetch_assoc();
+                                                        $totalPrice+=$prodRow['price']*$crtrow['amount'];
                                                         echo "<input type='hidden' name='productID' value=" . $prodRow['id'] . ">";  
                                                         echo "<tr>";
                                                             echo "<td>";
@@ -129,11 +132,8 @@
 
             $delete="DELETE FROM cartitem WHERE productID ='". $_POST['productID']. "' AND customerID='" . $_SESSION['id'] . "'";
             $result=mysqli_query($conn,$delete);
-<<<<<<< Updated upstream
 
-=======
             
->>>>>>> Stashed changes
             $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts-1 WHERE orderID='" . $_POST['orderID'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
             $updateOrderResult = $conn->query($updateOrdersql);
 

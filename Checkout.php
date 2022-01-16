@@ -32,15 +32,15 @@ echo "Address: " . $_SESSION['address']."<br>";
 
 <?php
 $totalPrice=0;
-$sql= "SELECT  `productID` FROM `cartitem` WHERE `customerID`='". $_SESSION['id']."'";
+$sql= "SELECT  * FROM `cartitem` WHERE `customerID`='". $_SESSION['id']."'";
 $result = mysqli_query($con,$sql);
 
 while($row = $result->fetch_assoc()){
 $sql2="SELECT  `price` FROM `product` WHERE `id`='". $row['productID']."'";
 $result2=mysqli_query($con,$sql2);
 $row2=$result2->fetch_assoc();
-$totalPrice+=$row2['price'];
-}
+
+}$totalPrice=$_GET['total'];
 echo " <br>Total Price: $totalPrice <br><br>";
 if(isset($_POST["purchasecomplete"])){
     $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";

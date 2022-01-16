@@ -51,7 +51,7 @@
             </button> 
         </div><br>
         <label>Link:</label><br>
-        <input type="url" name="link" placeholder="The link for the product" class="form-control"><br><br>
+        <input type="text" name="link" placeholder="The link for the product" class="form-control"><br><br>
         <label>Description:</label> <br>
         <textarea name="description" style="width: 100%;"></textarea>
         <div class='alert alert-danger' id="DescAlert" style="visibility: hidden" >               
