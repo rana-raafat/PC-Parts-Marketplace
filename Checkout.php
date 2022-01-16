@@ -1,15 +1,48 @@
 <html>
     <head>
-        <title>Checkout</title>
+        <link rel="stylesheet" href="Style.css">
+        <title> Contact Us </title>
     </head>
     <body>
-    <?php 
-        session_start();
-        include "Menu.php";
 
-        //after the purchase is complete make the completed value in the orders table for that order = 1
-        //and create a new order with customer's id, completed value=0 and numofproducts=0
-    ?>
+<?php
+//
+session_start();
+include "Menu.php";
+$con = new mysqli("localhost", "root", "", "project");
+
+if(!$con){
+    echo "connection error<br>";
+    die();
+}?>
+<form method='post'>
+<button onclick="location.href='Home.php'" name="purchasecomplete">Confirm Purchase</button>
+</form>
+<button onclick="location.href='Cart.php'">Negate Purchase</button>
+<?php
+$totalPrice=0;
+$sql= "SELECT  `productID` FROM `cartitem` WHERE `customerID`='". $_SESSION['id']."'";
+$result = mysqli_query($con,$sql);
+
+while($row = $result->fetch_assoc()){
+$sql2="SELECT  `price` FROM `product` WHERE `id`='". $row['productID']."'";
+$result2=mysqli_query($con,$sql2);
+$row2=$result2->fetch_assoc();
+$totalPrice+=$row2['price'];
+}
+echo " <br>Total Price:$totalPrice";
+if(isset($_POST["purchasecomplete"])){
+    $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
+    $result4 = mysqli_query($con,$sql4);
     
+    echo"Product Bought Successfully";
+    echo "<script>window.location.href='Home.php'</script>";
+    $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
+    $result5 = mysqli_query($con,$sql5);
+}
+
+?>
+
+
     </body>
 </html>
