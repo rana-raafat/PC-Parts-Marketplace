@@ -50,7 +50,7 @@
                                      
                                       <div>
                     <form action='' method='post' onsubmit="return validate(this);" class ="form-horizontal">
-                    <h3>Penalties</h3><br><br>
+                    <h3>Add a Penalty</h3><br><br>
                     <label>Please select the Admininstrator this penalty will be given to: </label>
                     
                     <?php
@@ -79,7 +79,7 @@
                 </div>
                 </div>
                 <?php
-                if(isset($_POST['submit'])){
+                if(isset($_POST['Submit'])){
                     $insertsql= "INSERT INTO penalty(adminID, hrID,reason) VALUES('". $_POST['admin'] ."','". $_SESSION['id']."','". $_POST['reason'] ."')";
                     $insertResult = mysqli_query($con,$insertsql);
                     
@@ -126,9 +126,8 @@
                             }
                         }
                     }
-                    else{
-                        echo "<script>window.location.href='Home.php'</script>";
-                    }
+                    echo "<script>window.location.href='Home.php'</script>";
+                    
                 }
             }
             else{

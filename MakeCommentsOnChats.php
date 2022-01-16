@@ -15,8 +15,8 @@
                 $uCustomerId=$_POST['uCustomerId'];
                 $uAdminId2=$_POST['uAdminId2'];
                 
-                echo "<h1>".$uCustomerId."</h1>";
-                echo  "<h1>".$uAdminId2."</h1>";
+                //echo "<h1>".$uCustomerId."</h1>";
+                //echo  "<h1>".$uAdminId2."</h1>";
 
             }
 

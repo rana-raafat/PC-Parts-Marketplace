@@ -27,7 +27,9 @@
                     echo "<div class='profile'>";          
                     echo "<h1>" . $row['username'] . "</h1>";
                     echo "<br>";
-                    echo "<img src='". $row['imagePath']. "' alt='profilepic' class='profile-image'>";
+                    echo "<img src='". $row['imagePath']. "' alt='profilepic' class='profile-image'><br><br>";
+                    echo "<i class='fa fa-user'></i> ";
+                    echo $row['userType'];
                     echo "<br><br>";
                     if(isset($_SESSION['id'])){
                         if($_SESSION['userType']=='administrator'){
@@ -96,7 +98,13 @@
                         else if($_SESSION['userType']=='customer'){
                             if($row['userType']!='customer'){
                                 //if they open a profile that isn't a customer have a 'Message' button
-                                echo "<a href='Messages.php?id=". $row['id'] ."'><input type='submit' name='message' value='Messagbutton'></a>";
+                                echo "<a href='chat.php?id=". $row['id'] ."'><input type='submit' name='message' value='Message'></a>";
+                            }
+                        }
+                        else if($_SESSION['userType']=='hrpartner'){
+                            if($row['userType']=='administrator'){
+                                
+                                echo "<a href='penalty.php'><input type='submit' name='penalty' value='Add a Penalty'></a>";
                             }
                         }
                     }
