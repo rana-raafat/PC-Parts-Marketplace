@@ -180,6 +180,7 @@
                         ?>
                         <li><a href='AddProduct.php'>Add a Product</a></li>
                         <li><a href='SearchOrder.php'>Customers Orders</a></li>
+                        <li><a href='DisplayCustomersList.php'>DisplayCustomersList</a></li>
 
                         <?php
                     }

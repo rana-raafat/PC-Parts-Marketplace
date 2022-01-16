@@ -9,6 +9,9 @@
 //
 session_start();
 include "Menu.php";
+if(isset($_POST['goback'])){
+    echo "<script>window.location.href='cart.php'</script>";
+}
 $con = new mysqli("localhost", "root", "", "project");
 
 if(!$con){
@@ -59,8 +62,7 @@ if(isset($_POST["purchasecomplete"])){
 ?>
 <button name="purchasecomplete">Confirm Purchase</button>
 
-<button onclick="location.href='Cart.php'">Go Back</button>
-</form>
+<button name='goback'>Negate Purchase</button></form>
 </div>
 </div>
 </div>
