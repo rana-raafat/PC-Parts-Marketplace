@@ -1,4 +1,9 @@
 <html>
+      <head>
+        <title>Survey</title>
+    </head>
+
+    <body>
     <?php 
         session_start();
         include "Menu.php";
@@ -88,4 +93,5 @@
 </div>
 </div>
 </div>
+</body>
 </html>

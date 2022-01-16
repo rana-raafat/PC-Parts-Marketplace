@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Adding product</title>
+    <title>Add a Product</title>
 </head>
 <body>
     <?php 

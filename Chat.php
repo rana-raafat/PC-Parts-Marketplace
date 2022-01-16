@@ -1,6 +1,10 @@
 <html>
     <head>
-        <?php
+        <title>Chats</title>
+    </head>
+
+    <body>
+<?php
         session_start();
         include "Menu.php";
        
@@ -8,10 +12,6 @@
 
         $sql="SELECT * FROM message, users WHERE ( (senderID='".$_SESSION['id']."') OR ( recepientID='".$_SESSION['id']."') ) AND SenderID=users.id";
         ?>
-    </head>
-
-    <body>
-
         <div class="container">
             <div class="card chat-app">
 

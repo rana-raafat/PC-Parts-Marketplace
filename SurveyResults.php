@@ -1,5 +1,6 @@
 <html>
     <head>
+        <title>Survery Results</title>
     </head>
     <body>
     <?php   

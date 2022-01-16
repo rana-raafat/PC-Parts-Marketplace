@@ -1,5 +1,9 @@
 <html>
+  <head>
+        <title>Chats</title>
+    </head>
 
+    <body>
     <?php
         session_start();
         include "Menu.php";
@@ -107,10 +111,5 @@
             <input type="submit" name="exit" value="exit"/>
             </form>
         
-<?php
-
-
-
-?>
-
+    </body>
 </html>

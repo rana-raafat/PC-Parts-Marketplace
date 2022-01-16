@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="Style.css">
-        <title> Contact Us </title>
+        <title> Reviews </title>
     </head>
     <body>
 

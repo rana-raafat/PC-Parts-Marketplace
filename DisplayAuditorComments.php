@@ -1,5 +1,8 @@
 <html>
-
+    <head>
+        <title>Auditor comments</title>
+    </head>
+<body>
 <?php 
            session_start();
            include "Menu.php";
@@ -58,5 +61,5 @@
                $conn->close();
             }
 ?>
-
+</body>
 </html>

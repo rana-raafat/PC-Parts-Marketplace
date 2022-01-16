@@ -1,3 +1,8 @@
+<html>
+<head>
+<title>Admin chats</title>
+</head>
+<body>
 <?php
 
 session_start();
@@ -207,7 +212,8 @@ if($_SESSION['userType']=='auditor')
         $conn->close(); 
 }
     ?>          
-    
+</body>
+</html>
             
 
 
