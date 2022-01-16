@@ -15,13 +15,18 @@ if(!$con){
     echo "connection error<br>";
     die();    
 }
+?>
+<div class='container'>
+                        <div class='card justify-content-center'>
+                            <div class="shoppingCart">
+                                <div class="cart-items">
+<?php
 echo "Name: ". $_SESSION['username']."<br>";
 echo "Address: " . $_SESSION['address']."<br>";
 ?>
-<form method='post'>
-<button name="purchasecomplete">Confirm Purchase</button>
 
-<button onclick="location.href='Cart.php'">Negate Purchase</button></form>
+<form method='post'class="form-horizontal">
+
 <?php
 $totalPrice=0;
 $sql= "SELECT  `productID` FROM `cartitem` WHERE `customerID`='". $_SESSION['id']."'";
@@ -33,7 +38,7 @@ $result2=mysqli_query($con,$sql2);
 $row2=$result2->fetch_assoc();
 $totalPrice+=$row2['price'];
 }
-echo " <br>Total Price: $totalPrice";
+echo " <br>Total Price: $totalPrice <br><br>";
 if(isset($_POST["purchasecomplete"])){
     $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
     $result4 = mysqli_query($con,$sql4);
@@ -52,7 +57,13 @@ if(isset($_POST["purchasecomplete"])){
 }
 
 ?>
+<button name="purchasecomplete">Confirm Purchase</button>
 
+<button onclick="location.href='Cart.php'">Negate Purchase</button></form>
+</div>
+</div>
+</div>
+</div>
 
     </body>
 </html>
