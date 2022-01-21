@@ -117,7 +117,7 @@
                 if(isset($_SESSION['username'])){
                     if($_SESSION['userType'] == "administrator"){
                         echo "<div class='text-right'>";
-                        echo "<button><a href='EditProduct.php?id=" . $row['id'] . "' class='href-btn'> Edit Product </a></button> ";
+                        echo "<a href='EditProduct.php?id=" . $row['id'] . "' class='href-btn'><button>Edit Product</button></a> ";
 
                         ?>
                         <!-------------------------------------------------- Delete Product Modal -------------------------------------------------->
@@ -145,7 +145,7 @@
                         </div>
                         <?php
 
-                        echo "<button><a data-toggle='modal' data-target='#deleteProductModal' class='href-btn'>Delete Product</a></button></div>";
+                        echo "<a data-toggle='modal' data-target='#deleteProductModal' class='href-btn'><button>Delete Product</button></a></div>";
                     }
                 }                
                 if(isset($_SESSION['username'])){

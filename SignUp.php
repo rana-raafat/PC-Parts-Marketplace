@@ -14,60 +14,124 @@
         ?>
     <script>
     function validate(form){ //sometimes when the script is under the form it causes an error where the form doesn't know what the validate function is
-        var fail="";
+        //var fail="";
         if(form.username.value==""){
-            fail+="Username required\n";
+            document.getElementById("UsernameError").innerHTML = "Username required";
+            document.getElementById("UsernameAlert").style.visibility = "visible";
+            return false;
+            //fail+="Username required\n";
         }
         if(form.email.value==""){
-            fail+="Email required\n";
+            //fail+="Email required\n";
+            document.getElementById("EmailError").innerHTML = "Email required";
+            document.getElementById("EmailAlert").style.visibility = "visible";
+            return false;
         }
         if(form.password.value==""){
-            fail+="Password required\n";
+            //fail+="Password required\n";
+            document.getElementById("PasswordError").innerHTML = "Password required";
+            document.getElementById("PasswordAlert").style.visibility = "visible";
+            return false;
         }
         if(form.address.value==""){
-            fail+="Address required\n";
+            //fail+="Address required\n";
+            document.getElementById("AddressError").innerHTML = "Address required";
+            document.getElementById("AddressAlert").style.visibility = "visible";
+            return false;
         }
-        if(fail == ""){
+        /*if(fail == ""){
             return true;
         }
         else{
             alert(fail);
             return false;
-        }     
+        }  */  
+        return true; 
     }
     </script>
 
 <div class="container">
-            <div class="card justify-content-center">
-                <div class="carda">
+    <div class="card justify-content-center">
+        <div class="carda">
         <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" class="form-horizontal">
-        <h1>Sign Up</h1><br><br>
-<div class ="form-group">
-            <label for="profilepic">Profile Picture:</label> <br>
-            <input type="file" name="profilepic" class="form-control-file" ><br><br>
-            
-</div>
-<div class ="form-group">
-            <label for="Username">Username:</label><br>
-            <input type="text" name="username" placeholder="Enter your username" maxlength=25 class="form-control"><br>
-</div>
-<div class ="form-group">
-            <label for="Email">Email:</label><br>
-            <input type="text" name="email" placeholder="Enter your email address" class="form-control"><br>
-</div>         
-<div class ="form-group">
-            <label for="Password">Password:</label><br>
-            <input type="password" name="password" placeholder="Enter your password" maxlength=50 minlength=8 class="form-control"><br>
-</div>
-<div class ="form-group">
-            <label for="Address">Address:</label><br>
-            <input type="text" name="address" placeholder="Enter your delivery address"  class="form-control" ><br>
-</div>
+            <h1>Sign Up</h1><br><br>
+            <div class ="form-group">
+                <label for="profilepic">Profile Picture:</label> <br>
+                <input type="file" name="profilepic" class="form-control-file" ><br><br>
+                <br>
+          
+                <label for="Username">Username:</label>
+                <input type="text" name="username" placeholder="Enter your username" maxlength=25 class="form-control">
+                <div class='alert alert-danger' id="UsernameAlert" style="visibility: hidden">               
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label id="UsernameError"></label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div>
+                <div class='alert alert-danger' id="UsernameTakenAlert" style="visibility: hidden">               
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label id="UsernameTakenError"></label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div><br>
+
+
+        
+                <label for="Email">Email:</label>
+                <input type="text" name="email" placeholder="Enter your email address" class="form-control">
+                <div class='alert alert-danger' id="EmailAlert" style="visibility: hidden">               
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label id="EmailError"></label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div>
+                <div class='alert alert-danger' id="BadEmailAlert" style="visibility: hidden">               
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label id="BadEmailError"></label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div>
+                <div class='alert alert-danger' id="EmailTakenAlert" style="visibility: hidden">               
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label id="EmailTakenError"></label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div>
+
+
+           
+                <br><label for="Password">Password:</label><br>
+                <input type="password" name="password" placeholder="Enter your password" maxlength=50 minlength=8 class="form-control">
+                <div class='alert alert-danger' id="PasswordAlert" style="visibility: hidden">               
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label id="PasswordError"></label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div><br>
+
+
+          
+                <label for="Address">Address:</label><br>
+                <input type="text" name="address" placeholder="Enter your delivery address"  class="form-control" >
+                <div class='alert alert-danger' id="AddressAlert" style="visibility: hidden">               
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <label id="AddressError"></label>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
+                </div><br>
+            </div>
             <input type="submit" name="submit"><br>
         </form>
         </div>
-        </div>
-        </div>
+    </div>
+</div>
 
 
 
@@ -83,7 +147,12 @@ if(isset($_POST["submit"])){
     
     $sanitizedEmail= filter_var($email, FILTER_SANITIZE_EMAIL); 
     if(!filter_var($sanitizedEmail, FILTER_VALIDATE_EMAIL)){  //check if valid email
-        echo "Error: Please enter a valid email<br>";
+        ?>
+        <script>
+            document.getElementById("BadEmailError").innerHTML = "Enter a valid email";
+            document.getElementById("BadEmailAlert").style.visibility = "visible";
+        </script>
+        <?php
     }
     else{
 
@@ -97,12 +166,26 @@ if(isset($_POST["submit"])){
         $checkUsername="SELECT * FROM users WHERE username='" . $username . "'";
         $EmailResult = $con->query($checkEmail);
         $UsernameResult = $con->query($checkUsername);
+        //try catch exception
 
         if($EmailResult->num_rows > 0){
-            echo "An account with this email already exists<br>";
+           // echo "An account with this email already exists<br>";
+           ?>
+            <script>
+                document.getElementById("EmailTakenError").innerHTML = "Email already exists";
+                document.getElementById("EmailTakenAlert").style.visibility = "visible";
+            </script>
+            <?php
+           
         }
-        if($UsernameResult->num_rows > 0){
-            echo "Username already taken<br>";
+        else if($UsernameResult->num_rows > 0){
+            //echo "Username already taken<br>";
+            ?>
+            <script>
+                document.getElementById("UsernameTakenError").innerHTML = "Username already taken";
+                document.getElementById("UsernameTakenAlert").style.visibility = "visible";
+            </script>
+            <?php
         }
         else{
             $target_dir="resources/images/ProfilePictures/";

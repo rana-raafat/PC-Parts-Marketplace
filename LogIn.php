@@ -12,7 +12,15 @@
             <div class="card justify-content-center">
                 <div class="carda">
                     <form action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);" class="form-horizontal">
-                        <h1>Log In</h1><br><br>
+                        <h1>Log In</h1>
+                        <div class='alert alert-danger' id="loginAlert" style="visibility: hidden" >               
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <label id="loginError"></label>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button> 
+                        </div>
+                        <br>
                         <label for="Email">E-mail:</label>
                         <input type="text"name="Email" placeholder="example@mail.com" class="form-control" >
 
@@ -26,7 +34,7 @@
                         <br>
 
                         <label for="Password">Password:</label>
-                        <input type="Password" name="Password" id="Password" placeholder="********" class="form-control">
+                        <input type="Password" name="Password" id="Password" placeholder="********" maxlength=50 minlength=8 class="form-control">
 
                         <div class='alert alert-danger' id="PasswordAlert" style="visibility: hidden" >               
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -38,7 +46,7 @@
                         <br>
 
                         <input type="submit"  value="Submit" name ="Submit">
-                        <input type="reset" > 
+                        <input type="reset"> 
                         <br>
                     </form>
                 </div>
@@ -53,9 +61,9 @@
             if(!filter_var($email, FILTER_VALIDATE_EMAIL))//check if valid email
             {  
                 echo "<script> 
-                document.getElementById('EmailError').innerHTML = 'Error: Please enter a valid email';
-                document.getElementById('EmailAlert').style.visibility = 'visible';
-                </script>";
+                    document.getElementById('EmailError').innerHTML = 'Enter a valid email';
+                    document.getElementById('EmailAlert').style.visibility = 'visible';
+                    </script>";
             }
             else{
                 $servername = "localhost";
@@ -91,24 +99,28 @@
                     $_SESSION["userType"]=$row['userType'];
 
                     echo "<script>window.location.href='Home.php'</script>";
-                }/*
+                }
                 else{
-                    echo "Invalid Email or Password"; //--//
-                }*/
+                    //echo "Invalid Email or Password"; 
+                    echo "<script> 
+                        document.getElementById('loginError').innerHTML = 'Incorrect email or password';
+                        document.getElementById('loginAlert').style.visibility = 'visible';
+                        </script>";
+                }
             }
         }
         ?>
 
         <script>
             function validate(form){
-                alert(form.password.value);
+                //alert(form.password.value);
                 if(form.email.value==""){
                     document.getElementById("EmailError").innerHTML = "Email required";
                     document.getElementById("EmailAlert").style.visibility = "visible";
                     return false;
                 }
                 if(form.password.value==""){
-                    alert("working!");
+                    //alert("working!");
                     document.getElementById("PasswordError").innerHTML = "Password required";
                     document.getElementById("PasswordAlert").style.visibility = "visible";
                     return false;

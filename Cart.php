@@ -92,9 +92,9 @@
                                 echo "</div>";
                                 echo "<div class='cart-footer'>";
                                     echo "<text class='header'> Total price: </text>" . $totalPrice;
-                                    echo "<br>"; 
-                                    echo "<a href='Checkout.php?total=" . $totalPrice . "'><button type='submit' name='checkout' value='checkout'>Checkout</button></a>";  
-                                echo "</div>";         
+                                    echo "<br><form action='Checkout.php' method='post'>"; 
+                                    echo "<button type='submit' name='total' value='" . $totalPrice ."'>Checkout</button>";  
+                                echo "</form></div>";         
                             echo "</div>";
                         echo "</div>";
                      echo "</div>";
