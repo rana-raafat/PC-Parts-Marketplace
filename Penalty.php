@@ -45,7 +45,7 @@
                     ?>
                     <div class="container">
                         <div class="card justify-content-center">
-                                 <div class="form-container">
+                                 <div class="medium-card-container">
                                      
                                       <div>
                     <form action='' method='post' onsubmit="return validate(this);" class ="form-horizontal">

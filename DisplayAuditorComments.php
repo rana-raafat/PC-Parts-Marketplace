@@ -26,39 +26,92 @@
    
                // just to display the name of the customer and display it at the top
                 if($fetch_auditorName = $result3->fetch_assoc()){
-                    echo "<div class='container'>";
-                    echo "<h1> All Comments </h1>";
-                    echo "</div>";
+                    echo "<div class='container'><div class='card justify-content-center'><div class='carda'><table class='content-table'>";
+                    echo "<h3> All Comments </h3>";
                 }
    
    
-                $fetch_messages_sql="SELECT * FROM auditorcomment";
+                $fetch_messages_sql="SELECT * FROM auditorcomment,message WHERE auditorcomment.messageID=message.messageID";
                 $result = mysqli_query($conn,$fetch_messages_sql);
                 if(!$result)
                 {
                     echo "couldn't read the messages from the DataBase<br>";
                     die();
                 }
-                echo "<div class='container'><div class='card justify-content-center'><div class='carda'><table class='content-table'>";
-                echo "<tr><th> MessageID </th> <th>Auditor Name</th> <th>Comment</th> </tr>";
+                echo "<tr><th>Sender</th> <th>Receiver</th> <th>Message</th> <th></th> <th>Auditor</th> <th>Auditor Comment</th> </tr>";
                 while($row = $result->fetch_assoc())
-                {   
-                    $fetch_adminName_sql="SELECT username FROM users WHERE id='" . $row['auditorID'] . "'";
-                    $result3 = mysqli_query($conn,$fetch_adminName_sql);
-                    if(!$result3)
-                    {
-                        echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                        die();
-                    }
+                {                   
                     echo "<tr>";
-                    while($fetch_auditorName = $result3->fetch_assoc())
-                    {
-                        echo "<td>".$row['messageID']."</td>";
-                        echo "<td>".$fetch_auditorName['username']."</td>";
-                      
-                        echo "<td>". $row['commentText']."</td>";
-                     
-                    }
+
+                        //------------------------------------------------------------------------------------------------//
+                        $fetch_sender_sql="SELECT imagePath,username FROM users WHERE id='" . $row['senderID'] . "'";
+                        $result3 = mysqli_query($conn,$fetch_sender_sql);
+                        if(!$result3)
+                        {
+                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                            die();
+                        }
+                        while($fetch_sender = $result3->fetch_assoc())
+                        {
+                            echo "<td>";
+                            
+                            echo "<img src=". $fetch_sender['imagePath']. " class='user-pic-icon'><img>";
+                            echo  $fetch_sender['username'];
+
+                            echo "</td>";
+                        }
+                        //------------------------------------------------------------------------------------------------//
+
+                        $fetch_recepient_sql="SELECT imagePath,username,userType FROM users WHERE id='" . $row['recepientID'] . "'";
+                        $result3 = mysqli_query($conn,$fetch_recepient_sql);
+                        if(!$result3)
+                        {
+                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                            die();
+                        }
+                        
+                        while($fetch_recepient = $result3->fetch_assoc())
+                        {
+                            
+                            echo "<td>";
+                            
+                            echo "<img src=". $fetch_recepient['imagePath']. " class='user-pic-icon'><img>";
+                            echo  $fetch_recepient['username'];
+
+                            echo "</td>";                        
+                        }
+
+                        //------------------------------------------------------------------------------------------------//
+
+                        echo "<td><i class='fa fa-quote-left'></i>   ".$row['messageText']."   <i class='fa fa-quote-right'></i></td>";
+
+                        //------------------------------------------------------------------------------------------------//
+                       
+                        echo "<td> </td>";
+                       
+                        //------------------------------------------------------------------------------------------------//
+
+                        $fetch_auditor_sql="SELECT imagePath,username FROM users WHERE id='" . $row['auditorID'] . "'";
+                        $result3 = mysqli_query($conn,$fetch_auditor_sql);
+                        if(!$result3)
+                        {
+                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                            die();
+                        }
+                        while($fetch_auditor = $result3->fetch_assoc())
+                        {
+                            echo "<td>";
+                            
+                            echo "<img src=". $fetch_auditor['imagePath']. " class='user-pic-icon'><img>";
+                            echo  $fetch_auditor['username'];
+
+                            echo "</td>";                             
+                        }
+
+                        //------------------------------------------------------------------------------------------------//
+
+                        echo "<td><i class='fa fa-quote-left'></i>   ".$row['commentText']."   <i class='fa fa-quote-right'></i></td>";
+
                     echo "</tr>";
                     
                 }

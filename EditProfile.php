@@ -106,6 +106,7 @@
                             $_SESSION["imagePath"]=$imagePath;
 
                         }
+                        echo "<script>window.location.href='Profile.php'</script>";
                     }
                 }
                 $con->close();

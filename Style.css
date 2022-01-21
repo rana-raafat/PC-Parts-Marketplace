@@ -143,7 +143,9 @@ a:visited, a:link, a:active{
     text-decoration: none;
 }
 
-
+.table>tbody>tr>td{
+    vertical-align: middle !important;
+}
 
 /***************************************************** FORM INPUTS ****************************************************/
 
@@ -187,7 +189,7 @@ input[type=number]{
 
 textarea{
     width: 480px;
-    height: 150px;
+    height: 75px;
     border-radius: 3rem;
     background: white;
     color: black;
@@ -337,7 +339,7 @@ input[type=checkbox], input[type=radio]{
     float: left;
 }
 
-.people-list .about {
+.about {
     float: left;
     padding-left: 10px
 }
@@ -363,7 +365,7 @@ input[type=checkbox], input[type=radio]{
 }
 
 .chat .chat-history{
-    height: 350px;
+    height: 366px;
     overflow:auto; 
     display:flex;
     flex-direction: column-reverse;
@@ -527,11 +529,6 @@ input.form-control.txtToBeSent{
 
 /********************************************** (HOME) CAROUSEL **********************************************************/
 
-.carousel{
-    position: relative;
-    margin-top: 30px;
-}
-
 .carousel-inner{
     border-radius: 1.5rem;
 
@@ -683,18 +680,27 @@ input.form-control.txtToBeSent{
 
 .List{
     padding:25px;
-    height: 450px;
+    height: 400px;
     overflow-y: auto;
 }
 
 /***************************************************** ... ******************************************************/
 
-.form-container{
-    text-align: center;
+.medium-card-container{
+    /*text-align: center;*/
     padding:25px;
     margin:25px;
     width: 640px;
-    height: 540px;
+    max-height: 540px;
+    overflow-y: auto;
+}
+
+.large-card-container{
+    text-align: center;
+    padding:25px;
+    margin:25px;
+    width: 840px;
+    max-height: 777px;
     overflow-y: auto;
 }
 
@@ -742,7 +748,7 @@ h1.center{
 }
 .form-control{
     align-content: center;
-    text-align: center;
+    /*text-align: center;*/
 }
 .redtext{
     color: red;

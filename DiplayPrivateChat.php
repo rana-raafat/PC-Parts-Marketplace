@@ -14,17 +14,23 @@
 
                 $uAdminId=$_POST['uAdminId'];
                 $uCustomerId2=$_POST['uCustomerId2'];
-                
-                echo "<h1>".$uAdminId."</h1>";
-                echo  "<h1>".$uCustomerId2."</h1>";
 
             }
 
             else
             {
-                echo "<h1>check again</h1>";
+                echo "check again<br>";
             } 
-            
+            ?>
+
+            <div class='container'>
+                                    <div class='card justify-content-center'>
+                                            <div class='medium-card-container'>
+                            <div class='chat'>
+                          <div class='chat-history'>
+                            <ul class='m-b-0'>
+
+                                <?php
             $conn = new mysqli("localhost","root","", "project");
             if(!$conn)
             {
@@ -42,7 +48,7 @@
 
             // just to display the name of the customer and display it at the top
             if($fetch_customerName = $result3->fetch_assoc()){
-                echo "<h1>".$fetch_customerName['username']."</h1>";
+                //echo "<h1>".$fetch_customerName['username']."</h1>";
             }
 
 
@@ -56,24 +62,48 @@
 
             while($row = $result->fetch_assoc())
             {   
-                $fetch_adminName_sql="SELECT username FROM users WHERE id='" . $row['senderID'] . "'";
+                $fetch_adminName_sql="SELECT id,username,imagePath,userType FROM users WHERE id='" . $row['senderID'] . "'";
                 $result3 = mysqli_query($conn,$fetch_adminName_sql);
                 if(!$result3)
                 {
                     echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                     die();
                 }
-                
-                while($fetch_customerName = $result3->fetch_assoc())
+                while($fetch_customer = $result3->fetch_assoc())
                 {
-                    echo $row['messageID'].": ";
-                    echo $fetch_customerName['username'];
-                    echo" : ";
+                    
+                    echo "<li class='clearfix'>";
+                    echo "<div class='message-data'>";
+                    if($fetch_customer['id']==$uCustomerId2){
+                    echo "<img src=".$fetch_customer['imagePath']."></img>  ";
+                    echo $fetch_customer['username'];
+                    echo "</div>";
+                    echo "<div class='message my-message'>";
                     echo $row['messageText'];
-                    echo"<br>";
-                }
+                    echo "</div>";
+                    }
+                    else{
+                    echo "<div class='text-right'>";
+                    echo $fetch_customer['username'];
+                    echo "<img src=".$fetch_customer['imagePath']."></img>  ";
+                    echo "</div>";
+                    echo "<div class='message other-message'>";
+                    echo $row['messageText'];
+                    echo "</div>";
+                    echo "</div>";
+                    }
+
+                    echo "</li>";
+                } 
             
             }
+            
+            echo "</ul>";
+            echo "</div>";
+            echo "</div>";    
+            echo "</div>";    
+            echo "</div>";
+            echo "</div>";   
 
     }
             ?>

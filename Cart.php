@@ -92,12 +92,14 @@
                                 echo "</div>";
                                 echo "<div class='cart-footer'>";
                                     echo "<text class='header'> Total price: </text>" . $totalPrice;
+                                    if($totalPrice>0){
                                     echo "<br><form action='Checkout.php' method='post'>"; 
-                                    echo "<button type='submit' name='total' value='" . $totalPrice ."'>Checkout</button>";  
-                                echo "</form></div>";         
-                            echo "</div>";
+                                        echo "<button type='submit' name='total' value='" . $totalPrice ."'>Checkout</button>";  
+                                    echo "</form></div>";    
+                                    }     
+                                echo "</div>";
                         echo "</div>";
-                     echo "</div>";
+                    echo "</div>";
                     $con->close();
                 }
             }

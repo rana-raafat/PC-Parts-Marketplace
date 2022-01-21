@@ -47,14 +47,20 @@
                                         <li class="clearfix">
                                             <img src="<?php echo $plist_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
                                             <?php
-                                    if($plist_row['readStatus']==0){
+                                    $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND SenderID=".$plist_row['senderID']." AND recepientID=".$_SESSION['id'];
+                                    $unread_sql_result = mysqli_query($conn,$unread_sql);	
+                                    if(!$unread_sql_result){
+                                        echo "error in unread messages query";
+                                    }
+                                    $unread_sql_result = $unread_sql_result->fetch_assoc();
+                                    if($unread_sql_result['unread_messages']==0){
                                         ?>
-                                            <div class="about unread">
+                                            <div class="about read">
                                         <?php
                                     }
                                     else{
                                         ?>
-                                            <div class="about read">
+                                            <div class="about unread">
                                         <?php
                                     }
                                     ?>         
@@ -96,14 +102,20 @@
                                         <li class="clearfix">
                                             <img src="<?php echo $plist_exc_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
                                             <?php
-                                    if($plist_exc_row['readStatus']==0){
+                                    $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND recepientID=".$plist_exc_row['recepientID']." AND senderID=".$_SESSION['id'];
+                                    $unread_sql_result = mysqli_query($conn,$unread_sql);	
+                                    if(!$unread_sql_result){
+                                        echo "error in unread messages query";
+                                    }
+                                    $unread_sql_result = $unread_sql_result->fetch_assoc();
+                                    if($unread_sql_result['unread_messages']==0){
                                         ?>
-                                            <div class="about unread">
+                                            <div class="about read">
                                         <?php
                                     }
                                     else{
                                         ?>
-                                            <div class="about read">
+                                            <div class="about unread">
                                         <?php
                                     }
                                     ?>  
@@ -127,13 +139,15 @@
 
                     <?php
                     if(!empty($_GET['id'])){
-                        $user_id=$_SESSION['id'];
-                        $seen_message_sql="UPDATE message SET readStatus=1 WHERE recepientID=$user_id";
+                        $seen_message_sql="UPDATE message SET readStatus=1 WHERE recepientID=".$_SESSION['id']." AND SenderID=".$_GET['id'];
                         $seen = mysqli_query($conn,$seen_message_sql);
                         if(!$seen){
                             echo "couldn't implement the seen sql<br>";
                             die();
                         }
+                        //to update inbox notification
+                        echo "<script>window.location.hash='reload';</script>";
+                        
                     ?>
                         <div class="chat chat-column">
                             <?php
@@ -184,9 +198,11 @@
                                             <!---------------------------------------- sessioned user message ----------------------------------------->
 
                                             <li class="clearfix">
+                                                
                                                 <div class="message-data">
                                                     <img src="<?php echo $messages_rows['imagePath'];?>" alt="my profile picture">
                                                 </div>
+
                                                 <div class="message my-message">
                                                     <?php 
                                                     echo $messages_rows['messageText'];
@@ -196,6 +212,7 @@
                                                         echo "<div class='readStatus-notSeen'><i class='glyphicon glyphicon-ok'></i><i class='glyphicon glyphicon-ok'></i></div>";
                                                     ?>
                                                </div>
+
                                            </li>
 
                                         <?php

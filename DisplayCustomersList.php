@@ -51,29 +51,47 @@ if($_SESSION['userType']=='administrator')
                    
                 }
                 
-    }
+    }        ?>
+        <div class='container'>
+                        <div class='card justify-content-center'>
+                                <div class='medium-card-container'>
+                                    <table class='table table-responsive text-center'>
+                                        <h3>Customers Chat History</h3>
+<?php
                 for($i=0;$i<sizeof($unique_customer_IDS);$i++)
                 {
-                    echo $unique_customer_images[$i]." ";
-                    echo $unique_customer_names[$i]." ";
-                    echo $unique_customer_IDS[$i]." ";
-                    echo $unique_customer_usertype[$i]." ";
-                    
-?>
-                <form method="Post" action="">
+                    echo "<tr>";
+                    echo "<td>";
+                    echo "<img src='". $unique_customer_images[$i]."'  class='user-pic-icon'><img>";
+                    echo $unique_customer_names[$i];
+                    echo "</td>";
+                ?>
+                <td>
+                <form method="Post" action="DisplayCustomersList.php#2">
                     
                <!-- <a href=DiplayPrivateChat.php?id=<?php //echo $unique_customer_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
                <?php
-                 echo"<input type=hidden name=uCustomerId value=".$unique_customer_IDS[$i].">";       
-               ?>
+ echo"<input type=hidden name=uCustomerId value=".$unique_customer_IDS[$i].">"; 
+ echo"<input type=hidden name=uCustomerName value=".$unique_customer_names[$i].">"; 
+                ?>
                 
-                    <input type="submit" name="submitted">
+                <button type="submit" name="submitted"> Chat History <i class='fa fa-commenting'></i></button>
                 </form>
                 <br>
-  <?php                     
+                </td>
+  <?php                   
+                  echo "</tr>";
+  
                 }
-            }
 
+                ?>
+                 </table>
+                 </div>
+                                    </div>
+                                            </div>
+                                               <?php
+                
+            }
             if( isset($_POST['submitted']) ){
                 
             $conn = new mysqli("localhost","root","", "project");
@@ -82,15 +100,6 @@ if($_SESSION['userType']=='administrator')
                  die();
             }
         
-            echo "<table border='1'>
-                <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Chats</th>
-                <th>userType</th>
-                <th>ImagePath</th>
-                
-                </tr>";
                 $sql="SELECT * FROM message WHERE (senderID='".$_POST['uCustomerId']."') OR ( recepientID='".$_POST['uCustomerId']."')";
                 //$sql2="SELECT username, id FROM users WHERE username !='" . $_POST['username'] . "'";
                 $result = mysqli_query($conn,$sql);
@@ -98,7 +107,6 @@ if($_SESSION['userType']=='administrator')
                     echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                     die();
                 }
-                echo "<tr>";
 
                 $unique_admin_name_arr=array(); 
                 $unique_admin_id_arr=array();
@@ -173,17 +181,23 @@ if($_SESSION['userType']=='administrator')
                             }  
                         }
                 
-        }     
+        } 
+        ?>
+        <div class='container'>
+                            <div class='card justify-content-center' id='2'>
+                                    <div class='medium-card-container'>
+                                        <table class='table table-responsive text-center'>
+                                            <h3>Users <?php echo $_POST['uCustomerName']; ?> Chatted With</h3>
+    <?php    
     // mohamed mohamed mohamed hady farah hady
             for ($i=0;$i<sizeof($unique_admin_name_arr);$i++)
             {
-                       
-    ?>
-    <tr>
-        <td><?php echo $unique_admin_id_arr[$i]; ?></td>
-        <td><?php echo $unique_admin_name_arr[$i]; ?></td>
+        echo"    <tr>";        
+    echo "<td><img src='". $unique_admin_image_arr[$i]."'  class='user-pic-icon'><img>" .  $unique_admin_name_arr[$i]."</td>";
+                    echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype_arr[$i]." </td>";
+                    ?>
         <!--<td><a href=Chat.php?id=<?php //echo $unique_admin_id_arr[$i]; ?> >Message</a></td>-->
-        
+        <td>
         <form method="Post" action="DiplayPrivateChat.php">
                     
                     <!-- <a href=DiplayPrivateChat.php?id=<?php //echo $unique_customer_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
@@ -191,24 +205,24 @@ if($_SESSION['userType']=='administrator')
                     if( isset($_POST['submitted']) ){
                       echo"<input type=hidden name=uAdminId value=".$unique_admin_id_arr[$i].">";
                       echo"<input type=hidden name=uCustomerId2 value=".$_POST['uCustomerId'].">";
-                      echo$unique_admin_id_arr[$i]."<br>";
-                      echo$_POST['uCustomerId']."<br>";
                     }      
-                    ?>
-                     
-                        <td> <input type="submit" name="uCustomerId_uCustomerIdSubmitted"> </td>
+                    ?> 
+                        <button type="submit" name="uCustomerId_uCustomerIdSubmitted">View Chat   <i class='fa fa-commenting'></i></button>
         </form>
-
-        <td><?php echo $unique_admin_usertype_arr[$i]; ?></td>
-        <td><?php echo $unique_admin_image_arr[$i]; ?></td>
+        </td>    
     
     </tr> 
     
     <?php
     
         }
-        echo"</table>";
-
+        ?>
+        </table>
+        </div>
+                           </div>
+                                   </div>
+                                      <?php
+       
         
    
         $conn->close(); 

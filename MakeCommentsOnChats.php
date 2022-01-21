@@ -9,14 +9,23 @@
         include "Menu.php";
         if($_SESSION['userType']=='auditor')
         {
+?>
+
+<div class='container'>
+                        <div class='card justify-content-center'>
+                                <div class='large-card-container'>
+                <div class='chat'>
+              <div class='chat-history'>
+                <ul class='m-b-0'>
+                    <?php
             if( ( isset($_POST['send']) ) || ( isset( $_POST['uCustomerId_uAdminIdSubmitted'] ) )  )
             {
 
                 $uCustomerId=$_POST['uCustomerId'];
                 $uAdminId2=$_POST['uAdminId2'];
                 
-                echo "<h1>".$uCustomerId."</h1>";
-                echo  "<h1>".$uAdminId2."</h1>";
+                //echo "<h1>".$uCustomerId."</h1>";
+                //echo  "<h1>".$uAdminId2."</h1>";
 
              
             
@@ -37,7 +46,7 @@
 
                 // just to display the name of the customer and display it at the top
                 if($fetch_customerName = $result3->fetch_assoc()){
-                    echo "<h1>".$fetch_customerName['username']."</h1>";
+                    //echo "<h1>".$fetch_customerName['username']."</h1>";
                 }
 
 
@@ -51,7 +60,7 @@
 
                 while($row = $result->fetch_assoc())
                 {   
-                    $fetch_adminName_sql="SELECT username FROM users WHERE id='" . $row['senderID'] . "'";
+                    $fetch_adminName_sql="SELECT id,username,imagePath,userType FROM users WHERE id='" . $row['senderID'] . "'";
                     $result3 = mysqli_query($conn,$fetch_adminName_sql);
                     if(!$result3)
                     {
@@ -59,21 +68,50 @@
                         die();
                     }
                     
-                    while($fetch_customerName = $result3->fetch_assoc())
+                    while($fetch_customer = $result3->fetch_assoc())
                     {
-                        echo $row['messageID'].": ";
-                        echo $fetch_customerName['username'];
-                        echo" : ";
-                        echo $row['messageText'];
-                        echo"<br>";
+
+                    echo "<li class='clearfix'>";
+
+                    if($fetch_customer['id']==$uAdminId2){
+                    echo "<div class='text-left'>";
+                    echo "<div class='message-data'>";
+                    echo "[".$row['messageID']."] ";
+                    echo "<br><br>";
+                    echo "<img src=".$fetch_customer['imagePath']."></img>  ";
+                    echo $fetch_customer['username'];
+                    echo "</div>";
+                    echo "<div class='message my-message'>";
+                    echo $row['messageText'];
+                    echo "</div>";
+                    echo "</div>";
                     }
-                
+                    else{
+                    echo "<div class='text-right'>";
+                    echo "<div class='message-data'>";
+                    echo "[".$row['messageID']."] ";
+                    echo "<br><br>";
+                    echo $fetch_customer['username'];
+                    echo "<img src=".$fetch_customer['imagePath']."></img>  ";
+                    echo "</div>";
+                    echo "<div class='message other-message'>";
+                    echo $row['messageText'];
+                    echo "</div>";
+                    echo "</div>";
+                    }
+
+                    echo "</li>";
+                    }
                 }
+                
+            echo "</ul>";
+            echo "</div>";
+            echo "</div>";    
             }
 
             else
             {
-                echo "<h1>check again</h1>";
+                echo "check again";
             }
                 if(isset($_POST['send'])) {
 
@@ -99,22 +137,21 @@
                 {
                     echo "<script>window.location.href='AdminChats.php'</script>";
                 }
-       
-            else
-            {
-                echo"please enter a number";
-            }
     }
             ?>
-
+            <hr>
 
             <form action="" method="post">
             
-            please enter the message no. you want to make your comment on: 
-            <input type="number" name="num"><br>
+            Enter the message [number] you want to make your comment on: 
+            <br>
+            <input type="number" name="num" value=1 min=1>
+            <br><br>
 
-            please enter your comment:
-            <input type="textarea" name="txt"><br>
+            Enter your comment:
+            <br>
+            <textarea name="txt"></textarea>
+            <br><br>
 
             <input type=hidden name=uCustomerId value="<?php echo $uCustomerId; ?>" >
             <input type=hidden name=uAdminId2 value="<?php echo $uAdminId2; ?>" >
@@ -122,6 +159,8 @@
             <input type="submit" name="send" value="send"/>
             <input type="submit" name="exit" value="exit"/>
             </form>
-        
+</div>
+</div>
+</div>
     </body>
 </html>

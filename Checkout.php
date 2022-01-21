@@ -24,8 +24,8 @@
                 <div class="shoppingCart">
                     <div class="cart-items">
                         <?php
-                        echo "Name: ". $_SESSION['username']."<br>";
-                        echo "Address: " . $_SESSION['address']."<br>";
+                        echo "<text class='header'>Name  </text><br>". $_SESSION['username']."<br><br>";
+                        echo "<text class='header'>Address </text><br>" . $_SESSION['address']."<br><br><hr>";
                         ?>
 
                         <form method='post'class="form-horizontal">
@@ -59,10 +59,29 @@
                             
                         }
 
-                        ?>
-                        <button name="purchasecomplete">Confirm Purchase</button>
+                        $totalPrice=$_GET['total'];
+                        echo "<text class='header'>Total Price </text><br> $totalPrice <br><br>";
+                        if(isset($_POST["purchasecomplete"])){
+                            $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
+                            $result4 = mysqli_query($con,$sql4);
+                            
+                            echo"<br>Products Bought Successfully<br>";
+                            
+                            $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
+                            $result5 = mysqli_query($con,$sql5);
+                            if(!$result5){
+                                echo "error creating a new order<br>";
+                            }
+                            else{
+                                echo "<script>window.location.href='Home.php'</script>";
+                            }
+                            
+                        }
 
-                        <button name='goback'>Negate Purchase</button></form>
+                        ?>
+                        <button name="purchasecomplete">Place Order</button>
+
+                        <button name='goback'>Go Back To Cart</button></form>
                     </div>
                 </div>
             </div>

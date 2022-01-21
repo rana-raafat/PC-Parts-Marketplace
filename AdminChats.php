@@ -57,15 +57,18 @@ if($_SESSION['userType']=='auditor')
     ?>
     <div class='container'>
                         <div class='card justify-content-center'>
-                                <div class='carda'>
-                                    <table class='table table-responsive'>
+                                <div class='medium-card-container'>
+                                    <table class='table table-responsive text-center'>
+                                        <h3>Administrators Chat History</h3>
 <?php
                 for($i=0;$i<sizeof($unique_admin_IDS);$i++)
                 {
                         
                     echo "<tr>";
-                    echo "<td><img src='". $unique_admin_images[$i]."'  class='user-pic-icon'><img>" .  $unique_admin_names[$i]."</td>";
-                    echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype[$i]." </td>";
+                    echo "<td>";
+                    echo "<img src='". $unique_admin_images[$i]."'  class='user-pic-icon'><img>";
+                    echo $unique_admin_names[$i];
+                    echo "</td>";
                     
 ?>
 <td>
@@ -73,10 +76,12 @@ if($_SESSION['userType']=='auditor')
                     
                <!-- <a href=MakeCommentsOnChats.php?id=<?php //echo $unique_admin_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
                <?php
-                 echo"<input type=hidden name=uAdminId value=".$unique_admin_IDS[$i].">";       
+                 echo"<input type=hidden name=uAdminId value=".$unique_admin_IDS[$i].">"; 
+                 echo"<input type=hidden name=uAdminName value=".$unique_admin_names[$i].">";       
+      
                ?>
                 
-                    <button type="submit" name="submitted"><i class='fa fa-commenting'></i></button>
+                    <button type="submit" name="submitted"> Chat History <i class='fa fa-commenting'></i></button>
                 </form>
                 <br>
                 </td>
@@ -187,8 +192,9 @@ if($_SESSION['userType']=='auditor')
         }        ?>
         <div class='container'>
                             <div class='card justify-content-center' id='2'>
-                                    <div class='carda'>
-                                        <table class='table table-responsive'>
+                                    <div class='medium-card-container'>
+                                        <table class='table table-responsive text-center'>
+                                            <h3>Users <?php echo $_POST['uAdminName']; ?> Chatted With</h3>
     <?php
     // mohamed mohamed mohamed hady farah hady
             for ($i=0;$i<sizeof($unique_customer_name_arr);$i++)
@@ -197,7 +203,7 @@ if($_SESSION['userType']=='auditor')
                        
 echo"    <tr>";
     echo "<td><img src='". $unique_customer_image_arr[$i]."'  class='user-pic-icon'><img>" .  $unique_customer_name_arr[$i]."</td>";
-                    echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype[$i]." </td>";
+                    echo "<td><i class='fa fa-user'></i>  ". $unique_customer_usertype_arr[$i]." </td>";
                     ?>
                             <!--<td><a href=Chat.php?id=<?php //echo $unique_customer_id_arr[$i]; ?> >Message</a></td>-->
             <td>
@@ -211,7 +217,7 @@ echo"    <tr>";
                     }      
                     ?>
                      
-                        <button type="submit" name="uCustomerId_uAdminIdSubmitted"><i class='fa fa-commenting'></i></button>
+                        <button type="submit" name="uCustomerId_uAdminIdSubmitted">View Chat   <i class='fa fa-commenting'></i></button>
 
         </form>
 
