@@ -7,9 +7,16 @@
         session_start();
         include "Menu.php";
         
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+        
         if(isset($_GET['cat'])){
             $con = new mysqli("localhost", "root", "", "project");
-            if(!$con){ //maybe here we can throw an exception? instead of using die()
+            if(!$con){ 
                 echo "connection error<br>";
                 die();
             }
@@ -21,6 +28,13 @@
                 $sql= "SELECT * FROM product WHERE category LIKE '%" . $search . "%'";
                 
             $result = mysqli_query($con,$sql);
+            try{
+                dbException($result);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
+            }
             if ($result->num_rows == 0) {
                 echo "No products found<br>";
             }

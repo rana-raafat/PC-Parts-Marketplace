@@ -10,6 +10,14 @@
         session_start();
         include "Menu.php";
 
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
+
         if(isset($_SESSION['id'])){
             if($_SESSION['userType']=='administrator'){
                 $con = new mysqli("localhost", "root", "", "project");
@@ -20,6 +28,13 @@
                 }
                 $sql= "SELECT imagePath,username,userType,id FROM users WHERE userType='customer'";
                 $result = mysqli_query($con,$sql);
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
                 if ($result->num_rows == 0) {
                     echo "No results found<br>";
                 }

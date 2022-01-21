@@ -7,8 +7,15 @@
         session_start();
         include "Menu.php";
 
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         $con = new mysqli("localhost", "root", "", "project");
-        if(!$con){ //exception
+        if(!$con){ 
             echo "connection error"; 
             echo "<br>";
             die();
@@ -16,6 +23,13 @@
         if(isset($_GET['id'])){
             $sql="SELECT * FROM users WHERE id='". $_GET['id'] ."'";
             $result=$con->query($sql);
+            try{
+                dbException($result);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
+            }
             if($result->num_rows == 0){
                 echo "Error: profile not found";
                 echo "<br>";
@@ -134,6 +148,13 @@
                 if($_SESSION['userType']=='administrator'){
                     $penaltysql="SELECT penalties FROM administrator WHERE id='". $_SESSION['id'] ."'";
                     $penaltyResult=$con->query($penaltysql);
+                    try{
+                        dbException($penaltyResult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     echo "<text class='header'> Number of penalties: </text>";
                     echo "<br>";
                     if($penaltyResult->num_rows == 0){
@@ -146,6 +167,13 @@
                     }
                     $reasonsql="SELECT * FROM penalty WHERE adminID='". $_SESSION['id'] ."'";
                     $reasonResult=$con->query($reasonsql);
+                    try{
+                        dbException($reasonResult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     echo "<text class='header'> Reasons for penalties: </text>";
                     echo "<br>";
                     if($reasonResult->num_rows == 0){
@@ -162,7 +190,13 @@
                 else if($_SESSION['userType']=='hrpartner'){
                     $hrsql="SELECT * FROM hrpartner WHERE id='". $_SESSION['id'] ."'";
                     $hrResult=$con->query($hrsql);
-                    
+                    try{
+                        dbException($hrResult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     if($hrResult->num_rows == 0){
                         echo "Error: hr row not found";
                         echo "<br>";

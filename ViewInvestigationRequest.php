@@ -6,6 +6,13 @@
     <?php
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
         ?>
     <body>
     <div class="container">
@@ -26,6 +33,13 @@
                     }
                     $requestsql = "SELECT * FROM investigationrequest WHERE id='". $_GET['id'] . "'";
                     $requestResult = $con->query($requestsql);
+                    try{
+                        dbException($requestResult);
+                    }
+                    catch(Exception $e){
+                        printf("Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     if($requestResult->num_rows == 0){
                         echo "Error: Request not found<br>";
                     }
@@ -37,6 +51,13 @@
 
                         $auditorsql = "SELECT username FROM users WHERE id='" . $requestRow['auditorID'] . "'";
                         $auditorResult = $con->query($auditorsql);
+                        try{
+                            dbException($auditorResult);
+                        }
+                        catch(Exception $e){
+                            printf("Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if($auditorResult->num_rows == 0){
                             echo "Error: Auditor not found<br>";
                         }
@@ -49,6 +70,13 @@
 
                         $hrsql = "SELECT username FROM users WHERE id='" . $requestRow['hrID'] . "'";
                         $hrResult = $con->query($hrsql);
+                        try{
+                            dbException($hrResult);
+                        }
+                        catch(Exception $e){
+                            printf("Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if($hrResult->num_rows == 0){
                             echo "Error: Hr not found<br>";
                         }
@@ -61,6 +89,13 @@
 
                         $adminsql = "SELECT username FROM users WHERE id='" . $requestRow['adminID'] . "'";
                         $adminResult = $con->query($adminsql);
+                        try{
+                            dbException($adminResult);
+                        }
+                        catch(Exception $e){
+                            printf("Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if($adminResult->num_rows == 0){
                             echo "Error: Admin not found<br>";
                         }

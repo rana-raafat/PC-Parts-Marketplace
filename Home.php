@@ -10,9 +10,15 @@
         session_start();
         include "Menu.php";
 
-        
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         $con = new mysqli("localhost", "root", "", "project");
-        if(!$con){ //exception
+        if(!$con){ 
             echo "connection error<br>";
             die();
         }
@@ -65,6 +71,13 @@
             $displayed[]=$rand;
             $sql= "SELECT * FROM product WHERE id='" . $rand . "'";
             $result = mysqli_query($con,$sql);
+            try{
+                dbException($result);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
+            }
             if ($result->num_rows == 0) {
                 echo "No products found<br>";
             }

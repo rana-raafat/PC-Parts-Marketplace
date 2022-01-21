@@ -6,6 +6,13 @@
     <?php 
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
     ?>
     <script>
         function validate(form){ 
@@ -105,7 +112,13 @@
 
             $checkProduct="SELECT * FROM product WHERE name='" . $productName . "'";
             $productResult = $con->query($checkProduct);
-
+            try{
+                dbException($productResult);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
+            }
             if($productResult->num_rows > 0){
                 ?>
                 <script>
@@ -144,16 +157,23 @@
                     . "','" . $price . "','" . $imagePath . "','0','0','0','0','0','0','" . $category . "')";
 
                 $result = $con->query($sql);
-                if(!$result){
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
+                /*if(!$result){
                     echo "error inserting data into database<br>";
                     printf("Error: %s\n", mysqli_error($con));
-                    exit(); //exit stops the program
+                    die(); //exit stops the program
                 }
-                else{
+                else{*/
                     echo "Product added successfully<br>";
                     //echo "<script>window.location.href='addproduct.php'</script>";
                     echo "<script>window.location.href='Home.php'</script>";
-                }
+                //}
             }
             $con->close();
         }

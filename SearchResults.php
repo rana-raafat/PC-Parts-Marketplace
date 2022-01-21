@@ -7,16 +7,30 @@
         session_start();
         include "Menu.php";
 
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         if(isset($_GET['submitSearch'])){
 
             $con = new mysqli("localhost", "root", "", "project");
-            if(!$con){ //exception?
+            if(!$con){
                 echo "connection error<br>";
                 die();
             }
             $search=$_GET['searchQuery'];
             $sql= "SELECT * FROM product WHERE name LIKE '%" . $search . "%'";
             $result = mysqli_query($con,$sql);
+            try{
+                dbException($result);
+            }
+            catch(Exception $e){
+                printf("Error: %s\n", mysqli_error($con));
+                die();
+            }
             if ($result->num_rows == 0) {
                 echo "No products found<br>";
             }

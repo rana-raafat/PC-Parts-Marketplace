@@ -7,6 +7,14 @@
     <?php
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         if($_SESSION['userType']=='administrator')
         {
             if( isset( $_POST['uCustomerId_uCustomerIdSubmitted'] )  )
@@ -41,10 +49,17 @@
 
             $fetch_adminName_sql="SELECT username FROM users WHERE id='" . $uAdminId . "'";
             $result3 = mysqli_query($conn,$fetch_adminName_sql);
-            if(!$result3){
-                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+            try{
+                dbException($result3);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($conn));
                 die();
             }
+            /*if(!$result3){
+                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                die();
+            }*/
 
             // just to display the name of the customer and display it at the top
             if($fetch_customerName = $result3->fetch_assoc()){
@@ -54,21 +69,35 @@
 
             $fetch_messages_sql="SELECT * FROM message WHERE (senderID='".$uCustomerId2."'AND recepientID='".$uAdminId."') OR (senderID='".$uAdminId."'AND recepientID='".$uCustomerId2."') ORDER BY messageID ASC";
             $result = mysqli_query($conn,$fetch_messages_sql);
-            if(!$result)
+            try{
+                dbException($result);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($conn));
+                die();
+            }
+            /*if(!$result)
             {
                 echo "couldn't read the messages from the DataBase<br>";
                 die();
-            }
+            }*/
 
             while($row = $result->fetch_assoc())
             {   
                 $fetch_adminName_sql="SELECT id,username,imagePath,userType FROM users WHERE id='" . $row['senderID'] . "'";
                 $result3 = mysqli_query($conn,$fetch_adminName_sql);
-                if(!$result3)
+                try{
+                    dbException($result3);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
+                    die();
+                }
+                /*if(!$result3)
                 {
                     echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                     die();
-                }
+                }*/
                 while($fetch_customer = $result3->fetch_assoc())
                 {
                     

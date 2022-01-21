@@ -10,7 +10,7 @@
         isset($_SESSION['id']){
             if(isset($_POST['Yes'])){
                 $con = new mysqli("localhost", "root", "", "project");
-                if(!$con){ //maybe here we can throw an exception? instead of using die()
+                if(!$con){ 
                     echo "connection error<br>";
                     die();
                 }
@@ -21,7 +21,7 @@
 
                 if (!$result) {
                     printf("Error: %s\n", mysqli_error($con));
-                    exit();
+                    die();
                 }
                 else{
                     echo "<script>window.location.href='Home.php'</script>";

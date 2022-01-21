@@ -7,6 +7,14 @@
 
 session_start();
 include "Menu.php";
+
+function dbException($queryResult){
+    if(!$queryResult){
+        throw new Exception("SQL Error");
+    }
+    return true;
+}
+
 if($_SESSION['userType']=='administrator')
 {
     
@@ -19,10 +27,17 @@ if($_SESSION['userType']=='administrator')
     //SELECT username FROM users JOIN message ON (SenderID=users.id OR recepientID=users.id) WHERE userType="administrator"
     $admin_sql=" SELECT * FROM message JOIN users ON (SenderID=users.id OR recepientID=users.id) WHERE userType='customer' ";
     $auditor_result = mysqli_query($conn_to_get_customers,$admin_sql);
-    if(!$auditor_result){
-        echo "COULDN'T SEARCH FOR THE NAMES OF ADMINISTRATORS FROM THE DB<br>";
+    try{
+        dbException($auditor_result);
+    }
+    catch(Exception $e){
+        printf("Database Error: %s\n", mysqli_error($conn_to_get_customers));
         die();
     }
+    /*if(!$auditor_result){
+        echo "COULDN'T SEARCH FOR THE NAMES OF ADMINISTRATORS FROM THE DB<br>";
+        die();
+    }*/
 
     $unique_customer_images=array();
     $unique_customer_names=array();
@@ -103,6 +118,13 @@ if($_SESSION['userType']=='administrator')
                 $sql="SELECT * FROM message WHERE (senderID='".$_POST['uCustomerId']."') OR ( recepientID='".$_POST['uCustomerId']."')";
                 //$sql2="SELECT username, id FROM users WHERE username !='" . $_POST['username'] . "'";
                 $result = mysqli_query($conn,$sql);
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
+                    die();
+                }
                 if(!$result){
                     echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                     die();
@@ -120,11 +142,18 @@ if($_SESSION['userType']=='administrator')
     
                         $unique_reciever_id="SELECT * FROM users WHERE id='" . $row['recepientID'] . "'";
                         $fetch_unique_recieve_id = mysqli_query($conn,$unique_reciever_id);
-                        if(!$fetch_unique_recieve_id)
+                        try{
+                            dbException($fetch_unique_recieve_id);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($conn));
+                            die();
+                        }
+                        /*if(!$fetch_unique_recieve_id)
                         {
                             echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                             die();
-                        }
+                        }*/
                     
                         while($row2 = $fetch_unique_recieve_id->fetch_assoc())
                         {
@@ -152,10 +181,17 @@ if($_SESSION['userType']=='administrator')
                     {
                         $unique_sender_id="SELECT * FROM users WHERE id='" . $row['senderID'] . "'";
                         $row_unique_sender_id = mysqli_query($conn,$unique_sender_id);
-                        if(!$row_unique_sender_id){
-                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                        try{
+                            dbException($row_unique_sender_id);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
+                        /*if(!$row_unique_sender_id){
+                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                            die();
+                        }*/
     
                             while($row3 = $row_unique_sender_id->fetch_assoc())
                             {   

@@ -9,6 +9,13 @@
 //
     session_start();
     include "Menu.php";
+    function dbException($queryResult){
+        if(!$queryResult){
+            throw new Exception("SQL Error");
+        }
+        return true;
+    }
+
     if(!isset($_SESSION['id'])){
         echo "Please log in to suggest a product<br>";
         die();
@@ -113,18 +120,32 @@ if(isset($_POST["submit"])){
         $description=$_POST["description"];
         $sql="INSERT INTO productsuggestion(imagePath, customerID, productLink,productname,productDescription) VALUES  ('" . $pic . "','" . $_SESSION['id'] . "','" . $link . "','" . $name . "','" . $description . "')";
         $result=mysqli_query($con,$sql);
-        if(!$result){
+        try{
+            dbException($result);
+        }
+        catch(Exception $e){
+            printf("Error: %s\n", mysqli_error($con));
+            die();
+        }
+        /*if(!$result){
             echo "couldn't insert suggestion into the DataBase<br>";
             printf("Error: %s\n", mysqli_error($con));
             die();
-        }
+        }*/
         $adminsql="SELECT id FROM administrator";
         $adminresult=mysqli_query($con,$adminsql);
-        if(!$adminresult){
-            echo "couldn't select admin ids<br>";
+        try{
+            dbException($adminresult);
+        }
+        catch(Exception $e){
             printf("Error: %s\n", mysqli_error($con));
             die();
         }
+        /*if(!$adminresult){
+            echo "couldn't select admin ids<br>";
+            printf("Error: %s\n", mysqli_error($con));
+            die();
+        }*/
         
         $suggestionlink = 'A new product was suggested <a href="DisplaySuggestions.php">Click Here</a> to view';
         //don't sanatize this cause it needs to stay as a link obviously

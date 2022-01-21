@@ -8,7 +8,13 @@
         session_start();
         include "Menu.php";
 
-        
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         $con = new mysqli("localhost","root","", "project");
         if(!$con)
         {
@@ -21,12 +27,26 @@
      
         $sql2="SELECT username FROM `users` WHERE userType='administrator'";
         $result2 = mysqli_query($con,$sql2);
+        try{
+            dbException($result2);
+        }
+        catch(Exception $e){
+            printf("Database Error: %s\n", mysqli_error($con));
+            die();
+        }
         if ($result2->num_rows == 0) {
             echo "There are no Administrators at the moment<br>";
         }
         else{
             $hrsql="SELECT username FROM `users` WHERE id='$HRid'";
             $hrresult = mysqli_query($con,$hrsql);
+            try{
+                dbException($hrresult);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
+            }
             if($hrresult->num_rows == 0){
                 echo "Error hr not found<br>";
             }
@@ -57,16 +77,37 @@
                 $admin=$_POST["admins"];
                 $sql="SELECT id FROM `users` WHERE username='$admin'";
                 $result=mysqli_query($con,$sql);
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
                 $row2=$result->fetch_assoc();
                 //echo"$row2[id]";
                 $insert="INSERT INTO investigationrequest( auditorID, hrID, adminID, reason) VALUES  ('".$_SESSION['id']."','$HRid','" . $row2['id'] . "','" . $reason . "')";
                 $result3=mysqli_query($con,$insert);
-                if (!$result3) {
+                try{
+                    dbException($result3);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
+                /*if (!$result3) {
                     printf("Error: %s\n", mysqli_error($con));
-                    exit();
-                }  
+                    die();
+                }  */
                 $investigationsql = "SELECT * FROM investigationrequest ORDER BY id DESC LIMIT 1";
                 $invResult = $con->query($investigationsql);
+                try{
+                    dbException($invResult);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
                 if($invResult->num_rows == 0){
                     echo "Error request not found<br>";
                 }
@@ -75,12 +116,19 @@
                     //don't sanatize this cause it needs to stay as a link obviously
                     $invMessage="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $invRow['auditorID'] ."','". $invRow['hrID'] ."','0','". $invesigationLink ."','0') " ;
                     $messageResult = mysqli_query($con,$invMessage);
-                    if(!$messageResult){
+                    try{
+                        dbException($messageResult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
+                    /*if(!$messageResult){
                         echo "couldn't insert survey into the DataBase<br>";
                         printf("Error: %s\n", mysqli_error($con));
                         die();
                     }
-                    else{
+                    else{*/
                         $updatehr="UPDATE hrpartner SET investigationsMade=investigationsMade+1";
                         $updateResult = mysqli_query($con,$updatehr);
                         if(!$updateResult){

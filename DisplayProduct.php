@@ -52,6 +52,14 @@
     <?php 
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         echo "<div class='container justify-content-center'>";
             $con = new mysqli("localhost", "root", "", "project");
             if(!$con){ //maybe here we can throw an exception? instead of using die()
@@ -65,22 +73,35 @@
             
             $sql = "SELECT * FROM product WHERE id='" . $id . "'";
             $result = mysqli_query($con,$sql);	
-
-            if (!$result) { //exception here
-                printf("Error: %s\n", mysqli_error($con));
-                exit();
+            try{
+                dbException($result);
             }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
+            }
+            /*if (!$result) { //exception here
+                printf("Error: %s\n", mysqli_error($con));
+                die();
+            }*/
 
             if(isset($_POST['reply'])){
                 $text=$_POST['replyText'];
                 $insertReply='INSERT INTO reviewreply(reviewID,userID,replyText) VALUES ("' . $_POST['reply'] . '","' . $_SESSION['id'] . '","' . $text . '")';
                 $insertReplyResult = $con->query($insertReply);
-                if(!$insertReplyResult){ //exception here
+                try{
+                    dbException($insertReplyResult);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
+                /*if(!$insertReplyResult){ //exception here
                     echo "Error inserting into reply table<br>";
                     printf("Error: %s\n", mysqli_error($con));
-                    exit();
+                    die();
                 }
-                else{
+                else{*/
                     ?>
                     <script>
                         $(document).ready(function() {
@@ -88,19 +109,33 @@
                         });
                     </script>
                     <?php
-                }
+                //}
             }
 
 
             if(isset($_POST['addButton'])){ 
                 $checkCart = "SELECT * FROM cartitem WHERE customerID='". $_SESSION['id'] . "' AND productID='" . $id . "'";
                 $checkResult = $con->query($checkCart);
+                try{
+                    dbException($checkResult);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
                 if($checkResult->num_rows != 0){
                     $itemError= "Item is already in cart<br>";
                 }
                 else if($checkResult->num_rows == 0){
                     $orderIDsql = "SELECT orderID FROM orders WHERE customerID='" . $_SESSION['id'] . "' AND completed='0'";
                     $orderIDresult = $con->query($orderIDsql);
+                    try{
+                        dbException($orderIDresult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     if($orderIDresult->num_rows == 0){
                         echo "Error: order not found<br>";
                     }
@@ -191,6 +226,13 @@
                     if(isset($_SESSION['id'])){
                         $select = "SELECT * FROM review WHERE productID='" . $id . "' AND customerID='" . $_SESSION['id'] . "'";
                         $selectResult = $con->query($select);
+                        try{
+                            dbException($selectResult);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if($selectResult->num_rows != 0){
                             $reviewed=true;
                             if($reviewRow = $selectResult->fetch_assoc()){
@@ -236,12 +278,12 @@
                         $insert = 'INSERT INTO review(productID,customerID,reviewText,starRating) VALUES("' . $id . '","' . $_SESSION['id'] . '","' . $_POST['review'] . '","' . $_POST['rating'] .'")';
                         
                         $insertResult = $con->query($insert);
-                        if(!$insertResult){ //exception here
+                        if(!$insertResult){ 
                             echo "Error inserting in the review table<br>";
                         }
                         else{
                             $updateResult = $con->query($update);
-                            if(!$updateResult){ //exception here
+                            if(!$updateResult){ 
                                 echo "Error updating the product table<br>";
                             }
                             else{
@@ -268,14 +310,13 @@
                     }
                 }
                 else if(isset($_POST['editReview'])){
-                    
-                    $OldRatingsql="SELECT ". $_POST['newRating'] ." FROM product WHERE id='". $id ."'"; 
 
                     $updateReview = "UPDATE review SET reviewText='" . $_POST['newreview'] . "', starRating='" . $_POST['newRating'] ."' WHERE productID='" . $_GET['id']. "' AND customerID='" . $_SESSION['id'] . "'";
                     $reviewResult = $con->query($updateReview);
+                    
                     $updateRating = "UPDATE product SET " . $_POST['newRating'] . "=" . $_POST['newRating'] . " + 1, ". $stars . "=" . $stars . "-1 WHERE id='" . $id . "'";
                 
-                    if(!$reviewResult){ //exception here
+                    if(!$reviewResult){
                         echo "Error updating the review table<br>";
                     }
                     else{
@@ -300,12 +341,12 @@
                     $deleteResult = $con->query($deleteReview);
                     
                     $decrement_reviews_sql = "UPDATE product SET " . $stars . "=" . $stars . "-1, numberOfReviews = numberOfReviews-1 WHERE id='" . $id . "'";
-                    if(!$deleteResult){ //exception here
+                    if(!$deleteResult){ 
                         echo "Error deleting from the review table<br>";
                     }
                     else {
                         $decrementResult = $con->query($decrement_reviews_sql);
-                        if(!$decrementResult){ //exception here
+                        if(!$decrementResult){ 
                             echo "Error decrementing the reviews in product table<br>";
                         } 
                         else{
@@ -405,6 +446,13 @@
                             $reviewsql="SELECT * FROM `review` Where productID='". $itemid."' AND customerID <>'" . $_SESSION['id'] . "'";
                         }
                         $reviewResult=mysqli_query($con,$reviewsql);
+                        try{
+                            dbException($reviewResult);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if (!$reviewResult) {
                             echo "Error fetching reviews<br>";
                         }
@@ -412,6 +460,13 @@
                             while($reviewRow = $reviewResult->fetch_assoc()){
                                 $namesql="SELECT username,imagePath FROM users WHERE id='".$reviewRow['customerID']."' ";
                                 $nameresult=mysqli_query($con,$namesql);
+                                try{
+                                    dbException($nameresult);
+                                }
+                                catch(Exception $e){
+                                    printf("Database Error: %s\n", mysqli_error($con));
+                                    die();
+                                }
                                 if($namerow=$nameresult->fetch_assoc()){
                             
                                     echo "<img src='" . $namerow['imagePath'] . "' class='profile-icon'> ";
@@ -422,7 +477,7 @@
                                         else
                                             echo "<i class='fa fa-star-o'></i>";
                                     }
-                                    echo " ". $reviewRow['starRating'] . " stars<br><p class='review'>" . $reviewRow['reviewText']."</p>";
+                                    echo " ". $reviewRow['starRating'] . " stars<br><p class='review'>" . $reviewRow['reviewText']."</p><br>";
                             
                                     //if the user clicked on reply show the textarea
                                     //echo "<form id='replything' method='post' action=''>";
@@ -455,13 +510,26 @@
                                     }
                                     $replies_sql="SELECT * FROM reviewreply WHERE reviewID='" . $reviewRow['id'] . "'";//get all replies to this review</form>
                                     $repliesresult=$con->query($replies_sql);
+                                    try{
+                                        dbException($repliesresult);
+                                    }
+                                    catch(Exception $e){
+                                        printf("Database Error: %s\n", mysqli_error($con));
+                                        die();
+                                    }
                                     if($repliesresult->num_rows > 0){//if there are replies
                                         if(isset($_POST['viewreplies'])){//if the users clicks on view replies button
                                             echo "<div class='reply-div'>";
                                             while($replyrows = $repliesresult->fetch_assoc()){ //get all replies
                                                 $reply_usernamesql = "SELECT * FROM users WHERE id='" . $replyrows['userID'] . "'"; //select username
                                                 $reply_username_result = $con->query($reply_usernamesql);
-                                                
+                                                try{
+                                                    dbException($reply_username_result);
+                                                }
+                                                catch(Exception $e){
+                                                    printf("Database Error: %s\n", mysqli_error($con));
+                                                    die();
+                                                }
                                                 if($reply_username_result->num_rows > 0){ //if the query returned a username
                                                     if($username_row = $reply_username_result->fetch_assoc()){
                                                         

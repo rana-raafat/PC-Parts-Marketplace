@@ -7,6 +7,14 @@
         <?php
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+        
         ?>
         <div class="container">
             <div class="card">
@@ -38,11 +46,18 @@
                                 for($i=0;$i<sizeof($customersArray);$i++){
                                     $survey="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $customersArray[$i] ."','0','". $link ."','0') " ;
                                     $surveyResult = mysqli_query($conn,$survey);
-                                    if(!$surveyResult){
-                                        echo "couldn't insert survey into the DataBase<br>";
+                                    try{
+                                        dbException($surveyResult);
+                                    }
+                                    catch(Exception $e){
                                         printf("Error: %s\n", mysqli_error($conn));
                                         die();
                                     }
+                                    /*if(!$surveyResult){
+                                        echo "couldn't insert survey into the DataBase<br>";
+                                        printf("Error: %s\n", mysqli_error($conn));
+                                        die();
+                                    }*/
                                 }
                                 $conn->close();
                                 echo "<script>window.location.href='Home.php'</script>";
@@ -67,6 +82,13 @@
                         //echo "<input type='checkbox' name='customers[]' value='' hidden checked>";
                         $customerssql = "SELECT * FROM users WHERE userType='customer'";
                         $customersResult = $conn->query($customerssql);
+                        try{
+                            dbException($customersResult);
+                        }
+                        catch(Exception $e){
+                            printf("Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if($customersResult->num_rows == 0){
                             echo "Error: no customers found<br>";
                         }

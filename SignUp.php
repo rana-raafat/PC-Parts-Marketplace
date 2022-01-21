@@ -11,6 +11,13 @@
         <?php 
             session_start();
             include "Menu.php";
+
+            function dbException($queryResult){
+                if(!$queryResult){
+                    throw new Exception("SQL Error");
+                }
+                return true;
+            }
         ?>
     <script>
     function validate(form){ //sometimes when the script is under the form it causes an error where the form doesn't know what the validate function is
@@ -157,7 +164,7 @@ if(isset($_POST["submit"])){
     else{
 
         $con = mysqli_connect("localhost","root","","project");
-        if(!$con){ //maybe here we can throw an exception? instead of using die()
+        if(!$con){ 
             echo "connection error<br>";
             die();
         }
@@ -165,8 +172,21 @@ if(isset($_POST["submit"])){
         $checkEmail="SELECT * FROM users WHERE email='" . $email . "'";
         $checkUsername="SELECT * FROM users WHERE username='" . $username . "'";
         $EmailResult = $con->query($checkEmail);
+        try{
+            dbException($EmailResult);
+        }
+        catch(Exception $e){
+            printf("Error: %s\n", mysqli_error($con));
+            die();
+        }
         $UsernameResult = $con->query($checkUsername);
-        //try catch exception
+        try{
+            dbException($UsernameResult);
+        }
+        catch(Exception $e){
+            printf("Error: %s\n", mysqli_error($con));
+            die();
+        }
 
         if($EmailResult->num_rows > 0){
            // echo "An account with this email already exists<br>";
@@ -219,15 +239,29 @@ if(isset($_POST["submit"])){
                 . "','" . $email . "','" . $address . "','" . $imagePath ."','" . $userType . "')";
 
             $result = $con->query($sql);
-            if(!$result){
+            try{
+                dbException($result);
+            }
+            catch(Exception $e){
+                printf("Error: %s\n", mysqli_error($con));
+                die();
+            }
+            /*if(!$result){
                 echo "error inserting data into database<br>";
                 printf("Error: %s\n", mysqli_error($con));
-        	    exit(); //exit stops the program
+        	    die(); //exit stops the program
             }
-            else{
+            else{*/
                 //create a new order for the user
                 $IDsql = "SELECT id FROM users WHERE username='" . $username ."'"; //not tested
                 $IDresult = $con->query($IDsql);
+                try{
+                    dbException($IDresult);
+                }
+                catch(Exception $e){
+                    printf("Error: %s\n", mysqli_error($con));
+                    die();
+                }
                 if($IDresult->num_rows == 0){
                     echo "Error: user not found<br>";
                 }
@@ -249,7 +283,7 @@ if(isset($_POST["submit"])){
                         <?php
                     }
                 }
-            }
+            //}
         }
         $con->close();
     }

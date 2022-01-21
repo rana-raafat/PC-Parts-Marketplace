@@ -11,7 +11,7 @@
 			if(isset($_POST['Yes'])) {
 
 				$conn = new mysqli("localhost","root","", "project");
-				if(!$con){ //maybe here we can throw an exception? instead of using die()
+				if(!$con){ 
 					echo "connection error<br>";
 					die();
 				}
@@ -19,14 +19,21 @@
 				$sql="DELETE FROM users WHERE email ='". $_SESSION['email'] . "'";
 				$sql2="DELETE FROM orders WHERE customerID ='". $_SESSION['id'] . "'";
 				$result=mysqli_query($conn,$sql);
-				$result2=mysqli_query($conn,$sql2);
-				if(!$result || !$result2){
-					//throw exception maybe? that says Database error or sth
-					echo "error deleting";
+				
+				if(!$result){
+					
+					echo "Error deleting user";
 				}
 				else{
-					session_destroy();
-					echo "<script>window.location.href='Home.php'</script>";
+					$result2=mysqli_query($conn,$sql2);
+					if(!$result2){
+						echo "Error deleting orders";
+					}
+					else{
+						session_destroy();
+						echo "<script>window.location.href='Home.php'</script>";
+					}
+					
 				}
 				$con->close();
     	    }

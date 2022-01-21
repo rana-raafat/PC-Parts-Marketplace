@@ -7,13 +7,13 @@
         <?php
         session_start();
         include "Menu.php";
-        
+
         if(isset($_SESSION['id'])){
             if(isset($_GET['id'])){
                 $customerID=$_GET['id'];
                 if($_SESSION['userType']=='administrator'){
                     $con = new mysqli("localhost", "root", "", "project");
-                    if(!$con){ //exception
+                    if(!$con){ 
                         echo "connection error<br>";
                         die();
                     }
@@ -21,19 +21,18 @@
                     $updatesql= "UPDATE users SET userType='administrator' WHERE id='" . $customerID . "'";
                     $updateresult = mysqli_query($con,$updatesql);
                     
-                    $insertsql= "INSERT INTO administrator VALUES('". $customerID . "','0')";
-                    $insertResult = mysqli_query($con,$insertsql);
-                    
-                    if (!$insertResult || !$updateresult) {
-                        if (!$insertResult){
+                    if (!$updateresult) {
+                        echo "Error updating users table<br>";
+                    } 
+                    else {
+                        $insertsql= "INSERT INTO administrator VALUES('". $customerID . "','0')";
+                        $insertResult = mysqli_query($con,$insertsql);
+                        if(!$insertResult){
                             echo "Error inserting into administrator table<br>";
                         }
                         else{
-                            echo "Error updating users table<br>";
+                            echo "<script>window.location.href='Home.php'</script>";
                         }
-                    }
-                    else{
-                        echo "<script>window.location.href='Home.php'</script>";
                     }
                 }
                 else{

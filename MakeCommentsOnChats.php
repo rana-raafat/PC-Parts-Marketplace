@@ -7,6 +7,14 @@
     <?php
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         if($_SESSION['userType']=='auditor')
         {
 ?>
@@ -39,24 +47,37 @@
 
                 $fetch_customerName_sql="SELECT username FROM users WHERE id='" . $uCustomerId . "'";
                 $result3 = mysqli_query($conn,$fetch_customerName_sql);
-                if(!$result3){
-                    echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                try{
+                    dbException($result3);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
+                /*if(!$result3){
+                    echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                    die();
+                }*/
 
                 // just to display the name of the customer and display it at the top
                 if($fetch_customerName = $result3->fetch_assoc()){
                     //echo "<h1>".$fetch_customerName['username']."</h1>";
                 }
 
-
                 $fetch_messages_sql="SELECT * FROM message WHERE (senderID='".$uAdminId2."'AND recepientID='".$uCustomerId."') OR (senderID='".$uCustomerId."'AND recepientID='".$uAdminId2."') ORDER BY messageID ASC";
                 $result = mysqli_query($conn,$fetch_messages_sql);
-                if(!$result)
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
+                    die();
+                }
+                /*if(!$result)
                 {
                     echo "couldn't read the messages from the DataBase<br>";
                     die();
-                }
+                }*/
 
                 while($row = $result->fetch_assoc())
                 {   

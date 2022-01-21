@@ -4,6 +4,13 @@
         <?php
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
         ?>
     </head>
     <body>
@@ -72,7 +79,7 @@
                 $dbname = "project";
                 // Create connection
                 $conn = new mysqli($servername, $username, $password, $dbname);
-                if(!$conn){ //maybe here we can throw an exception? instead of using die()
+                if(!$conn){ 
                     echo "connection error<br>"; //--//
                     die();
                 }
@@ -81,11 +88,17 @@
 
                 $sql= "SELECT * FROM users WHERE email='" . $_POST['Email'] . "' AND password='" . $encryptedPass . "'";
                 $result = mysqli_query($conn,$sql);	
-
-                if (!$result) {
-                    printf("Error: %s\n", mysqli_error($conn)); //--//
-                    exit();
+                try{
+                    dbException($result);
                 }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
+                    die();
+                }
+                /*if (!$result) {
+                    printf("Error: %s\n", mysqli_error($conn)); //--//
+                    die();
+                }*/
 
                 
                 if($row = $result->fetch_assoc()){

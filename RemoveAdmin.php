@@ -7,14 +7,14 @@
         <?php
         session_start();
         include "Menu.php";
-        //when an admin views an admin's profile there is a "remove admin" button
+        
         
         if(isset($_SESSION['id'])){
             if(isset($_GET['id'])){
                 $adminID=$_GET['id'];
                 if($_SESSION['userType']=='administrator'){
                     $con = new mysqli("localhost", "root", "", "project");
-                    if(!$con){ //exception
+                    if(!$con){ 
                         echo "connection error<br>";
                         die();
                     }

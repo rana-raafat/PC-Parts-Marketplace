@@ -7,6 +7,13 @@
         session_start();
         include "Menu.php";
         
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         if(isset($_SESSION['id'])){
             if($_SESSION['userType']!='customer'){
                 echo "Your account does not have this privilege<br>";
@@ -17,10 +24,11 @@
                     echo "connection error<br>";
                     die();
                 }
+                
 
                 $totalPrice=0;
                 $orderIDsql = "SELECT orderID FROM orders WHERE customerID='" . $_SESSION['id'] . "' AND completed='0'";
-                $orderIDresult = $con->query($orderIDsql); 
+                $orderIDresult = $con->query($orderIDsql);
                 if($orderIDresult->num_rows == 0){
                     echo "Error: order not found<br>";
                 }
@@ -28,9 +36,16 @@
                     $sql= "SELECT * FROM cartitem WHERE customerID='". $_SESSION['id'] . "' AND orderID='" . $orderRow['orderID'] . "'";
                     $result = mysqli_query($con,$sql);	
                     
-                    if (!$result) { //exception here
+                    /*if (!$result) { //exception here
                         printf("Error: %s\n", mysqli_error($con));
-                        exit();
+                        die();
+                    }*/
+                    try{
+                        dbException($result);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
                     }
                     ?>
                     <div class='container'>
@@ -46,13 +61,26 @@
                                                     echo "<input type='hidden' name='orderID' value=" . $row['orderID'] . ">";      
                                                     $productsql= "SELECT * FROM product WHERE id='". $row['productID'] . "'";
                                                     $productResult = mysqli_query($con,$productsql);	
-                                                    
+                                                    try{
+                                                        dbException($productResult);
+                                                    }
+                                                    catch(Exception $e){
+                                                        printf("Database Error: %s\n", mysqli_error($con));
+                                                        //die();
+                                                    }
                                                     if($productResult->num_rows == 0){
-                                                        echo "Error: Product not found<br>";
+                                                        echo "Product not found<br>";
                                                     }
                                                     else if($prodRow = $productResult->fetch_assoc()){ 
                                                         $crt="SELECT * FROM cartitem WHERE orderID='" . $row['orderID']  ."' AND productID='" . $row['productID'] ."'";
                                                         $crtResult = mysqli_query($con,$crt);
+                                                        try{
+                                                            dbException($crtResult);
+                                                        }
+                                                        catch(Exception $e){
+                                                            printf("Database Error: %s\n", mysqli_error($con));
+                                                            die();
+                                                        }
                                                         $crtrow=$crtResult->fetch_assoc();
                                                         
                                                         $totalPrice += $prodRow['price']*$crtrow['amount'];
@@ -137,12 +165,16 @@
             $delete="DELETE FROM cartitem WHERE productID ='". $_POST['productID']. "' AND customerID='" . $_SESSION['id'] . "'";
             $result=mysqli_query($conn,$delete);
 
-            
-            $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts-1 WHERE orderID='" . $_POST['orderID'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
-            $updateOrderResult = $conn->query($updateOrdersql);
+            if(!$result){
+                echo "Error deleting from database<br>";
+            }
+            else{
+                $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts-1 WHERE orderID='" . $_POST['orderID'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
+                $updateOrderResult = $conn->query($updateOrdersql);
 
-            if(!$result || !$updateOrderResult){
-                echo "error deleting";
+                if(!$updateOrderResult){
+                    echo "Error updating orders table<br>";
+                }
             }
             $conn->close();
             echo "<meta http-equiv='refresh' content='0'>";

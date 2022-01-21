@@ -7,6 +7,13 @@
         session_start(); 
         include "Menu.php";
 
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         $conn = new mysqli("localhost","root","", "project");
 
         $sql="SELECT * FROM message, users WHERE ( (senderID='".$_SESSION['id']."') OR ( recepientID='".$_SESSION['id']."') ) AND SenderID=users.id";
@@ -22,10 +29,17 @@
                     $plist_sql= $sql;
 
                     $plist_result = mysqli_query($conn,$plist_sql);
-                    if(!$plist_result){
-                        echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                    try{
+                        dbException($plist_result);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($conn));
                         die();
                     }
+                    /*if(!$plist_result){
+                        echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                        die();
+                    }*/
 
                     $id_arr=array();
                     while($plist_row = $plist_result->fetch_assoc()){
@@ -49,9 +63,16 @@
                                             <?php
                                     $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND SenderID=".$plist_row['id']." AND recepientID=".$_SESSION['id'];
                                     $unread_sql_result = mysqli_query($conn,$unread_sql);	
-                                    if(!$unread_sql_result){
-                                        echo "error in unread messages query";
+                                    try{
+                                        dbException($unread_sql_result);
                                     }
+                                    catch(Exception $e){
+                                        printf("Database Error: %s\n", mysqli_error($conn));
+                                        die();
+                                    }
+                                    /*if(!$unread_sql_result){
+                                        echo "error in unread messages query";
+                                    }*/
                                     $unread_messages = $unread_sql_result->fetch_assoc();
                                     if($unread_messages['unread_messages']==0){
                                         ?>
@@ -79,10 +100,17 @@
                             $plist_exc_sql = "SELECT * FROM  message, users WHERE messageID=".$plist_row['messageID']." AND users.id=".$plist_row['recepientID'];
                 
                             $plist_exc_result = mysqli_query($conn,$plist_exc_sql);
-                            if(!$plist_exc_result){
-                                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                            try{
+                                dbException($plist_exc_result);
+                            }
+                            catch(Exception $e){
+                                printf("Database Error: %s\n", mysqli_error($conn));
                                 die();
                             }
+                            /*if(!$plist_exc_result){
+                                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                                die();
+                            }*/
                 
                             if($plist_exc_row = $plist_exc_result->fetch_assoc()){           
                                 $repeated=false;
@@ -103,10 +131,17 @@
                                             <img src="<?php echo $plist_exc_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
                                             <?php
                                     $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND recepientID=".$_SESSION['id']." AND senderID=".$plist_exc_row['id'];
-                                    $unread_sql_result = mysqli_query($conn,$unread_sql);	
-                                    if(!$unread_sql_result){
-                                        echo "error in unread messages query";
+                                    $unread_sql_result = mysqli_query($conn,$unread_sql);
+                                    try{
+                                        dbException($unread_sql_result);
                                     }
+                                    catch(Exception $e){
+                                        printf("Database Error: %s\n", mysqli_error($conn));
+                                        die();
+                                    }	
+                                    /*if(!$unread_sql_result){
+                                        echo "error in unread messages query";
+                                    }*/
                                     $unread_messages = $unread_sql_result->fetch_assoc();
                                     if($unread_messages['unread_messages']==0){
                                         ?>
@@ -141,10 +176,17 @@
                     if(!empty($_GET['id'])){
                         $seen_message_sql="UPDATE message SET readStatus=1 WHERE recepientID=".$_SESSION['id']." AND SenderID=".$_GET['id'];
                         $seen = mysqli_query($conn,$seen_message_sql);
-                        if(!$seen){
-                            echo "couldn't implement the seen sql<br>";
+                        try{
+                            dbException($seen);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
+                        /*if(!$seen){
+                            echo "couldn't implement the seen sql<br>";
+                            die();
+                        }*/
                         //to update inbox notification and read-unread style
                         if(mysqli_affected_rows($conn)>0){
                             echo "<meta http-equiv='refresh' content='0'>";
@@ -156,10 +198,17 @@
                             $header_sql = "SELECT * FROM users WHERE id=" . $_GET['id'];
 
                             $header_result = mysqli_query($conn,$header_sql);
-                            if(!$header_result){
-                                echo "couldn't read the messages from the DataBase<br>";
+                            try{
+                                dbException($header_result);
+                            }
+                            catch(Exception $e){
+                                printf("Database Error: %s\n", mysqli_error($conn));
                                 die();
                             }
+                            /*if(!$header_result){
+                                echo "couldn't read the messages from the DataBase<br>";
+                                die();
+                            }*/
 
                             if($header_rows = $header_result->fetch_assoc()){
                             ?>
@@ -187,10 +236,17 @@
                                     $messages_sql= $sql . " AND ( (recepientID=". $_GET['id'] .") OR (senderID=". $_GET['id'].") )";
 
                                     $messages_result = mysqli_query($conn,$messages_sql);
-                                    if(!$messages_result){
-                                        echo "couldn't read the messages from the DataBase<br>";
+                                    try{
+                                        dbException($messages_result);
+                                    }
+                                    catch(Exception $e){
+                                        printf("Database Error: %s\n", mysqli_error($conn));
                                         die();
                                     }
+                                    /*if(!$messages_result){
+                                        echo "couldn't read the messages from the DataBase<br>";
+                                        die();
+                                    }*/
 
                                     while($messages_rows = $messages_result->fetch_assoc()){
 

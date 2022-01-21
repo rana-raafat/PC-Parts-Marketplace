@@ -4,25 +4,40 @@
     </head>
     <body>
         <?php 
-           session_start();
-           include "Menu.php";
-           if($_SESSION['userType']=='auditor')
-           {
+            session_start();
+            include "Menu.php";
+
+            function dbException($queryResult){
+                if(!$queryResult){
+                    throw new Exception("SQL Error");
+                }
+                return true;
+            }
+
+            if($_SESSION['userType']=='auditor')
+            {
                
-               $conn = new mysqli("localhost","root","", "project");
-               if(!$conn)
-               {
-                   echo "couldn't connect to the DataBase<br>";
-                   die();
-               }
-   
-   
-               $fetch_customerName_sql="SELECT username FROM users WHERE id='" .$_SESSION['id'] . "'";
-               $result3 = mysqli_query($conn,$fetch_customerName_sql);
-               if(!$result3){
+                $conn = new mysqli("localhost","root","", "project");
+                if(!$conn)
+                {
+                    echo "couldn't connect to the DataBase<br>";
+                    die();
+                }
+    
+    
+                $fetch_customerName_sql="SELECT username FROM users WHERE id='" .$_SESSION['id'] . "'";
+                $result3 = mysqli_query($conn,$fetch_customerName_sql);
+                try{
+                    dbException($result3);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
+                    die();
+                }
+               /*if(!$result3){
                    echo "COULDN'T SEARCH FOR THE auditor's NAME FROM THE DB<br>";
                    die();
-               }
+               }*/
    
                // just to display the name of the customer and display it at the top
                 if($fetch_auditorName = $result3->fetch_assoc()){
@@ -33,11 +48,18 @@
    
                 $fetch_messages_sql="SELECT * FROM auditorcomment,message WHERE auditorcomment.messageID=message.messageID";
                 $result = mysqli_query($conn,$fetch_messages_sql);
-                if(!$result)
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
+                    die();
+                }
+                /*if(!$result)
                 {
                     echo "couldn't read the messages from the DataBase<br>";
                     die();
-                }
+                }*/
                 echo "<tr><th>Sender</th> <th>Receiver</th> <th>Message</th> <th></th> <th>Auditor</th> <th>Auditor Comment</th> </tr>";
                 while($row = $result->fetch_assoc())
                 {                   
@@ -46,11 +68,18 @@
                         //------------------------------------------------------------------------------------------------//
                         $fetch_sender_sql="SELECT imagePath,username FROM users WHERE id='" . $row['senderID'] . "'";
                         $result3 = mysqli_query($conn,$fetch_sender_sql);
-                        if(!$result3)
+                        try{
+                            dbException($result3);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($conn));
+                            die();
+                        }
+                        /*if(!$result3)
                         {
                             echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                             die();
-                        }
+                        }*/
                         while($fetch_sender = $result3->fetch_assoc())
                         {
                             echo "<td>";
@@ -64,11 +93,18 @@
 
                         $fetch_recepient_sql="SELECT imagePath,username,userType FROM users WHERE id='" . $row['recepientID'] . "'";
                         $result3 = mysqli_query($conn,$fetch_recepient_sql);
-                        if(!$result3)
+                        try{
+                            dbException($result3);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($conn));
+                            die();
+                        }
+                        /*if(!$result3)
                         {
                             echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                             die();
-                        }
+                        }*/
                         
                         while($fetch_recepient = $result3->fetch_assoc())
                         {
@@ -93,11 +129,18 @@
 
                         $fetch_auditor_sql="SELECT imagePath,username FROM users WHERE id='" . $row['auditorID'] . "'";
                         $result3 = mysqli_query($conn,$fetch_auditor_sql);
-                        if(!$result3)
+                        try{
+                            dbException($result3);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($conn));
+                            die();
+                        }
+                        /*if(!$result3)
                         {
                             echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
                             die();
-                        }
+                        }*/
                         while($fetch_auditor = $result3->fetch_assoc())
                         {
                             echo "<td>";

@@ -6,6 +6,13 @@
     <?php 
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
     ?>
     <script>
         function validate(form){ 
@@ -43,7 +50,7 @@
     <?php 
 
         $con = new mysqli("localhost", "root", "", "project");
-        if(!$con){ //maybe here we can throw an exception? instead of using die()
+        if(!$con){ 
             echo "connection error<br>";
             die();
         }
@@ -51,11 +58,17 @@
 
         $sql= "SELECT * FROM product WHERE id='" . $id . "'";
         $result = mysqli_query($con,$sql);	
-
-        if (!$result) {
-            printf("Error: %s\n", mysqli_error($con));
-            exit();
+        try{
+            dbException($result);
         }
+        catch(Exception $e){
+            printf("Database Error: %s\n", mysqli_error($con));
+            die();
+        }
+        /*if (!$result) {
+            printf("Error: %s\n", mysqli_error($con));
+            die();
+        }*/
         if($row = $result->fetch_assoc()){
             ?>
             
@@ -133,7 +146,13 @@
 
             $checkProduct="SELECT * FROM product WHERE name='" . $_POST['name'] . "'";
             $productResult = $con->query($checkProduct);
-
+            try{
+                dbException($productResult);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
+            }
             if($productResult->num_rows > 0){
                 //echo "A product with this name already exists<br>";
                 ?>
@@ -147,11 +166,17 @@
                 if($_FILES["productpic"]["size"]>0) {
                     $sql= "SELECT imagePath FROM product WHERE id='" . $id . "'";
                     $result = mysqli_query($con,$sql);	
-
-                    if (!$result) {
-                        printf("Error: %s\n", mysqli_error($con));
-                        exit();
+                    try{
+                        dbException($result);
                     }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
+                    /*if (!$result) {
+                        printf("Error: %s\n", mysqli_error($con));
+                        die();
+                    }*/
                     if($row = $result->fetch_assoc()){
                         $imagePath=$row['imagePath'];
                         $target_dir="resources/images/ProductsPictures/";
@@ -181,11 +206,17 @@
                         echo $imagePath;
                         $updateImage = "UPDATE product SET imagePath='" . $imagePath . "' WHERE id='" . $id . "'" ;
                         $imageresult = mysqli_query($con,$updateImage);	
-
-                        if (!$imageresult) { //exception
-                            printf("Error: %s\n", mysqli_error($con));
-                            exit();
+                        try{
+                            dbException($imageresult);
                         }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($con));
+                            die();
+                        }
+                        /*if (!$imageresult) { //exception
+                            printf("Error: %s\n", mysqli_error($con));
+                            die();
+                        }*/
                     }
                     else{
                         echo "image missing<br>";
@@ -195,10 +226,10 @@
                 $update = "UPDATE product SET name='" . $_POST['name'] . "',price='" . $_POST['price'] . "',description='" . $_POST['description'] .
                 "',category='" . $_POST['category'] . "' WHERE id='" . $id . "'" ;
                 $result = mysqli_query($con,$update);	
-
-                if (!$result) { //exception
+                
+                if (!$result) {
                     printf("Error: %s\n", mysqli_error($con));
-                    exit();
+                    die();
                 }
                 echo "<script>window.location.href='DisplayProduct.php?id=".$id."'</script>";
                 $con->close();

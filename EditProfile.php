@@ -7,6 +7,12 @@
         session_start();
         include "Menu.php";
 
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
         ?>
         <script>
         function validate(form){ 
@@ -41,7 +47,7 @@
 
             if(isset($_POST['submit'])){
                 $con = mysqli_connect("localhost","root","","project");
-                if(!$con){ //maybe here we can throw an exception? instead of using die()
+                if(!$con){ 
                     echo "connection error";
                     echo "<br>";
                     die();
@@ -53,7 +59,13 @@
                 else{
                     $checkUsername="SELECT * FROM users WHERE username='" . $_POST['username'] . "' AND username!='" . $_SESSION['username'] . "'";
                     $UsernameResult = $con->query($checkUsername);
-
+                    try{
+                        dbException($UsernameResult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     if($UsernameResult->num_rows > 0){
                         $usernameError = "Username already taken";
                     }
@@ -98,18 +110,25 @@
                         $updatesql = "UPDATE users SET username='" . $_POST['username'] . "', password='" . $encryptedPass . "', email='" 
                         . $_POST['email'] . "', address='" . $_POST['address'] . "', imagePath='" . $imagePath . "' WHERE id='" . $_SESSION['id'] . "'";
                         $updateResult = $con->query($updatesql);
-                        if (!$updateResult) {
-                            printf("Error: %s\n", mysqli_error($con));
-                            exit();
+                        try{
+                            dbException($updateResult);
                         }
-                        else{
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($con));
+                            die();
+                        }
+                        /*if (!$updateResult) {
+                            printf("Error: %s\n", mysqli_error($con));
+                            die();
+                        }
+                        else{*/
                             $_SESSION["username"]=$_POST['username'];
                             $_SESSION["password"]=$encryptedPass;
                             $_SESSION["email"]=$_POST['email'];
                             $_SESSION["address"]=$_POST['address'];
                             $_SESSION["imagePath"]=$imagePath;
                             echo "<script>window.location.href='Profile.php'</script>";
-                        }
+                        //}
                     }
                 }
                 $con->close();
