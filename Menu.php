@@ -179,9 +179,9 @@
                     else if($_SESSION['userType'] == "administrator"){
                         ?>
                         <li><a href='AddProduct.php'>Add a Product</a></li>
-                        <li><a href='SearchOrder.php'>Customers Orders</a></li>
-                        <li><a href='DisplayCustomersList.php'>Customers Chat</a></li>
-
+                        <li><a href='SearchOrder.php'>Search Orders</a></li>
+                        <li><a href='DisplayCustomersList.php'>Customers Chats</a></li>
+                        <li><a href='CustomersList.php'>All Customers</a></li>
                         <?php
                     }
                     /*--------------------------------------- If HR Partner ---------------------------------------*/

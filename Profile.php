@@ -43,9 +43,8 @@
 
                                 //can see messages the customer SENT NOT MADE YETTTT
                                 ?>
-                                <form method='post' action=<?php echo 'ChatHistory.php?id=' . $row['id']; ?>>
-                                <input type='submit' name='customerchat' value='Chat History'>
-                                </form>
+                                <br>
+                                <a href='DisplayCustomersList.php'><button name='customerchat' value='Chat History'><i class='fa fa-commenting'></i> Chat History</button></a>
                                 <?php
                             }
                         }

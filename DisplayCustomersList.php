@@ -63,7 +63,7 @@ if($_SESSION['userType']=='administrator')
                     echo "<tr>";
                     echo "<td>";
                     echo "<img src='". $unique_customer_images[$i]."'  class='user-pic-icon'><img>";
-                    echo $unique_customer_names[$i];
+                    echo "<a href=profile.php?id=" . $unique_customer_IDS[$i] .">". $unique_customer_names[$i] ."</a>";
                     echo "</td>";
                 ?>
                 <td>
@@ -193,7 +193,7 @@ if($_SESSION['userType']=='administrator')
             for ($i=0;$i<sizeof($unique_admin_name_arr);$i++)
             {
         echo"    <tr>";        
-    echo "<td><img src='". $unique_admin_image_arr[$i]."'  class='user-pic-icon'><img>" .  $unique_admin_name_arr[$i]."</td>";
+    echo "<td><img src='". $unique_admin_image_arr[$i]."'  class='user-pic-icon'><img><a href=profile.php?id=" . $unique_admin_id_arr[$i] .">" .  $unique_admin_name_arr[$i]."</a></td>";
                     echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype_arr[$i]." </td>";
                     ?>
         <!--<td><a href=Chat.php?id=<?php //echo $unique_admin_id_arr[$i]; ?> >Message</a></td>-->
