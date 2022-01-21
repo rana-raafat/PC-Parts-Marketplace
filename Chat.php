@@ -145,8 +145,10 @@
                             echo "couldn't implement the seen sql<br>";
                             die();
                         }
-                        //to update inbox notification and read/unread style
-                        echo "<meta http-equiv='refresh' content='0'>";
+                        //to update inbox notification and read-unread style
+                        if(mysqli_affected_rows($conn)>0){
+                            echo "<meta http-equiv='refresh' content='0'>";
+                        }
                         
                         ?>
                         <div class="chat chat-column">

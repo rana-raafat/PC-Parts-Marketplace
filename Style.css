@@ -446,8 +446,11 @@ input[type=checkbox], input[type=radio]{
 }
 
 .readStatus-notSeen{
-    font-size: xx-small;
     opacity: 50%;
+    font-size: xx-small;
+    float: right;
+    display: inline-flex;
+    padding-left:10px;
 }
 
 .readStatus-seen{
