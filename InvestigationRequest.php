@@ -21,7 +21,7 @@
             echo "couldn't connect to the DataBase<br>";
             die();
         }
-        if(isset($_GET['id']))//auditor asks hr to make an inv in an admin, hr investiagte admins cause audtor asked them to
+        if(isset($_GET['id']))
         $HRid=$_GET['id'];
         
      
@@ -85,7 +85,7 @@
                     die();
                 }
                 $row2=$result->fetch_assoc();
-                //echo"$row2[id]";
+              
                 $insert="INSERT INTO investigationrequest( auditorID, hrID, adminID, reason) VALUES  ('".$_SESSION['id']."','$HRid','" . $row2['id'] . "','" . $reason . "')";
                 $result3=mysqli_query($con,$insert);
                 try{
@@ -95,10 +95,7 @@
                     printf("Database Error: %s\n", mysqli_error($con));
                     die();
                 }
-                /*if (!$result3) {
-                    printf("Error: %s\n", mysqli_error($con));
-                    die();
-                }  */
+                
                 $investigationsql = "SELECT * FROM investigationrequest ORDER BY id DESC LIMIT 1";
                 $invResult = $con->query($investigationsql);
                 try{
@@ -111,9 +108,9 @@
                 if($invResult->num_rows == 0){
                     echo "Error request not found<br>";
                 }
-                else if($invRow = $invResult->fetch_assoc()){//
+                else if($invRow = $invResult->fetch_assoc()){
                     $invesigationLink = 'Investigation requested <a href="ViewInvestigationRequest.php?id=' . $invRow['id'] . '"">click here </a> to view';
-                    //don't sanatize this cause it needs to stay as a link obviously
+                   
                     $invMessage="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $invRow['auditorID'] ."','". $invRow['hrID'] ."','0','". $invesigationLink ."','0') " ;
                     $messageResult = mysqli_query($con,$invMessage);
                     try{
@@ -123,24 +120,19 @@
                         printf("Database Error: %s\n", mysqli_error($con));
                         die();
                     }
-                    /*if(!$messageResult){
+                    
+                    $updatehr="UPDATE hrpartner SET investigationsMade=investigationsMade+1";
+                    $updateResult = mysqli_query($con,$updatehr);
+                    if(!$updateResult){
                         echo "couldn't insert survey into the DataBase<br>";
                         printf("Error: %s\n", mysqli_error($con));
                         die();
                     }
-                    else{*/
-                        $updatehr="UPDATE hrpartner SET investigationsMade=investigationsMade+1";
-                        $updateResult = mysqli_query($con,$updatehr);
-                        if(!$updateResult){
-                            echo "couldn't insert survey into the DataBase<br>";
-                            printf("Error: %s\n", mysqli_error($con));
-                            die();
-                        }
-                        else{
-                            $con->close();
-                            echo "<script>window.location.href='chat.php?id=".$_GET['id']."'</script>";
-                        }
+                    else{
+                        $con->close();
+                        echo "<script>window.location.href='chat.php?id=".$_GET['id']."'</script>";
                     }
+                    
                     
                 }
             }

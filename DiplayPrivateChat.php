@@ -56,10 +56,6 @@
                 printf("Database Error: %s\n", mysqli_error($conn));
                 die();
             }
-            /*if(!$result3){
-                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                die();
-            }*/
 
             // just to display the name of the customer and display it at the top
             if($fetch_customerName = $result3->fetch_assoc()){
@@ -76,11 +72,6 @@
                 printf("Database Error: %s\n", mysqli_error($conn));
                 die();
             }
-            /*if(!$result)
-            {
-                echo "couldn't read the messages from the DataBase<br>";
-                die();
-            }*/
 
             while($row = $result->fetch_assoc())
             {   
@@ -93,11 +84,6 @@
                     printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
-                /*if(!$result3)
-                {
-                    echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                    die();
-                }*/
                 while($fetch_customer = $result3->fetch_assoc())
                 {
                     

@@ -34,10 +34,6 @@
                     printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
-               /*if(!$result3){
-                   echo "COULDN'T SEARCH FOR THE auditor's NAME FROM THE DB<br>";
-                   die();
-               }*/
    
                // just to display the name of the customer and display it at the top
                 if($fetch_auditorName = $result3->fetch_assoc()){
@@ -55,11 +51,7 @@
                     printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
-                /*if(!$result)
-                {
-                    echo "couldn't read the messages from the DataBase<br>";
-                    die();
-                }*/
+                
                 echo "<tr><th>Sender</th> <th>Receiver</th> <th>Message</th> <th></th> <th>Auditor</th> <th>Auditor Comment</th> </tr>";
                 while($row = $result->fetch_assoc())
                 {                   
@@ -75,11 +67,7 @@
                             printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
-                        /*if(!$result3)
-                        {
-                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                            die();
-                        }*/
+                        
                         while($fetch_sender = $result3->fetch_assoc())
                         {
                             echo "<td>";
@@ -100,11 +88,6 @@
                             printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
-                        /*if(!$result3)
-                        {
-                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                            die();
-                        }*/
                         
                         while($fetch_recepient = $result3->fetch_assoc())
                         {
@@ -136,11 +119,7 @@
                             printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
-                        /*if(!$result3)
-                        {
-                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                            die();
-                        }*/
+                        
                         while($fetch_auditor = $result3->fetch_assoc())
                         {
                             echo "<td>";

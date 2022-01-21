@@ -36,10 +36,6 @@
                     $sql= "SELECT * FROM cartitem WHERE customerID='". $_SESSION['id'] . "' AND orderID='" . $orderRow['orderID'] . "'";
                     $result = mysqli_query($con,$sql);	
                     
-                    /*if (!$result) { //exception here
-                        printf("Error: %s\n", mysqli_error($con));
-                        die();
-                    }*/
                     try{
                         dbException($result);
                     }

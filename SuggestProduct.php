@@ -6,7 +6,7 @@
     <body>
 
 <?php
-//
+
     session_start();
     include "Menu.php";
     function dbException($queryResult){
@@ -24,14 +24,14 @@
 ?>
 <script>
     function validate(form){
-        //alert(form.name.value);
+     
         if(form.name.value=="" || form.name.value=="Enter product name"){
             document.getElementById("NameError").innerHTML = "Name required";
             document.getElementById("NameAlert").style.visibility = "visible";
             return false;
         }
         if(form.description.value==""){
-            //alert("working!");
+          
             document.getElementById("DescError").innerHTML = "Description required";
             document.getElementById("DescAlert").style.visibility = "visible";
             return false;
@@ -127,11 +127,7 @@ if(isset($_POST["submit"])){
             printf("Error: %s\n", mysqli_error($con));
             die();
         }
-        /*if(!$result){
-            echo "couldn't insert suggestion into the DataBase<br>";
-            printf("Error: %s\n", mysqli_error($con));
-            die();
-        }*/
+        
         $adminsql="SELECT id FROM administrator";
         $adminresult=mysqli_query($con,$adminsql);
         try{
@@ -141,14 +137,10 @@ if(isset($_POST["submit"])){
             printf("Error: %s\n", mysqli_error($con));
             die();
         }
-        /*if(!$adminresult){
-            echo "couldn't select admin ids<br>";
-            printf("Error: %s\n", mysqli_error($con));
-            die();
-        }*/
+        
         
         $suggestionlink = 'A new product was suggested <a href="DisplaySuggestions.php">Click Here</a> to view';
-        //don't sanatize this cause it needs to stay as a link obviously
+      
         while($row=$adminresult->fetch_assoc()){
             $msg="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $row['id'] ."','0','". $suggestionlink ."','0') " ;
             $surveyResult = mysqli_query($con,$msg);

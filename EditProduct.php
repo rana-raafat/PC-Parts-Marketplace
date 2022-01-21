@@ -16,32 +16,25 @@
     ?>
     <script>
         function validate(form){ 
-            //var fail="";
+    
             if(form.name.value==""){
-                //fail+="Name required\n";
+             
                 document.getElementById("NameError").innerHTML = "Name required";
                 document.getElementById("NameAlert").style.visibility = "visible";
                 return false;
             }
             if(form.category.value==""){
-                //fail+="Category required\n";
+               
                 document.getElementById("CategoryError").innerHTML = "Category required";
                 document.getElementById("CategoryAlert").style.visibility = "visible";
                 return false;
             }
             if(form.description.value==""){
-                //fail+="Description required\n";
+             
                 document.getElementById("DescriptionError").innerHTML = "Description required";
                 document.getElementById("DescriptionAlert").style.visibility = "visible";
                 return false;
-            }
-            /*if(fail == ""){
-                return true;
-            }
-            else{
-                alert(fail);
-                return false;
-            }  */  
+            } 
             return true; 
         }
     </script>
@@ -65,10 +58,6 @@
             printf("Database Error: %s\n", mysqli_error($con));
             die();
         }
-        /*if (!$result) {
-            printf("Error: %s\n", mysqli_error($con));
-            die();
-        }*/
         if($row = $result->fetch_assoc()){
             ?>
             
@@ -154,7 +143,7 @@
                 die();
             }
             if($productResult->num_rows > 0){
-                //echo "A product with this name already exists<br>";
+                
                 ?>
                 <script>
                     document.getElementById("NameTakenError").innerHTML = "Product already exists";
@@ -173,10 +162,7 @@
                         printf("Database Error: %s\n", mysqli_error($con));
                         die();
                     }
-                    /*if (!$result) {
-                        printf("Error: %s\n", mysqli_error($con));
-                        die();
-                    }*/
+                    
                     if($row = $result->fetch_assoc()){
                         $imagePath=$row['imagePath'];
                         $target_dir="resources/images/ProductsPictures/";
@@ -213,10 +199,7 @@
                             printf("Database Error: %s\n", mysqli_error($con));
                             die();
                         }
-                        /*if (!$imageresult) { //exception
-                            printf("Error: %s\n", mysqli_error($con));
-                            die();
-                        }*/
+                        
                     }
                     else{
                         echo "image missing<br>";

@@ -62,8 +62,8 @@
 
         <?php
 
-        if(isset($_POST['Submit'])){ //check if form was submitted
-            //sanitize any text input
+        if(isset($_POST['Submit'])){
+         
             $email=$_POST["Email"];
             if(!filter_var($email, FILTER_VALIDATE_EMAIL))//check if valid email
             {  
@@ -77,10 +77,10 @@
                 $username = "root";
                 $password = "";
                 $dbname = "project";
-                // Create connection
+               
                 $conn = new mysqli($servername, $username, $password, $dbname);
                 if(!$conn){ 
-                    echo "connection error<br>"; //--//
+                    echo "connection error<br>"; 
                     die();
                 }
 
@@ -95,10 +95,6 @@
                     printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
-                /*if (!$result) {
-                    printf("Error: %s\n", mysqli_error($conn)); //--//
-                    die();
-                }*/
 
                 
                 if($row = $result->fetch_assoc()){
@@ -114,7 +110,7 @@
                     echo "<script>window.location.href='Home.php'</script>";
                 }
                 else{
-                    //echo "Invalid Email or Password"; 
+                    
                     echo "<script> 
                         document.getElementById('loginError').innerHTML = 'Incorrect email or password';
                         document.getElementById('loginAlert').style.visibility = 'visible';
@@ -126,14 +122,14 @@
 
         <script>
             function validate(form){
-                //alert(form.password.value);
+             
                 if(form.email.value==""){
                     document.getElementById("EmailError").innerHTML = "Email required";
                     document.getElementById("EmailAlert").style.visibility = "visible";
                     return false;
                 }
                 if(form.password.value==""){
-                    //alert("working!");
+                  
                     document.getElementById("PasswordError").innerHTML = "Password required";
                     document.getElementById("PasswordAlert").style.visibility = "visible";
                     return false;

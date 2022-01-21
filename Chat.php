@@ -36,10 +36,6 @@
                         printf("Database Error: %s\n", mysqli_error($conn));
                         die();
                     }
-                    /*if(!$plist_result){
-                        echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                        die();
-                    }*/
 
                     $id_arr=array();
                     while($plist_row = $plist_result->fetch_assoc()){
@@ -70,9 +66,6 @@
                                         printf("Database Error: %s\n", mysqli_error($conn));
                                         die();
                                     }
-                                    /*if(!$unread_sql_result){
-                                        echo "error in unread messages query";
-                                    }*/
                                     $unread_messages = $unread_sql_result->fetch_assoc();
                                     if($unread_messages['unread_messages']==0){
                                         ?>
@@ -107,10 +100,6 @@
                                 printf("Database Error: %s\n", mysqli_error($conn));
                                 die();
                             }
-                            /*if(!$plist_exc_result){
-                                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                                die();
-                            }*/
                 
                             if($plist_exc_row = $plist_exc_result->fetch_assoc()){           
                                 $repeated=false;
@@ -139,9 +128,7 @@
                                         printf("Database Error: %s\n", mysqli_error($conn));
                                         die();
                                     }	
-                                    /*if(!$unread_sql_result){
-                                        echo "error in unread messages query";
-                                    }*/
+                                    
                                     $unread_messages = $unread_sql_result->fetch_assoc();
                                     if($unread_messages['unread_messages']==0){
                                         ?>
@@ -183,10 +170,7 @@
                             printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
-                        /*if(!$seen){
-                            echo "couldn't implement the seen sql<br>";
-                            die();
-                        }*/
+                        
                         //to update inbox notification and read-unread style
                         if(mysqli_affected_rows($conn)>0){
                             echo "<meta http-equiv='refresh' content='0'>";
@@ -205,10 +189,6 @@
                                 printf("Database Error: %s\n", mysqli_error($conn));
                                 die();
                             }
-                            /*if(!$header_result){
-                                echo "couldn't read the messages from the DataBase<br>";
-                                die();
-                            }*/
 
                             if($header_rows = $header_result->fetch_assoc()){
                             ?>
@@ -243,10 +223,6 @@
                                         printf("Database Error: %s\n", mysqli_error($conn));
                                         die();
                                     }
-                                    /*if(!$messages_result){
-                                        echo "couldn't read the messages from the DataBase<br>";
-                                        die();
-                                    }*/
 
                                     while($messages_rows = $messages_result->fetch_assoc()){
 

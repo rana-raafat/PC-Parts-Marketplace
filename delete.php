@@ -7,7 +7,7 @@
 			session_start();
             include "Menu.php";
 
-			// Create connection
+		
 			if(isset($_POST['Yes'])) {
 
 				$conn = new mysqli("localhost","root","", "project");
@@ -15,7 +15,7 @@
 					echo "connection error<br>";
 					die();
 				}
-				//echo $_SESSION['email'];
+			
 				$sql="DELETE FROM users WHERE email ='". $_SESSION['email'] . "'";
 				$sql2="DELETE FROM orders WHERE customerID ='". $_SESSION['id'] . "'";
 				$result=mysqli_query($conn,$sql);

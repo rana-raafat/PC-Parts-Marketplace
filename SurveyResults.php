@@ -29,10 +29,7 @@
             printf("Error: %s\n", mysqli_error($conn));
             die();
         }
-        /*if(!$result){
-            echo "couldn't search inside the DataBase<br>";
-            die();
-        }*/
+        
         ?>
         <div class="container">
             <div class="card justify-content-center">
@@ -66,10 +63,7 @@
                                 printf("Error: %s\n", mysqli_error($conn));
                                 die();
                             }
-                            /*if(!$result2){
-                                echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                                die();
-                            }*/
+                            
                             while($rows = $result2->fetch_assoc()){
                                 echo "<img src=". $rows['imagePath']. " class='user-pic-icon'><img>";
                                 echo  $rows['username'];
@@ -84,7 +78,7 @@
 
                             echo "</tr>";
 
-                            //echo "<script>window.location.href='Home.php'</script>";
+                            
                         }
                         ?>
                     </table>

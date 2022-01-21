@@ -192,6 +192,7 @@
                           <li><a href='ViewInvestigationRequest.php'>View Investigation Requests</a></li>
                         -->
                         <li><a href='Penalty.php'>Penalties</a></li>
+                        <li><a href='AllRequests.php'>Investigation Requests</a></li>
                       <?php
                     }  
                     ?>

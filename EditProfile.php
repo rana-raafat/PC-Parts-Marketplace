@@ -117,18 +117,13 @@
                             printf("Database Error: %s\n", mysqli_error($con));
                             die();
                         }
-                        /*if (!$updateResult) {
-                            printf("Error: %s\n", mysqli_error($con));
-                            die();
-                        }
-                        else{*/
                             $_SESSION["username"]=$_POST['username'];
                             $_SESSION["password"]=$encryptedPass;
                             $_SESSION["email"]=$_POST['email'];
                             $_SESSION["address"]=$_POST['address'];
                             $_SESSION["imagePath"]=$imagePath;
                             echo "<script>window.location.href='Profile.php'</script>";
-                        //}
+                     
                     }
                 }
                 $con->close();

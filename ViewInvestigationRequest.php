@@ -45,7 +45,7 @@
                     }
                     else if($requestRow = $requestResult->fetch_assoc()){
                         echo "<h3>Investigation Request</h3>";
-                        //echo "<br>";
+                        
                         echo "<text class='header'>Number " . $_GET['id'] . "</text>";
                         echo "<br><br>";
 
@@ -110,7 +110,7 @@
                         echo "<br>";
                         echo "<i>" .$requestRow['reason'] . "</i>";
                         echo "<br><br>";
-                        echo "<form method='post' action=''><input type='submit' name='exit' value='exit'/><form><br>";
+                        echo "<form method='post' action=''><input type='submit' name='exit' value='Exit'/><form><br>";
                     }
 
                     $con->close();

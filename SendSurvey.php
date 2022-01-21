@@ -42,7 +42,7 @@
                             else{
                                 $customersArray = $_POST['customers'];
                                 $link = 'Kindly take <a href="survey.php">this survey</a>';
-                                //don't sanatize this cause it needs to stay as a link obviously
+                                
                                 for($i=0;$i<sizeof($customersArray);$i++){
                                     $survey="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $customersArray[$i] ."','0','". $link ."','0') " ;
                                     $surveyResult = mysqli_query($conn,$survey);
@@ -53,11 +53,7 @@
                                         printf("Error: %s\n", mysqli_error($conn));
                                         die();
                                     }
-                                    /*if(!$surveyResult){
-                                        echo "couldn't insert survey into the DataBase<br>";
-                                        printf("Error: %s\n", mysqli_error($conn));
-                                        die();
-                                    }*/
+                                    
                                 }
                                 $conn->close();
                                 echo "<script>window.location.href='Home.php'</script>";
@@ -79,7 +75,7 @@
                             <br>
                             <?php
                         }
-                        //echo "<input type='checkbox' name='customers[]' value='' hidden checked>";
+                      
                         $customerssql = "SELECT * FROM users WHERE userType='customer'";
                         $customersResult = $conn->query($customerssql);
                         try{

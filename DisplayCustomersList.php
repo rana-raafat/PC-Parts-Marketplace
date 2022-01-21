@@ -24,7 +24,6 @@ if($_SESSION['userType']=='administrator')
         die();
     }
     
-    //SELECT username FROM users JOIN message ON (SenderID=users.id OR recepientID=users.id) WHERE userType="administrator"
     $admin_sql=" SELECT * FROM message JOIN users ON (SenderID=users.id OR recepientID=users.id) WHERE userType='customer' ";
     $auditor_result = mysqli_query($conn_to_get_customers,$admin_sql);
     try{
@@ -34,17 +33,13 @@ if($_SESSION['userType']=='administrator')
         printf("Database Error: %s\n", mysqli_error($conn_to_get_customers));
         die();
     }
-    /*if(!$auditor_result){
-        echo "COULDN'T SEARCH FOR THE NAMES OF ADMINISTRATORS FROM THE DB<br>";
-        die();
-    }*/
 
     $unique_customer_images=array();
     $unique_customer_names=array();
     $unique_customer_IDS=array();
     $unique_customer_usertype=array();
     while($admin_row = $auditor_result->fetch_assoc()){
-        //echo $admin_row['senderID']."<br>";
+       
                 
                 $repeated_IDS=false;
 
@@ -116,7 +111,7 @@ if($_SESSION['userType']=='administrator')
             }
         
                 $sql="SELECT * FROM message WHERE (senderID='".$_POST['uCustomerId']."') OR ( recepientID='".$_POST['uCustomerId']."')";
-                //$sql2="SELECT username, id FROM users WHERE username !='" . $_POST['username'] . "'";
+             
                 $result = mysqli_query($conn,$sql);
                 try{
                     dbException($result);
@@ -149,11 +144,6 @@ if($_SESSION['userType']=='administrator')
                             printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
-                        /*if(!$fetch_unique_recieve_id)
-                        {
-                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                            die();
-                        }*/
                     
                         while($row2 = $fetch_unique_recieve_id->fetch_assoc())
                         {
@@ -188,10 +178,6 @@ if($_SESSION['userType']=='administrator')
                             printf("Database Error: %s\n", mysqli_error($conn));
                             die();
                         }
-                        /*if(!$row_unique_sender_id){
-                            echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                            die();
-                        }*/
     
                             while($row3 = $row_unique_sender_id->fetch_assoc())
                             {   
@@ -225,7 +211,7 @@ if($_SESSION['userType']=='administrator')
                                         <table class='table table-responsive text-center'>
                                             <h3>Users <?php echo $_POST['uCustomerName']; ?> Chatted With</h3>
     <?php    
-    // mohamed mohamed mohamed hady farah hady
+    
             for ($i=0;$i<sizeof($unique_admin_name_arr);$i++)
             {
         echo"    <tr>";        

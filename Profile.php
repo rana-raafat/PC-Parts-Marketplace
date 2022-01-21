@@ -55,7 +55,7 @@
                                 //if they open a customer's profile they have a button that can make this customer an admin
                                 echo "<a href='AddAdmin.php?id=". $row['id'] ."'><input type='submit' name='addadmin' value='Add admin'></a>";
 
-                                //can see messages the customer
+                             
                                 ?>
                                 <br>
                                 <a href='DisplayCustomersList.php'><button name='customerchat' value='Chat History'><i class='fa fa-commenting'></i> Chat History</button></a>
@@ -70,18 +70,14 @@
                                 <input type='submit' name='adminchat' value='Chat History'>
                                 </form>
                                 <?php
-                                //redirects to show message history
-                                //NOTE: on second thought this button should redirect to chats where
-                                //a list of all the customers the admin contacted is there then when the auditor
-                                //clicks on one of those people it sends the aditor to the chathistory page which then displays the
-                                //conversation between them (then the auditor can add a comment to that conversation i don't understand how)
+                                
                             }
                             else if($row['userType']=='customer'){
                                 //if they open a customer's profile they have a 'send survey' button
                                 //sends survey link as a message
                                 if(isset($_POST['sendsurvey'])){
                                     $link = 'Kindly take <a href="survey.php">this survey</a>';
-                                    //don't sanatize this cause it needs to stay as a link obviously
+                                 
                                     $survey="INSERT INTO message(senderID,recepientID,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $row['id'] ."','". $link ."','0') " ;
                                     $surveyResult = mysqli_query($con,$survey);
                                     if(!$surveyResult){

@@ -32,9 +32,6 @@
                 $uCustomerId=$_POST['uCustomerId'];
                 $uAdminId2=$_POST['uAdminId2'];
                 
-                //echo "<h1>".$uCustomerId."</h1>";
-                //echo  "<h1>".$uAdminId2."</h1>";
-
              
             
                 $conn = new mysqli("localhost","root","", "project");
@@ -54,10 +51,6 @@
                     printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
-                /*if(!$result3){
-                    echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
-                    die();
-                }*/
 
                 // just to display the name of the customer and display it at the top
                 if($fetch_customerName = $result3->fetch_assoc()){
@@ -73,11 +66,6 @@
                     printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
-                /*if(!$result)
-                {
-                    echo "couldn't read the messages from the DataBase<br>";
-                    die();
-                }*/
 
                 while($row = $result->fetch_assoc())
                 {   
@@ -151,7 +139,7 @@
                         }
                     }
                     $conn->close();
-                    //echo "<script>window.location.href='test2.php'</script>"; 
+                    
                 }
 
                 if(isset($_POST['exit']))

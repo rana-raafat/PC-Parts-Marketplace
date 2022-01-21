@@ -20,39 +20,32 @@
             }
         ?>
     <script>
-    function validate(form){ //sometimes when the script is under the form it causes an error where the form doesn't know what the validate function is
-        //var fail="";
+    function validate(form){ 
+        
         if(form.username.value==""){
             document.getElementById("UsernameError").innerHTML = "Username required";
             document.getElementById("UsernameAlert").style.visibility = "visible";
             return false;
-            //fail+="Username required\n";
+            
         }
         if(form.email.value==""){
-            //fail+="Email required\n";
+           
             document.getElementById("EmailError").innerHTML = "Email required";
             document.getElementById("EmailAlert").style.visibility = "visible";
             return false;
         }
         if(form.password.value==""){
-            //fail+="Password required\n";
+            
             document.getElementById("PasswordError").innerHTML = "Password required";
             document.getElementById("PasswordAlert").style.visibility = "visible";
             return false;
         }
         if(form.address.value==""){
-            //fail+="Address required\n";
+          
             document.getElementById("AddressError").innerHTML = "Address required";
             document.getElementById("AddressAlert").style.visibility = "visible";
             return false;
-        }
-        /*if(fail == ""){
-            return true;
-        }
-        else{
-            alert(fail);
-            return false;
-        }  */  
+        } 
         return true; 
     }
     </script>
@@ -189,7 +182,7 @@ if(isset($_POST["submit"])){
         }
 
         if($EmailResult->num_rows > 0){
-           // echo "An account with this email already exists<br>";
+     
            ?>
             <script>
                 document.getElementById("EmailTakenError").innerHTML = "Email already exists";
@@ -199,7 +192,7 @@ if(isset($_POST["submit"])){
            
         }
         else if($UsernameResult->num_rows > 0){
-            //echo "Username already taken<br>";
+          
             ?>
             <script>
                 document.getElementById("UsernameTakenError").innerHTML = "Username already taken";
@@ -246,44 +239,38 @@ if(isset($_POST["submit"])){
                 printf("Error: %s\n", mysqli_error($con));
                 die();
             }
-            /*if(!$result){
-                echo "error inserting data into database<br>";
-                printf("Error: %s\n", mysqli_error($con));
-        	    die(); //exit stops the program
+            //create a new order for the user
+            $IDsql = "SELECT id FROM users WHERE username='" . $username ."'"; 
+            $IDresult = $con->query($IDsql);
+            try{
+                dbException($IDresult);
             }
-            else{*/
-                //create a new order for the user
-                $IDsql = "SELECT id FROM users WHERE username='" . $username ."'"; //not tested
-                $IDresult = $con->query($IDsql);
-                try{
-                    dbException($IDresult);
+            catch(Exception $e){
+                printf("Error: %s\n", mysqli_error($con));
+                die();
+            }
+            if($IDresult->num_rows == 0){
+                echo "Error: user not found<br>";
+            }
+            else if($idrow = $IDresult->fetch_assoc()){
+                $ordersql = "INSERT INTO orders(customerID, numberOfProducts, completed) VALUES('". $idrow['id'] . "','0','0')";
+                $orderResult = $con->query($ordersql);
+                if(!$ordersql){
+                    echo "Error: couldn't create new order<br>";
                 }
-                catch(Exception $e){
-                    printf("Error: %s\n", mysqli_error($con));
-                    die();
+                else{
+                    echo "Account creation successful<br>";
+                    
+                    ?>
+                    <script>
+                    $(document).ready(function() {
+                        window.location.replace("Home.php");;
+                    });
+                    </script>
+                    <?php
                 }
-                if($IDresult->num_rows == 0){
-                    echo "Error: user not found<br>";
-                }
-                else if($idrow = $IDresult->fetch_assoc()){
-                    $ordersql = "INSERT INTO orders(customerID, numberOfProducts, completed) VALUES('". $idrow['id'] . "','0','0')";
-                    $orderResult = $con->query($ordersql);
-                    if(!$ordersql){
-                        echo "Error: couldn't create new order<br>";
-                    }
-                    else{
-                        echo "Account creation successful<br>";
-                        //echo "<script>window.location.href='Home.php'</script>";
-                        ?>
-                        <script>
-                        $(document).ready(function() {
-                            window.location.replace("Home.php");;
-                        });
-                        </script>
-                        <?php
-                    }
-                }
-            //}
+            }
+           
         }
         $con->close();
     }

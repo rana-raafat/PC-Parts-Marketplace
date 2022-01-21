@@ -31,9 +31,6 @@
             }
             echo "<script>window.location.href='Home.php'</script>";
         }
-        else{
-            //echo"Please fill in the values";
-        }
     ?>
 
 <script>

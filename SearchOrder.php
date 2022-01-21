@@ -72,11 +72,7 @@
                 printf("Database Error: %s\n", mysqli_error($con));
                 die();
             }
-            /*if(!$result){
-                echo "sql error<br>";
-                printf("Error: %s\n", mysqli_error($con));
-                die();
-            }*/
+            
             if ($result->num_rows == 0) {
                 echo "No orders found<br>";
             }
@@ -144,65 +140,58 @@
                 printf("Database Error: %s\n", mysqli_error($con));
                 die();
             }
-            /*if (!$orderresult) {
-                echo "error fetching order<br>";
-            }
-            else{*/
-                if($orderrow = $orderresult->fetch_assoc()){
-                    $usersql = "SELECT * FROM users WHERE id='" . $orderrow['customerID'] . "'";
-                    $userResult = mysqli_query($con,$usersql);
+            if($orderrow = $orderresult->fetch_assoc()){
+                $usersql = "SELECT * FROM users WHERE id='" . $orderrow['customerID'] . "'";
+                $userResult = mysqli_query($con,$usersql);
+                try{
+                    dbException($userResult);
+                }
+                catch(Exception $e){
+                    echo "User not found<br>";
+                }
+                if($userRow = $userResult->fetch_assoc()){
+                    echo "<h4>Customer Name: " . $userRow['username'] . "</h4>";
+                }
+                $totalPrice=0;
+                $cartsql= "SELECT * FROM cartitem WHERE customerID='". $orderrow['customerID'] . "' AND orderID='" . $_GET['id'] . "'";
+                $cartResult = mysqli_query($con,$cartsql);	
+                try{
+                    dbException($cartResult);
+                }
+                catch(Exception $e){
+                    printf("Error: %s\n", mysqli_error($con));
+                    die();
+                }
+                
+                
+                echo "<table border=2 class='table'>";
+                echo "<thead><tr><th>Image</th><th>Name</th> <th>Price</th> <th>Amount</th></tr></thead><tbody>";
+                while($cartRow=$cartResult->fetch_assoc()){
+                    $productsql= "SELECT * FROM product WHERE id='". $cartRow['productID'] . "'";
+                    $productResult = mysqli_query($con,$productsql);	
                     try{
-                        dbException($userResult);
-                    }
-                    catch(Exception $e){
-                        echo "User not found<br>";
-                    }
-                    if($userRow = $userResult->fetch_assoc()){
-                        echo "<h4>Customer Name: " . $userRow['username'] . "</h4>";
-                    }
-                    $totalPrice=0;
-                    $cartsql= "SELECT * FROM cartitem WHERE customerID='". $orderrow['customerID'] . "' AND orderID='" . $_GET['id'] . "'";
-                    $cartResult = mysqli_query($con,$cartsql);	
-                    try{
-                        dbException($cartResult);
+                        dbException($productResult);
                     }
                     catch(Exception $e){
                         printf("Error: %s\n", mysqli_error($con));
                         die();
                     }
-                    
-                    /*if (!$cartResult) { //exception here
-                        printf("Error: %s\n", mysqli_error($con));
-                        die();
-                    }*/
-                    echo "<table border=2 class='table'>";
-                    echo "<thead><tr><th>Image</th><th>Name</th> <th>Price</th> <th>Amount</th></tr></thead><tbody>";
-                    while($cartRow=$cartResult->fetch_assoc()){
-                        $productsql= "SELECT * FROM product WHERE id='". $cartRow['productID'] . "'";
-                        $productResult = mysqli_query($con,$productsql);	
-                        try{
-                            dbException($productResult);
-                        }
-                        catch(Exception $e){
-                            printf("Error: %s\n", mysqli_error($con));
-                            die();
-                        }
-                        if($productResult->num_rows == 0){
-                            echo "Error: Product not found<br>";
-                        }
-                        else if($prodRow = $productResult->fetch_assoc()){ 
-                            $totalPrice+=$prodRow['price'];
-                            $image= "<img src='" . $prodRow['imagePath'] ."' height=100 width=100>";
-                            $name="<a href='DisplayProduct.php?id=" . $prodRow['id'] . "'>" . $prodRow['name'] . "</a><br>";
-                            echo "<tr><td>" . $image . "</td> <td>" .  $name . "</td> <td>" . $prodRow['price'] . "</td> <td>" . $cartRow['amount'] . "</td></tr>";
-                        }
-                        
+                    if($productResult->num_rows == 0){
+                        echo "Error: Product not found<br>";
                     }
-                    echo "</tbody></table>";
-                    echo "<b>Total price:</b>" . $totalPrice." "; 
+                    else if($prodRow = $productResult->fetch_assoc()){ 
+                        $totalPrice+=$prodRow['price'];
+                        $image= "<img src='" . $prodRow['imagePath'] ."' height=100 width=100>";
+                        $name="<a href='DisplayProduct.php?id=" . $prodRow['id'] . "'>" . $prodRow['name'] . "</a><br>";
+                        echo "<tr><td>" . $image . "</td> <td>" .  $name . "</td> <td>" . $prodRow['price'] . "</td> <td>" . $cartRow['amount'] . "</td></tr>";
+                    }
                     
                 }
-            //}
+                echo "</tbody></table>";
+                echo "<b>Total price:</b>" . $totalPrice." "; 
+                
+            }
+          
             echo "</div></div></div>";
         }
         

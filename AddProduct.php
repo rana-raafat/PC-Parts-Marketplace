@@ -16,26 +16,16 @@
     ?>
     <script>
         function validate(form){ 
-            //var fail="";
             if(form.name.value==""){
-                //fail+="Name required\n";
                 document.getElementById("NameError").innerHTML = "Name required";
                 document.getElementById("NameAlert").style.visibility = "visible";
                 return false;
             }
             if(form.description.value==""){
-                //fail+="Description required\n";
                 document.getElementById("DescriptionError").innerHTML = "Description required";
                 document.getElementById("DescriptionAlert").style.visibility = "visible";
                 return false;
             }
-            /*if(fail == ""){
-                return true;
-            }
-            else{
-                alert(fail);
-                return false;
-            }*/
             return true;
         }
     </script>
@@ -164,16 +154,9 @@
                     printf("Database Error: %s\n", mysqli_error($con));
                     die();
                 }
-                /*if(!$result){
-                    echo "error inserting data into database<br>";
-                    printf("Error: %s\n", mysqli_error($con));
-                    die(); //exit stops the program
-                }
-                else{*/
-                    echo "Product added successfully<br>";
-                    //echo "<script>window.location.href='addproduct.php'</script>";
-                    echo "<script>window.location.href='Home.php'</script>";
-                //}
+                echo "Product added successfully<br>";
+                echo "<script>window.location.href='Home.php'</script>";
+            
             }
             $con->close();
         }
