@@ -47,13 +47,13 @@
                                         <li class="clearfix">
                                             <img src="<?php echo $plist_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
                                             <?php
-                                    $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND SenderID=".$plist_row['senderID']." AND recepientID=".$_SESSION['id'];
+                                    $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND SenderID=".$plist_row['id']." AND recepientID=".$_SESSION['id'];
                                     $unread_sql_result = mysqli_query($conn,$unread_sql);	
                                     if(!$unread_sql_result){
                                         echo "error in unread messages query";
                                     }
-                                    $unread_sql_result = $unread_sql_result->fetch_assoc();
-                                    if($unread_sql_result['unread_messages']==0){
+                                    $unread_messages = $unread_sql_result->fetch_assoc();
+                                    if($unread_messages['unread_messages']==0){
                                         ?>
                                             <div class="about read">
                                         <?php
@@ -102,13 +102,13 @@
                                         <li class="clearfix">
                                             <img src="<?php echo $plist_exc_row['imagePath'];?>" alt="profile picture" width='50' height='50' class="img-circle">
                                             <?php
-                                    $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND recepientID=".$plist_exc_row['recepientID']." AND senderID=".$_SESSION['id'];
+                                    $unread_sql = "SELECT COUNT('messageID') as unread_messages FROM message WHERE readStatus='0' AND recepientID=".$_SESSION['id']." AND senderID=".$plist_exc_row['id'];
                                     $unread_sql_result = mysqli_query($conn,$unread_sql);	
                                     if(!$unread_sql_result){
                                         echo "error in unread messages query";
                                     }
-                                    $unread_sql_result = $unread_sql_result->fetch_assoc();
-                                    if($unread_sql_result['unread_messages']==0){
+                                    $unread_messages = $unread_sql_result->fetch_assoc();
+                                    if($unread_messages['unread_messages']==0){
                                         ?>
                                             <div class="about read">
                                         <?php
@@ -145,10 +145,10 @@
                             echo "couldn't implement the seen sql<br>";
                             die();
                         }
-                        //to update inbox notification
-                        echo "<script>window.location.hash='reload';</script>";
+                        //to update inbox notification and read/unread style
+                        echo "<meta http-equiv='refresh' content='0'>";
                         
-                    ?>
+                        ?>
                         <div class="chat chat-column">
                             <?php
                             $header_sql = "SELECT * FROM users WHERE id=" . $_GET['id'];
