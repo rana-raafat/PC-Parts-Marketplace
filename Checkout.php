@@ -40,42 +40,28 @@
                             $result2=mysqli_query($con,$sql2);
                             $row2=$result2->fetch_assoc();
                         }
-                        $totalPrice=$_POST['total'];
-                        echo " <br>Total Price: $totalPrice <br><br>";
-                        if(isset($_POST["purchasecomplete"])){
-                            $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
-                            $result4 = mysqli_query($con,$sql4);
-                            
-                            echo"<br>Products Bought Successfully<br>";
-                            
-                            $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
-                            $result5 = mysqli_query($con,$sql5);
-                            if(!$result5){
-                                echo "error creating a new order<br>";
-                            }
-                            else{
-                                echo "<script>window.location.href='Home.php'</script>";
-                            }
-                            
-                        }
+                        
 
-                        $totalPrice=$_GET['total'];
+                        $totalPrice=$_POST['total'];
                         echo "<text class='header'>Total Price </text><br> $totalPrice <br><br>";
                         if(isset($_POST["purchasecomplete"])){
                             $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
                             $result4 = mysqli_query($con,$sql4);
-                            
-                            echo"<br>Products Bought Successfully<br>";
-                            
-                            $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
-                            $result5 = mysqli_query($con,$sql5);
-                            if(!$result5){
-                                echo "error creating a new order<br>";
+                            if(!$result4){
+                                echo "error updating order<br>";
                             }
                             else{
-                                echo "<script>window.location.href='Home.php'</script>";
+                                echo"<br>Products Bought Successfully<br>";
+                                
+                                $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
+                                $result5 = mysqli_query($con,$sql5);
+                                if(!$result5){
+                                    echo "error creating a new order<br>";
+                                }
+                                else{
+                                  //  echo "<script>window.location.href='Home.php'</script>";
+                                }
                             }
-                            
                         }
 
                         ?>

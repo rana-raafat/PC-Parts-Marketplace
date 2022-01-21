@@ -20,7 +20,7 @@
 
                 $totalPrice=0;
                 $orderIDsql = "SELECT orderID FROM orders WHERE customerID='" . $_SESSION['id'] . "' AND completed='0'";
-                $orderIDresult = $con->query($orderIDsql);//not tested
+                $orderIDresult = $con->query($orderIDsql); 
                 if($orderIDresult->num_rows == 0){
                     echo "Error: order not found<br>";
                 }
@@ -54,7 +54,9 @@
                                                         $crt="SELECT * FROM cartitem WHERE orderID='" . $row['orderID']  ."' AND productID='" . $row['productID'] ."'";
                                                         $crtResult = mysqli_query($con,$crt);
                                                         $crtrow=$crtResult->fetch_assoc();
-                                                        $totalPrice+=$prodRow['price']*$crtrow['amount'];
+                                                        
+                                                        $totalPrice += $prodRow['price']*$crtrow['amount'];
+                                                        
                                                         echo "<input type='hidden' name='productID' value=" . $prodRow['id'] . ">";  
                                                         echo "<tr>";
                                                             echo "<td>";

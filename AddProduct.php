@@ -107,7 +107,6 @@
             $productResult = $con->query($checkProduct);
 
             if($productResult->num_rows > 0){
-                //echo "A product with this name already exists<br>";
                 ?>
                 <script>
                     document.getElementById("NameTakenError").innerHTML = "Product already exists";

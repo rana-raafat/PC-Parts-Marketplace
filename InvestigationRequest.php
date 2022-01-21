@@ -15,7 +15,7 @@
             echo "couldn't connect to the DataBase<br>";
             die();
         }
-        if(isset($_GET['id']))
+        if(isset($_GET['id']))//auditor asks hr to make an inv in an admin, hr investiagte admins cause audtor asked them to
         $HRid=$_GET['id'];
         
      
@@ -70,7 +70,7 @@
                 if($invResult->num_rows == 0){
                     echo "Error request not found<br>";
                 }
-                else if($invRow = $invResult->fetch_assoc()){
+                else if($invRow = $invResult->fetch_assoc()){//
                     $invesigationLink = 'Investigation requested <a href="ViewInvestigationRequest.php?id=' . $invRow['id'] . '"">click here </a> to view';
                     //don't sanatize this cause it needs to stay as a link obviously
                     $invMessage="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $invRow['auditorID'] ."','". $invRow['hrID'] ."','0','". $invesigationLink ."','0') " ;

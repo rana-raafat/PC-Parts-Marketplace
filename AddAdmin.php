@@ -7,7 +7,6 @@
         <?php
         session_start();
         include "Menu.php";
-        //when an admin views a customer's profile there is an "add as admin" button
         
         if(isset($_SESSION['id'])){
             if(isset($_GET['id'])){

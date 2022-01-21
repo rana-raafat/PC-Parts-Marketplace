@@ -56,7 +56,7 @@
         <?php
 
         if(isset($_POST['Submit'])){ //check if form was submitted
-            
+            //sanitize any text input
             $email=$_POST["Email"];
             if(!filter_var($email, FILTER_VALIDATE_EMAIL))//check if valid email
             {  

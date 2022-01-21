@@ -41,7 +41,7 @@
                                 //if they open a customer's profile they have a button that can make this customer an admin
                                 echo "<a href='AddAdmin.php?id=". $row['id'] ."'><input type='submit' name='addadmin' value='Add admin'></a>";
 
-                                //can see messages the customer SENT NOT MADE YETTTT
+                                //can see messages the customer
                                 ?>
                                 <br>
                                 <a href='DisplayCustomersList.php'><button name='customerchat' value='Chat History'><i class='fa fa-commenting'></i> Chat History</button></a>
@@ -52,7 +52,7 @@
                             if($row['userType']=='administrator'){
                                 //can see messages between admin and customers
                                 ?>
-                                <form method='post' action=<?php echo 'ChatHistory.php?id=' . $row['id']; ?>>
+                                <form method='post' action=<?php echo 'AdminChats.php'; ?>>
                                 <input type='submit' name='adminchat' value='Chat History'>
                                 </form>
                                 <?php

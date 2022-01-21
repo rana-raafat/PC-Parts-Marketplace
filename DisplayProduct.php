@@ -1,41 +1,54 @@
 <html>
 <head>
     <title>Product page</title>
-</head>
-<body>
+
     <script>
     function validate(form){ 
-        var fail="";
+        //var fail="";
         if(form.rating.value == ""){
-            fail+="Star rating required\n";
+            //fail+="Star rating required\n";
+            document.getElementById("RatingError").innerHTML = "Rating required";
+            document.getElementById("RatingAlert").style.visibility = "visible";
+            return false;
         }
         if(form.review.value == "" || form.review.value == "Write a review..."){
-            fail+="Review required\n";
+            //fail+="Review required\n";
+            document.getElementById("ReviewError").innerHTML = "Review required";
+            document.getElementById("ReviewAlert").style.visibility = "visible";
+            return false;
         }
+        /*
         if(fail == ""){
             return true;
         }
         else{
             alert(fail);
             return false;
-        }     
+        } */
+        return true;    
     }
 
-    function validateReply(form){ 
-        var fail="";
-        if(form.replyText.value == "" || form.replyText.value == "Write a reply..."){
-            fail+="Reply required\n";
+    function validateReply(form2){ 
+        //var fail="";
+        if(form2.replyText.value == "" || form2.replyText.value == "Write a reply..."){
+            //fail+="Reply required\n";
+            document.getElementById("ReplyError").innerHTML = "Reply required";
+            document.getElementById("ReplyAlert").style.visibility = "visible";
+            return false;
         }
-        if(fail == ""){
+        /*if(fail == ""){
             return true;
         }
         else{
             alert(fail);
             return false;
-        }     
+        }  */
+        return true;
     }
 
     </script>
+</head>
+<body>
     <?php 
         session_start();
         include "Menu.php";
@@ -321,8 +334,22 @@
                                 <input type='radio' name='rating' value='2stars'>2 stars
                                 <input type='radio' name='rating' value='3stars'>3 stars
                                 <input type='radio' name='rating' value='4stars'>4 stars
-                                <input type='radio' name='rating' value='5stars'>5 stars<br><br>
-                                <textarea name='review' rows='4' cols='50' maxlength='255'placeholder='Write a review...'></textarea><br>
+                                <input type='radio' name='rating' value='5stars'>5 stars
+                                <div class='alert alert-danger' id="RatingAlert" style="visibility: hidden" >               
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <label id="RatingError"></label>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button> 
+                                </div><br><br>
+                                <textarea name='review' rows='4' cols='50' maxlength='255'placeholder='Write a review...'></textarea>
+                                <div class='alert alert-danger' id="ReviewAlert" style="visibility: hidden" >               
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <label id="ReviewError"></label>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button> 
+                                </div><br>
                                 <input type='submit' name='submitReview' value='submit'>
                             </form>
                             <?php
@@ -334,12 +361,19 @@
                             ?>
                             <br><b>Edit your review:</b>
                             <form method='post' action='' onsubmit='return validate(this);'>
-                                <input type='radio' name='newRating' value='1star' <?php echo ($currentRating==1)?'checked':'' ?> >1 star 
+                                <input type='radio' name='newRating' value='1star'  <?php echo ($currentRating==1)?'checked':'' ?> >1 star 
                                 <input type='radio' name='newRating' value='2stars' <?php echo ($currentRating==2)?'checked':'' ?>>2 stars
                                 <input type='radio' name='newRating' value='3stars' <?php echo ($currentRating==3)?'checked':'' ?>>3 stars
                                 <input type='radio' name='newRating' value='4stars' <?php echo ($currentRating==4)?'checked':'' ?>>4 stars
                                 <input type='radio' name='newRating' value='5stars' <?php echo ($currentRating==5)?'checked':'' ?>>5 stars<br><br>
-                                <textarea name='newreview' rows='4' cols='50' maxlength='255' wrap='hard' autofocus><?php echo $reviewText; ?></textarea><br>
+                                <textarea name='newreview' rows='4' cols='50' maxlength='255' wrap='hard' autofocus><?php echo $reviewText; ?></textarea>
+                                <div class='alert alert-danger' id="ReviewAlert" style="visibility: hidden" >               
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <label id="ReviewError"></label>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button> 
+                                </div><br>
                                 <input type='submit' name='editReview' value='submit'>
                             </form>
                             <?php
@@ -391,13 +425,21 @@
                                     echo " ". $reviewRow['starRating'] . " stars<br><p class='review'>" . $reviewRow['reviewText']."</p>";
                             
                                     //if the user clicked on reply show the textarea
-                                    echo "<form id='reply' method='post' action=''>";
+                                    //echo "<form id='replything' method='post' action=''>";
                                     if(isset($_POST['addreply']) && !isset($_POST['viewreplies'])){
-                                        echo "<img src='" . $_SESSION['imagePath'] . "' class='profile-icon'> ";
+                                        echo "<br><img src='" . $_SESSION['imagePath'] . "' class='profile-icon'> ";
                                         echo "<b>" . $_SESSION['username'] . "</b>";
                                         ?>
                                         <form method='post' action='' onsubmit='return validateReply(this);'><br>
-                                            <textarea name='replyText' rows='4' cols='50' maxlength='255' autofocus wrap='hard' placeholder='Write a reply...'></textarea><br>
+                                            <textarea name='replyText' rows='4' cols='50' maxlength='255' autofocus wrap='hard' placeholder='Write a reply...'></textarea>
+                                            <br><br>
+                                            <div class='alert alert-danger' id="ReplyAlert" style="visibility: hidden" >               
+                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                <label id="ReplyError"></label>
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button> 
+                                            </div><br>
                                             <button type='submit' name='reply' value='<?php echo $_POST['addreply']; ?>'>Post Reply</button>
                                         </form>
                                         <?php
@@ -405,7 +447,9 @@
                                     else if(isset($_SESSION['id'])){
                                         if($_SESSION['userType']=='administrator' || $_SESSION['userType']=='customer'){
                                             ?>
+                                            <form method='post' action=''>
                                             <button type='submit' class='reply-btn' name='addreply' value='<?php echo $reviewRow['id']; ?>'>Reply</button>
+                                            </form>
                                             <?php
                                         }
                                     }
@@ -434,13 +478,14 @@
                                         }
                                         else if(!isset($_POST['addreply'])) { //if there are replies + the user didn't click on view replies, show the view replies button <form method='post' action=''> 
                                             ?>
-                                            
+                                            <form method='post' action=''>
                                             <button type='submit' class='reply-btn' name='viewreplies' value='<?php echo $reviewRow['id']; ?>'>View replies</button>
+                                            </form>
                                             <?php
                                         }
                                     }
                                     //echo "<br><br>";
-                                    echo "</form>";
+                                    //echo "</form>";
                                 }
                             }
                         } 

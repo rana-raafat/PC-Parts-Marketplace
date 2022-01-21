@@ -80,27 +80,29 @@
             }
             echo "</div>";
 
-            
         }
         if(isset($_POST['showAll'])){
-            echo "<div class='container'><div class='card justify-content-center'><div class='carda'>";
-            echo "<table border=2 class='table'>";
+            echo "<div class='container'><div class='card justify-content-center'><div class='List'>";
+            echo "<table class='table table-responsive' style='text-align:center'>";
             echo "<thead><tr><th>Order ID</th><th>Customer</th> <th>Amount of Products</th> <th>Completed</th></tr></thead><tbody>";
             $allsql= "SELECT * FROM orders";
-            $allResult = mysqli_query($con,$allsql);	
+            $allResult = mysqli_query($con,$allsql);
             while($allRow=$allResult->fetch_assoc()){
-                $namesql= "SELECT username FROM users WHERE id='" . $allRow['customerID'] ."'";
+                $namesql= "SELECT id,username FROM users WHERE id='" . $allRow['customerID'] ."'";
                 $nameResult = mysqli_query($con,$namesql);
                 $username='User not found';
-                $completed="No";	
+                $userid=0;
+                $completed="No";
                 
                 if($nameRow=$nameResult->fetch_assoc()){
                     $username=$nameRow['username'];
+                    $userid=$nameRow['id'];
                 }
                 if($allRow['completed']==1){
                     $completed="Yes";
                 }
-                echo "<tr><td>" . $allRow['orderID'] . "</td> <td>" .  $username . "</td> <td>" . $allRow['numberOfProducts'] . "</td> <td>" . $completed . "</td></tr>";
+                echo "<tr><td>" . $allRow['orderID'] . "</td> <td><a href=Profile.php?id=". $userid .">" 
+                .  $username . "</a></td> <td>" . $allRow['numberOfProducts'] . "</td> <td>" . $completed . "</td></tr>";
                 
             }
             echo "</tbody></table>";

@@ -89,7 +89,7 @@
 
                     $selectPenaltiessql="SELECT penalties FROM administrator WHERE id='" . $_POST['admin'] . "'";
                     $penaltyResult = $con->query($selectPenaltiessql);
-
+                    
                     if(!$insertResult || !$update_HR_Result || !$update_Admin_Result || $penaltyResult->num_rows == 0) {
                         if (!$insertResult){
                             echo "Error inserting into penalty table<br>";

@@ -49,7 +49,9 @@
                     break;
                 }
             }
-            if($skip){ $skip=false; continue; 
+            if($skip){ 
+                $skip=false; 
+                continue; 
             }
             
             if($output == 10){
