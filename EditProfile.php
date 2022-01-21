@@ -59,37 +59,42 @@
                     }
                     else{
                         $imagePath=$_SESSION['imagePath'];
-                        $target_dir="resources/images/ProfilePictures/";
-                        $target_file=$target_dir . basename($_FILES["profilepic"]["name"]);
-                        $imageType= strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-                        
-                        if(file_exists($target_file)){ //check if pic already exists, if it does don't move_uploaded_file so there are no duplicates
-                            $imagePath=$target_file;
-    
-                        }
-                        else if($_FILES["profilepic"]["size"]>1000000){
-                            echo "Error: Image size is too large";
-                            echo "<br>";
-                        }
-                        else if($imageType != "jpeg" && $imageType != "jpg" && $imageType != "png"){
-                            echo "Error: Incorrect file type, Please enter a jpg, jpeg or png";
-                            echo "<br>";
-                        }
-                        else{
-                            if(move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_file)){
+
+                        if ( isset( $_FILES["profilepic"] ) && !empty( $_FILES["profilepic"]["name"] ) ) {
+                            $target_dir="resources/images/ProfilePictures/";
+                            $target_file=$target_dir . basename($_FILES["profilepic"]["name"]);
+                            $imageType=strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+                            if(file_exists($target_file)){ //check if pic already exists, if it does don't move_uploaded_file so there are no duplicates
                                 $imagePath=$target_file;
+        
                             }
-                            else{
-                                echo "Error uploading image";
+                            else if($_FILES["profilepic"]["size"]>1000000){
+                                echo "Error: Image size is too large";
                                 echo "<br>";
                             }
+                            else if($imageType != "jpeg" && $imageType != "jpg" && $imageType != "png"){
+                                echo "Error: Incorrect file type, Please enter a jpg, jpeg or png";
+                                echo "<br>";
+                            }
+                            else{
+                                if(move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target_file)){
+                                    $imagePath=$target_file;
+                                }
+                                else{
+                                    echo "Error uploading image";
+                                    echo "<br>";
+                                }
+                            }
                         }
+
                         if($_POST['password']!=$_SESSION['password']){
                             $encryptedPass = md5($_POST['password']);
                         }
                         else{
                             $encryptedPass=$_POST['password'];
                         }
+
                         $updatesql = "UPDATE users SET username='" . $_POST['username'] . "', password='" . $encryptedPass . "', email='" 
                         . $_POST['email'] . "', address='" . $_POST['address'] . "', imagePath='" . $imagePath . "' WHERE id='" . $_SESSION['id'] . "'";
                         $updateResult = $con->query($updatesql);
@@ -98,15 +103,13 @@
                             exit();
                         }
                         else{
-                            echo "all good";
                             $_SESSION["username"]=$_POST['username'];
                             $_SESSION["password"]=$encryptedPass;
                             $_SESSION["email"]=$_POST['email'];
                             $_SESSION["address"]=$_POST['address'];
                             $_SESSION["imagePath"]=$imagePath;
-
+                            echo "<script>window.location.href='Profile.php'</script>";
                         }
-                        echo "<script>window.location.href='Profile.php'</script>";
                     }
                 }
                 $con->close();
