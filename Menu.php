@@ -100,7 +100,7 @@
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="LogIn.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="loginform.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                         <li><a href="SignUp.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                     </ul>
 
@@ -114,7 +114,7 @@
                         <form class="searchbar" action="SearchResults.php" method="get">
 
                             <input type="text" name="searchQuery" placeholder="Search for a product">
-
+                  
                             <button class="btn btn-basic search" type="submit" name="submitSearch">
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
