@@ -1,20 +1,14 @@
 <html>
     <head>
+        <link rel="stylesheet" href="Style.css">
         <title> Suggest a Product </title>
     </head>
     <body>
 
 <?php
-
+//
     session_start();
     include "Menu.php";
-    function dbException($queryResult){
-        if(!$queryResult){
-            throw new Exception("SQL Error");
-        }
-        return true;
-    }
-
     if(!isset($_SESSION['id'])){
         echo "Please log in to suggest a product<br>";
         die();
@@ -23,14 +17,14 @@
 ?>
 <script>
     function validate(form){
-     
+        //alert(form.name.value);
         if(form.name.value=="" || form.name.value=="Enter product name"){
             document.getElementById("NameError").innerHTML = "Name required";
             document.getElementById("NameAlert").style.visibility = "visible";
             return false;
         }
         if(form.description.value==""){
-          
+            //alert("working!");
             document.getElementById("DescError").innerHTML = "Description required";
             document.getElementById("DescAlert").style.visibility = "visible";
             return false;
@@ -39,10 +33,9 @@
     }
 </script>
 <div class="container">
-            <div class="card">
+            <div class="card justify-content-center">
                 <div class="carda">
-<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);'>
-<h3>Suggest Product</h3><br>
+<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);' class="form-horizontal">
 <div class ="form-group">
         <label>Image:</label> 
         <br>
@@ -51,22 +44,22 @@
         <label>Name:</label>
         <input type="text" name="name" placeholder="Enter product name"  class="form-control">
         <div class='alert alert-danger' id="NameAlert" style="visibility: hidden">               
-            <i class="glyphicon glyphicon-exclamation-sign"></i>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <label id="NameError"></label>
-            <a href class="close" alert-hide=".alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-            </a> 
+            </button> 
         </div><br>
         <label>Link:</label><br>
         <input type="text" name="link" placeholder="The link for the product" class="form-control"><br><br>
         <label>Description:</label> <br>
         <textarea name="description" style="width: 100%;"></textarea>
         <div class='alert alert-danger' id="DescAlert" style="visibility: hidden" >               
-            <i class="glyphicon glyphicon-exclamation-sign"></i>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <label id="DescError"></label>
-            <a href class="close" alert-hide=".alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-            </a> 
+            </button> 
         </div>  <br>      
         <input type='Submit' name='submit'>
 
@@ -112,35 +105,33 @@ if(isset($_POST["submit"])){
         }
         $pic=$imagePath;
         $name=$_POST["name"];
+        $name = filter_var($name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $link='No link';
         if($_POST["link"]!=''){
             $link=$_POST["link"];
+            $link = filter_var($link,FILTER_SANITIZE_URL);
+            
         }
         
         $description=$_POST["description"];
+        $description = filter_var($description, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $sql="INSERT INTO productsuggestion(imagePath, customerID, productLink,productname,productDescription) VALUES  ('" . $pic . "','" . $_SESSION['id'] . "','" . $link . "','" . $name . "','" . $description . "')";
         $result=mysqli_query($con,$sql);
-        try{
-            dbException($result);
-        }
-        catch(Exception $e){
+        if(!$result){
+            echo "couldn't insert suggestion into the DataBase<br>";
             printf("Error: %s\n", mysqli_error($con));
             die();
         }
-        
         $adminsql="SELECT id FROM administrator";
         $adminresult=mysqli_query($con,$adminsql);
-        try{
-            dbException($adminresult);
-        }
-        catch(Exception $e){
+        if(!$adminresult){
+            echo "couldn't select admin ids<br>";
             printf("Error: %s\n", mysqli_error($con));
             die();
         }
         
-        
         $suggestionlink = 'A new product was suggested <a href="DisplaySuggestions.php">Click Here</a> to view';
-      
+        //don't sanatize this cause it needs to stay as a link obviously
         while($row=$adminresult->fetch_assoc()){
             $msg="INSERT INTO message(senderID,recepientID,auditorFlag,messageText,readStatus) VALUES('". $_SESSION['id'] ."','". $row['id'] ."','0','". $suggestionlink ."','0') " ;
             $surveyResult = mysqli_query($con,$msg);

@@ -17,8 +17,9 @@
                     echo "couldn't connect to the DataBase<br>";
                     die();
                 }
-               
-                $sql="INSERT INTO survey(customerID,rating,improvement,age) VALUES('" . $_SESSION['id'] ."','" . $_POST['rating']  ."','" . $_POST['review'] . "','" . $_POST['Age'] . "')";
+                $review=$_POST['review'];
+                $review=filter_var($review, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+                $sql="INSERT INTO survey(customerID,rating,improvement,age) VALUES('" . $_SESSION['id'] ."','" . $_POST['rating']  ."','" . $review . "','" . $_POST['Age'] . "')";
                 $result = mysqli_query($conn,$sql);
                 if(!$result){
                     echo "couldn't insert into the DataBase<br>";
@@ -30,6 +31,9 @@
                 echo "Please enter a number<br>";
             }
             echo "<script>window.location.href='Home.php'</script>";
+        }
+        else{
+            //echo"Please fill in the values";
         }
     ?>
 
@@ -56,11 +60,12 @@
         
     }
 </script>
-<div class="container">
-    <div class="card">
-            <div class="small-card-container">
+<div class="container h-100">
+    <div class="row align-items-center h-100">
+        <div class="col-6 mx-auto">
+            <div class="carda h-100 border-primary justify-content-center">
                 <div>
-<form action="" method="post" onsubmit="return validate(this);"> 
+<form action="" method="post" onsubmit="return validate(this);"class="form-horizontal"> 
 <h2>Feedback</h2><br>
 <label class="form-check-label">Please rate your experience</label>
 

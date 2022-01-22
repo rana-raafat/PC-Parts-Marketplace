@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <title> Penalty </title>
     </head>
@@ -27,41 +28,27 @@
         session_start();
         include "Menu.php";
 
-        function dbException($queryResult){
-            if(!$queryResult){
-                throw new Exception("SQL Error");
-            }
-            return true;
-        }
-
         if(isset($_SESSION['id'])){
             if($_SESSION['userType']=='hrpartner'){
                 $con = new mysqli("localhost", "root", "", "project");
-                if(!$con){ 
+                if(!$con){ //exception
                     echo "connection error<br>";
                     die();
                 }
 
                 $sql= "SELECT * FROM users WHERE userType='administrator'";
                 $result = mysqli_query($con,$sql);
-                try{
-                    dbException($result);
-                }
-                catch(Exception $e){
-                    printf("Database Error: %s\n", mysqli_error($con));
-                    die();
-                }
                 if ($result->num_rows == 0) {
                     echo "Error: No admins found<br>";
                 }
                 else{
                     ?>
                     <div class="container">
-                        <div class="card">
-                                 <div class="medium-card-container text-center">
+                        <div class="card justify-content-center">
+                                 <div class="medium-card-container">
                                      
                                       <div>
-                    <form action='' method='post' onsubmit="return validate(this);">
+                    <form action='' method='post' onsubmit="return validate(this);" class ="form-horizontal">
                     <h3>Penalties</h3><br>
                     <label>Select the Admininstrator this penalty will be given to: </label>
                     
@@ -91,7 +78,9 @@
                 </div>
                 <?php
                 if(isset($_POST['Submit'])){
-                    $insertsql= "INSERT INTO penalty(adminID, hrID,reason) VALUES('". $_POST['admin'] ."','". $_SESSION['id']."','". $_POST['reason'] ."')";
+                    $reason= $_POST['reason'];
+                    $reason=filter_var($reason,FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+                    $insertsql= "INSERT INTO penalty(adminID, hrID,reason) VALUES('". $_POST['admin'] ."','". $_SESSION['id']."','". $reason ."')";
                     $insertResult = mysqli_query($con,$insertsql);
                     
                     $update_Admin_sql= "UPDATE administrator SET penalties = penalties+1 WHERE id='" . $_POST['admin'] . "'";
@@ -102,13 +91,6 @@
 
                     $selectPenaltiessql="SELECT penalties FROM administrator WHERE id='" . $_POST['admin'] . "'";
                     $penaltyResult = $con->query($selectPenaltiessql);
-                    try{
-                        dbException($penaltyResult);
-                    }
-                    catch(Exception $e){
-                        printf("Database Error: %s\n", mysqli_error($con));
-                        die();
-                    }
                     
                     if(!$insertResult || !$update_HR_Result || !$update_Admin_Result || $penaltyResult->num_rows == 0) {
                         if (!$insertResult){

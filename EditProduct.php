@@ -6,35 +6,35 @@
     <?php 
         session_start();
         include "Menu.php";
-
-        function dbException($queryResult){
-            if(!$queryResult){
-                throw new Exception("SQL Error");
-            }
-            return true;
-        }
     ?>
     <script>
         function validate(form){ 
-    
+            //var fail="";
             if(form.name.value==""){
-             
+                //fail+="Name required\n";
                 document.getElementById("NameError").innerHTML = "Name required";
                 document.getElementById("NameAlert").style.visibility = "visible";
                 return false;
             }
             if(form.category.value==""){
-               
+                //fail+="Category required\n";
                 document.getElementById("CategoryError").innerHTML = "Category required";
                 document.getElementById("CategoryAlert").style.visibility = "visible";
                 return false;
             }
             if(form.description.value==""){
-             
+                //fail+="Description required\n";
                 document.getElementById("DescriptionError").innerHTML = "Description required";
                 document.getElementById("DescriptionAlert").style.visibility = "visible";
                 return false;
-            } 
+            }
+            /*if(fail == ""){
+                return true;
+            }
+            else{
+                alert(fail);
+                return false;
+            }  */  
             return true; 
         }
     </script>
@@ -43,7 +43,7 @@
     <?php 
 
         $con = new mysqli("localhost", "root", "", "project");
-        if(!$con){ 
+        if(!$con){ //maybe here we can throw an exception? instead of using die()
             echo "connection error<br>";
             die();
         }
@@ -51,52 +51,44 @@
 
         $sql= "SELECT * FROM product WHERE id='" . $id . "'";
         $result = mysqli_query($con,$sql);	
-        try{
-            dbException($result);
-        }
-        catch(Exception $e){
-            printf("Database Error: %s\n", mysqli_error($con));
-            die();
+
+        if (!$result) {
+            printf("Error: %s\n", mysqli_error($con));
+            exit();
         }
         if($row = $result->fetch_assoc()){
             ?>
             
             <div class="container">
-                <div class="card">
-                    <div class="medium-card-container">
-                        <h1 class='text-center'>Edit Product</h1><br>
-
-                        <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);">
-
+                <div class="card justify-content-center">
+                    <div class="cardb">
+                        <h1 class='center'>Edit Product</h1><br>
+                        <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" class="form-horizontal">
+                            <div style='text-align:center;'>
                             <img src='<?php echo $row['imagePath'];?>' height='400' width='400'><br><br>
-                            <input type='file' name='productpic'>
-                            
-                            <br><br>
+                            <input type='file' name='productpic'></div><br>
 
                             <label>Name: </label>
                             <input type='text' name='name' value='<?php echo $row['name']; ?>'>
-
                             <div class='alert alert-danger' id="NameAlert" style="visibility: hidden" >               
-                                <i class="glyphicon glyphicon-exclamation-sign"></i>
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <label id="NameError"></label>
-                                <a href class="close" alert-hide=".alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                                </a> 
+                                </button> 
                             </div>
-
                             <div class='alert alert-danger' id="NameTakenAlert" style="visibility: hidden" >               
-                                <i class="glyphicon glyphicon-exclamation-sign"></i>
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <label id="NameTakenError"></label>
-                                <a href class="close" alert-hide=".alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                                </a> 
+                                </button> 
                             </div>
+                            <br>
 
-                            <br><br>
 
                             <label>Price: </label>
-                            <input type='number' name='price' min='0' step='0.25' value='<?php echo $row['price']; ?>'> LE
-                            <br><br>
+                            <input type='number' name='price' min='0' step='0.25' value='<?php echo $row['price']; ?>'> LE<br><br>
                             
                             <label>Category: </label>
                             <select name='category'> 
@@ -108,30 +100,25 @@
                                 <option value='HDD/SSD'>HDD/SSD</option>
                                 <option value='Processor'>Processor</option> 
                             </select>
-
                             <div class='alert alert-danger' id="CategoryAlert" style="visibility: hidden" >               
-                                <i class="glyphicon glyphicon-exclamation-sign"></i>
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <label id="CategoryError"></label>
-                                <a href class="close" alert-hide=".alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                                </a> 
-                            </div>
-                            <br><br>  
+                                </button> 
+                            </div><br><br>  
 
                             <label>Description: </label>
-                            <br>
-                            <textarea name='description' style="height:150px;"><?php echo $row['description']; ?></textarea><br>
-                            
+                            <br><textarea name='description' rows='4' cols='50'><?php echo $row['description']; ?></textarea><br>
                             <div class='alert alert-danger' id="DescriptionAlert" style="visibility: hidden" >               
-                                <i class="glyphicon glyphicon-exclamation-sign"></i>
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                                 <label id="DescriptionError"></label>
-                                <a href class="close" alert-hide=".alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
-                                </a> 
-                            </div>
-                            <br>
-
-                            <input type='submit' name='submit'>
+                                </button> 
+                            </div><br>
+                            <div style='text-align:center;'>
+                            <input type='submit' name='submit'></div>
                         </form>
                     </div>
                 </div>
@@ -144,17 +131,11 @@
         
         if(isset($_POST['submit'])){
 
-            $checkProduct="SELECT * FROM product WHERE name='" . $_POST['name'] . "' AND id!=".$id;
+            $checkProduct="SELECT * FROM product WHERE name='" . $_POST['name'] . "'";
             $productResult = $con->query($checkProduct);
-            try{
-                dbException($productResult);
-            }
-            catch(Exception $e){
-                printf("Database Error: %s\n", mysqli_error($con));
-                die();
-            }
+
             if($productResult->num_rows > 0){
-                
+                //echo "A product with this name already exists<br>";
                 ?>
                 <script>
                     document.getElementById("NameTakenError").innerHTML = "Product already exists";
@@ -166,14 +147,11 @@
                 if($_FILES["productpic"]["size"]>0) {
                     $sql= "SELECT imagePath FROM product WHERE id='" . $id . "'";
                     $result = mysqli_query($con,$sql);	
-                    try{
-                        dbException($result);
+
+                    if (!$result) {
+                        printf("Error: %s\n", mysqli_error($con));
+                        exit();
                     }
-                    catch(Exception $e){
-                        printf("Database Error: %s\n", mysqli_error($con));
-                        die();
-                    }
-                    
                     if($row = $result->fetch_assoc()){
                         $imagePath=$row['imagePath'];
                         $target_dir="resources/images/ProductsPictures/";
@@ -203,27 +181,28 @@
                         echo $imagePath;
                         $updateImage = "UPDATE product SET imagePath='" . $imagePath . "' WHERE id='" . $id . "'" ;
                         $imageresult = mysqli_query($con,$updateImage);	
-                        try{
-                            dbException($imageresult);
+
+                        if (!$imageresult) { //exception
+                            printf("Error: %s\n", mysqli_error($con));
+                            exit();
                         }
-                        catch(Exception $e){
-                            printf("Database Error: %s\n", mysqli_error($con));
-                            die();
-                        }
-                        
                     }
                     else{
                         echo "image missing<br>";
                     }
                 }
-                
-                $update = "UPDATE product SET name='" . $_POST['name'] . "',price='" . $_POST['price'] . "',description='" . $_POST['description'] .
+                $name=$_POST['name'];
+                $name=filter_var($name,FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+                $price= $_POST['price'];
+                $description=$_POST['description'];
+                $description=filter_var($description,FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+                $update = "UPDATE product SET name='" . $name . "',price='" . $price . "',description='" . $description .
                 "',category='" . $_POST['category'] . "' WHERE id='" . $id . "'" ;
                 $result = mysqli_query($con,$update);	
-                
-                if (!$result) {
+
+                if (!$result) { //exception
                     printf("Error: %s\n", mysqli_error($con));
-                    die();
+                    exit();
                 }
                 echo "<script>window.location.href='DisplayProduct.php?id=".$id."'</script>";
                 $con->close();
