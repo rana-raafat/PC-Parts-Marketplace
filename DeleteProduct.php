@@ -7,7 +7,7 @@
         session_start();
         include "Menu.php";
         
-        isset($_SESSION['id']){
+        if( isset($_SESSION['id']) ){
             if(isset($_POST['Yes'])){
                 $con = new mysqli("localhost", "root", "", "project");
                 if(!$con){ 
@@ -35,6 +35,7 @@
                     </script>";
             }
         }
+        
     ?>
     
 </body>
