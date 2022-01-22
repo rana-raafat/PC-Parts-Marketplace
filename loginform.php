@@ -12,7 +12,6 @@
 
 <body>
     
-
     <div class="container">
         <div class="card justify-content-center">
             <div class="carda">
@@ -68,8 +67,8 @@
     <script>
         
         function ajaxCall(email,pass){
-            //
-            const xhttp= new XMLHttpRequest();
+         
+            const xhttp = new XMLHttpRequest();
             xhttp.onload=function(){
             
                 if(this.responseText==""){
@@ -86,7 +85,7 @@
                         document.getElementById('EmailError').innerHTML = 'Enter a valid email';
                         document.getElementById('EmailAlert').style.visibility = 'visible';
                     }
-                    return false
+                    return false;
                 }
             }
             xhttp.open("GET","LogIn.php?em="+email+"&pass="+pass);
