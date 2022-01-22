@@ -10,16 +10,13 @@
         }
     
 
-        //if(isset($_POST['Submit'])){
+       
          $errors="";
-            //$email=$_POST["Email"];
+     
             $email=$_GET['em'];
             if(!filter_var($email, FILTER_VALIDATE_EMAIL))//check if valid email
             {  
-                /*echo "<script> 
-                    document.getElementById('EmailError').innerHTML = 'Enter a valid email';
-                    document.getElementById('EmailAlert').style.visibility = 'visible';
-                    </script>";*/
+             
                     $errors="Invalid email";
             }
             else{
@@ -34,16 +31,14 @@
                     die();
                 }
                 $encryptedPass = md5($_GET['pass']);
-                //$encryptedPass = md5($_POST['Password']);
 
-                //$sql= "SELECT * FROM users WHERE email='" . $_POST['Email'] . "' AND password='" . $encryptedPass . "'";
                 $sql= "SELECT * FROM users WHERE email='" . $email . "' AND password='" . $encryptedPass . "'";
                 $result = mysqli_query($conn,$sql);	
                 try{
                     dbException($result);
                 }
                 catch(Exception $e){
-                    //printf("Database Error: %s\n", mysqli_error($conn));
+                    echo("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
 
@@ -58,14 +53,11 @@
                     $_SESSION["imagePath"]=$row['imagePath'];
                     $_SESSION["userType"]=$row['userType'];
 
-                    //echo "<script>window.location.href='Home.php'</script>";
+               
                 }
                 else{
                     $errors="Incorrect email or password";
-                   /* echo "<script> 
-                        document.getElementById('loginError').innerHTML = 'Incorrect email or password';
-                        document.getElementById('loginAlert').style.visibility = 'visible';
-                        </script>";*/
+                
                 }
             }
             if($errors=="")
