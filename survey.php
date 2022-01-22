@@ -56,12 +56,11 @@
         
     }
 </script>
-<div class="container h-100">
-    <div class="row align-items-center h-100">
-        <div class="col-6 mx-auto">
-            <div class="carda h-100 border-primary justify-content-center">
+<div class="container">
+    <div class="card">
+            <div class="small-card-container">
                 <div>
-<form action="" method="post" onsubmit="return validate(this);"class="form-horizontal"> 
+<form action="" method="post" onsubmit="return validate(this);"> 
 <h2>Feedback</h2><br>
 <label class="form-check-label">Please rate your experience</label>
 

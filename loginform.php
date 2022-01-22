@@ -19,24 +19,25 @@
                 <form action="" method="post" enctype="multipart/form-data" onsubmit="return validate(this);"
                     class="form-horizontal">
                     <h1>Log In</h1>
-                    <div class='alert alert-danger' id="loginAlert" style="visibility: hidden">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <label id="loginError"></label>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <div class='alert alert-danger' id="loginAlert" style="visibility: hidden" >               
+                            <i class="glyphicon glyphicon-exclamation-sign"></i>
+                            <label id="loginError"></label>
+                            <a href class="close" alert-hide=".alert">
+                                <span aria-hidden="true">&times;</span>
+                            </a> 
+                        </div>
+
                     <br>
                     <label for="Email">E-mail:</label>
-                    <input type="text" name="email" placeholder="example@mail.com" class="form-control">
+                    <input type="text" name="email" placeholder="example@mail.com" class="form-control" >
+                    <div class='alert alert-danger' id="EmailAlert" style="visibility: hidden">               
+                            <i class="glyphicon glyphicon-exclamation-sign"></i>
+                            <label id="EmailError"></label>
+                            <a href class="close" alert-hide=".alert">
+                                <span aria-hidden="true">&times;</span>
+                            </a> 
+                        </div>
 
-                    <div class='alert alert-danger' id="EmailAlert" style="visibility: hidden">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <label id="EmailError"></label>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
                     
                     <br>
 
@@ -44,13 +45,14 @@
                     <input type="Password" name="password" id="Password" placeholder="********" maxlength=50 minlength=8
                         class="form-control">
 
-                    <div class='alert alert-danger' id="PasswordAlert" style="visibility: hidden">
-                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                        <label id="PasswordError"></label>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                        <div class='alert alert-danger' id="PasswordAlert" style="visibility: hidden" >               
+                            <i class="glyphicon glyphicon-exclamation-sign"></i>
+                            <label id="PasswordError"></label>
+                            <a href class="close" alert-hide=".alert">
+                                <span aria-hidden="true">&times;</span>
+                            </a> 
+                        </div>
+
                     <br>
                     <br>
                     <input type="submit" value="Submit" name="Submit">

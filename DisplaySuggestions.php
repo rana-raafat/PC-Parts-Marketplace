@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> View Suggestions </title>
     </head>
     <body>
@@ -35,8 +34,8 @@ catch(Exception $e){
 if ($result->num_rows == 0) {
     echo "No results found<br>";
 }
-echo "<div class='container'>";
-echo "<table class='content-table' border='0'><tr> <th>Name of Product</th> <th>Customer</th><th>Suggestion ID</th><th >Image</th><th>Product Link</th><th>Product Description</th></tr>";
+echo "<div class='container'><div class='card'><div class='large-card-container'>";
+echo "<table class='custom-table'><tr> <th>Name of Product</th> <th>Customer</th><th>Suggestion ID</th><th >Image</th><th>Product Link</th><th>Product Description</th></tr>";
 while($row = $result->fetch_assoc()){
     $namesql="SELECT username FROM users WHERE id='" . $row['customerID'] ."'";
     $nameresult = mysqli_query($con,$namesql);
@@ -64,6 +63,8 @@ while($row = $result->fetch_assoc()){
             
             echo "</tr>";
 }
+echo "</table></div></div></div>";
+
 ?>
     </body>
 </html>

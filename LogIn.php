@@ -1,6 +1,6 @@
 <?php
         session_start();
-        //include "Menu.php";
+        include "Menu.php";
 
         function dbException($queryResult){
             if(!$queryResult){

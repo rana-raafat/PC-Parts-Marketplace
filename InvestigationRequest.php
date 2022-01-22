@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Investigation Request </title>
     </head>
     <body>
@@ -52,13 +51,13 @@
             }
             $hrname=$hrresult->fetch_assoc();
             echo "<div class='container'>";
-            echo "<div class='card justify-content-center'>";
+            echo "<div class='card'>";
             echo "<div class='medium-card-container'>";
             echo "<h4>HRPartner Name </h4>";
             echo"<p class='review'>". $hrname['username'] ."</p>";
             echo "<br><br>";
             echo"<form method='post'>"; 
-            echo "<h4>Select admin: </h4><Select name='admins'style='color:black;>";
+            echo "<h4>Select admin: </h4><Select name='admins'";
             echo "<option value='' selected>Choose Admin</option>";
             while($row = $result2->fetch_assoc()){
                 echo "<option value='". $row['username'] ."'>". $row['username'] ."</option>";
@@ -67,7 +66,7 @@
             echo "<br><br>";
             echo "<h4>Write your problem:</h4>";
             
-            echo "<textarea name='textarea''style='color:black; rows='5' cols='30'></textarea>";
+            echo "<textarea name='textarea'></textarea>";
             echo "<br><br>";
             echo "<input type='Submit' name='submit'>";
             echo"<br>";

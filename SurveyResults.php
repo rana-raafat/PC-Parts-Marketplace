@@ -32,10 +32,10 @@
         
         ?>
         <div class="container">
-            <div class="card justify-content-center">
+            <div class="card">
                 <div class="SurveyResults">
-                    <h3 style="text-align: center";>Survey Results</h3>
-                    <table class="content-table">
+                    <h3 class="text-center";>Survey Results</h3>
+                    <table class="custom-table">
                         <tr>
 
                             <th>Customer </th>

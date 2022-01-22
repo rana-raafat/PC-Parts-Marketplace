@@ -31,7 +31,6 @@
                     <button type="submit" name="showAll">Show All Orders</button><br><br>
                 </form>
                 </div>
-
                 <?php
             }
         }

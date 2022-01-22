@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Checkout </title>
     </head>
     <body>
@@ -16,30 +15,61 @@
             return true;
         }
 
-        if(isset($_POST['goback'])){
-            echo "<script>window.location.href='cart.php'</script>";
-        }
         $con = new mysqli("localhost", "root", "", "project");
 
         if(!$con){
             echo "connection error<br>";
             die();    
         }
+
+        
+        if(isset($_POST['goback'])){
+            echo "<script>window.location.href='cart.php'</script>";
+        }
+
+        if(isset($_POST["purchasecomplete"])){
+            $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
+            $result4 = mysqli_query($con,$sql4);
+            
+            if(!$result4){
+                echo "error updating order<br>";
+            }
+            else{
+                //echo"<br>Products Bought Successfully<br>";
+                
+                $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
+                $result5 = mysqli_query($con,$sql5);
+                
+                if(!$result5){
+                    echo "error creating a new order<br>";
+                }
+                else{
+                echo "<script>window.location.href='Home.php'</script>";
+                }
+            }
+        }
+        
+
         ?>
+
         <div class='container'>
-            <div class='card justify-content-center'>
+            <div class='card'>
                 <div class="shoppingCart">
-                    <div class="cart-items">
+                    
+                    <h3 class='center'> Checkout </h3>
+
+                    <br><br>
+
+                    <?php
+                    echo "<text class='header'>Name  </text><br>". $_SESSION['username']."<br><br>";
+                    echo "<text class='header'>Address </text><br>" . $_SESSION['address']."<br><br><hr>";
+                    ?>
+
+                    <form method='post'>
+
                         <?php
-                        echo "<text class='header'>Name  </text><br>". $_SESSION['username']."<br><br>";
-                        echo "<text class='header'>Address </text><br>" . $_SESSION['address']."<br><br><hr>";
-                        ?>
-
-                        <form method='post'class="form-horizontal">
-
-                        <?php
-                        if(isset($_POST['total'])){
-
+                        if(isset($_POST['total'])){ //from previous cart page
+                            /*
                             $totalPrice=0;
                             $sql= "SELECT  * FROM `cartitem` WHERE `customerID`='". $_SESSION['id']."'";
                             $result = mysqli_query($con,$sql);
@@ -62,39 +92,18 @@
                                 }
                                 $row2=$result2->fetch_assoc();
                             }
+                            */
                             
-
                             $totalPrice=$_POST['total'];
                             echo "<text class='header'>Total Price </text><br> $totalPrice <br><br>";
                         }
-                        if(isset($_POST["purchasecomplete"])){
-                            $sql4= "UPDATE `orders` SET `completed`='1' WHERE `customerID`='". $_SESSION['id']."'";
-                            $result4 = mysqli_query($con,$sql4);
-                            
-                            if(!$result4){
-                                echo "error updating order<br>";
-                            }
-                            else{
-                                echo"<br>Products Bought Successfully<br>";
-                                
-                                $sql5= "INSERT INTO `orders`( `customerID`, `numberOfProducts`, `completed`) VALUES ('". $_SESSION['id']."','0','0')";
-                                $result5 = mysqli_query($con,$sql5);
-                                
-                                if(!$result5){
-                                    echo "error creating a new order<br>";
-                                }
-                                else{
-                                echo "<script>window.location.href='Home.php'</script>";
-                                }
-                            }
-                        }
-                        
 
                         ?>
                         <button name="purchasecomplete">Place Order</button>
 
-                        <button name='goback'>Go Back To Cart</button></form>
-                    </div>
+                        <button name='goback'>Go Back To Cart</button>
+
+                    </form>
                 </div>
             </div>
         </div>

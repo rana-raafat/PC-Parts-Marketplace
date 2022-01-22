@@ -19,12 +19,11 @@
         {
 ?>
 
-<div class='container'>
-                        <div class='card justify-content-center'>
-                                <div class='large-card-container'>
-                <div class='chat'>
+    <div class='container'>
+        <div class='card'>
+            <div class='large-card-container'>
               <div class='chat-history'>
-                <ul class='m-b-0'>
+                <ul>
                     <?php
             if( ( isset($_POST['send']) ) || ( isset( $_POST['uCustomerId_uAdminIdSubmitted'] ) )  )
             {
@@ -80,7 +79,7 @@
                     while($fetch_customer = $result3->fetch_assoc())
                     {
 
-                    echo "<li class='clearfix'>";
+                    echo "<li>";
 
                     if($fetch_customer['id']==$uAdminId2){
                     echo "<div class='text-left'>";
@@ -115,7 +114,6 @@
                 
             echo "</ul>";
             echo "</div>";
-            echo "</div>";    
             }
 
             else
@@ -154,7 +152,15 @@
             
             Enter the message [number] you want to make your comment on: 
             <br>
-            <input type="number" name="num" value=1 min=1>
+            <?php
+            $messages_count_sql="SELECT COUNT(messageID) as messages_count FROM message";
+            $messages_count_result = mysqli_query($conn,$messages_count_sql);
+            if(!$messages_count_result){
+                echo "couldn't select from DataBase<br>";
+            }
+            $messages_count = $messages_count_result->fetch_assoc();
+            ?>
+            <input type="number" name="num" value=1 min=1 max=<?php echo $messages_count['messages_count'];?>>
             <br><br>
 
             Enter your comment:

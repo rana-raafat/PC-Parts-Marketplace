@@ -37,7 +37,7 @@
    
                // just to display the name of the customer and display it at the top
                 if($fetch_auditorName = $result3->fetch_assoc()){
-                    echo "<div class='container'><div class='card justify-content-center'><div class='carda'><table class='content-table'>";
+                    echo "<div class='container'><div class='card '><div class='large-card-container'><table class='custom-table'>";
                     echo "<h3> All Comments </h3>";
                 }
    

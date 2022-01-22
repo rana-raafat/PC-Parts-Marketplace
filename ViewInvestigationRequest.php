@@ -16,8 +16,8 @@
         ?>
     <body>
     <div class="container">
-            <div class="card justify-content-center">
-                <div class="carda">
+            <div class="card">
+                <div class="medium-card-container text-center">
         <?php
         if(isset($_SESSION['id'])){
             if($_SESSION['userType']=='hrpartner'){

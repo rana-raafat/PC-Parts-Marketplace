@@ -1,11 +1,6 @@
 <html>
     <head>
         <title> Sign Up </title>
-        <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
         <?php 
@@ -51,7 +46,7 @@
     </script>
 
 <div class="container">
-    <div class="card justify-content-center">
+    <div class="card">
         <div class="carda">
         <form method="post" action="" enctype="multipart/form-data" onsubmit="return validate(this);" class="form-horizontal">
             <h1>Sign Up</h1><br><br>
@@ -62,19 +57,20 @@
           
                 <label for="Username">Username:</label>
                 <input type="text" name="username" placeholder="Enter your username" maxlength=25 class="form-control">
-                <div class='alert alert-danger' id="UsernameAlert" style="visibility: hidden">               
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                
+                <div class='alert alert-danger' id="UsernameAlert" style="visibility: hidden" >               
+                    <i class="glyphicon glyphicon-exclamation-sign"></i>
                     <label id="UsernameError"></label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <a href class="close" alert-hide=".alert">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </a> 
                 </div>
                 <div class='alert alert-danger' id="UsernameTakenAlert" style="visibility: hidden">               
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                     <label id="UsernameTakenError"></label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <a href class="close" alert-hide=".alert">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </a> 
                 </div><br>
 
 
@@ -82,25 +78,25 @@
                 <label for="Email">Email:</label>
                 <input type="text" name="email" placeholder="Enter your email address" class="form-control">
                 <div class='alert alert-danger' id="EmailAlert" style="visibility: hidden">               
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                     <label id="EmailError"></label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <a href class="close" alert-hide=".alert">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </a> 
                 </div>
                 <div class='alert alert-danger' id="BadEmailAlert" style="visibility: hidden">               
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                     <label id="BadEmailError"></label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <a href class="close" alert-hide=".alert">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </a>  
                 </div>
                 <div class='alert alert-danger' id="EmailTakenAlert" style="visibility: hidden">               
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     <label id="EmailTakenError"></label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <a href class="close" alert-hide=".alert">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </a>  
                 </div>
 
 
@@ -108,11 +104,11 @@
                 <br><label for="Password">Password:</label><br>
                 <input type="password" name="password" placeholder="Enter your password" maxlength=50 minlength=8 class="form-control">
                 <div class='alert alert-danger' id="PasswordAlert" style="visibility: hidden">               
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                     <label id="PasswordError"></label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <a href class="close" alert-hide=".alert">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </a> 
                 </div><br>
 
 
@@ -120,11 +116,11 @@
                 <label for="Address">Address:</label><br>
                 <input type="text" name="address" placeholder="Enter your delivery address"  class="form-control" >
                 <div class='alert alert-danger' id="AddressAlert" style="visibility: hidden">               
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                     <label id="AddressError"></label>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <a href class="close" alert-hide=".alert">
                         <span aria-hidden="true">&times;</span>
-                    </button> 
+                    </a>  
                 </div><br>
             </div>
             <input type="submit" name="submit"><br>

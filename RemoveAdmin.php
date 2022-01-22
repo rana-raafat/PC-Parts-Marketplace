@@ -34,7 +34,7 @@
                         }
                     }
                     else{
-                        echo "<script>window.location.href='Home.php'</script>";
+                        echo "<script>window.history.go(-1);</script>";
                     }
                 }
                 else{

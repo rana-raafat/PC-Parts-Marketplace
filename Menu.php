@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- IMPORTING BOOTSTRAP & AJAX LIBRARIES -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!-- IMPORTING FONT-AWESOME ICONS LIBRARY -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- IMPORTING OUR CUSTOM MADE CSS FILE -->
         <link rel="stylesheet" href="Style.css">
+       
+        <!-- JQUERY THAT HIDES BOOTSTRAP ERRIR ALERTS ON THE CLICK OF CLOSE BUTTON -->
+        <script>
+          $(document).on("click", "[alert-hide]", function(e) {
+              //$'this' in this case in the alert close button
+              $(this).parent().css("visibility", "hidden");
+          });
+        </script> 
+
+        <!-- P.S. ALL PREVIOUS LINES ARE WRITTEN ONLY ONCE IN CODE.
+            WHICH IS HERE IN MENU, AS IT IS INCLUDED IN ALL PAGES -->
+
         <?php
           $conn = new mysqli("localhost", "root", "", "project");
           if(!$conn){
@@ -265,6 +279,7 @@
   <?php
     $conn->close();
   ?>
+  
 </body>
 
 </html>

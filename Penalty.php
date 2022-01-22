@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <title> Penalty </title>
     </head>
@@ -58,11 +57,11 @@
                 else{
                     ?>
                     <div class="container">
-                        <div class="card justify-content-center">
-                                 <div class="medium-card-container">
+                        <div class="card">
+                                 <div class="medium-card-container text-center">
                                      
                                       <div>
-                    <form action='' method='post' onsubmit="return validate(this);" class ="form-horizontal">
+                    <form action='' method='post' onsubmit="return validate(this);">
                     <h3>Penalties</h3><br>
                     <label>Select the Admininstrator this penalty will be given to: </label>
                     

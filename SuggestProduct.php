@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Suggest a Product </title>
     </head>
     <body>
@@ -40,9 +39,10 @@
     }
 </script>
 <div class="container">
-            <div class="card justify-content-center">
+            <div class="card">
                 <div class="carda">
-<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);' class="form-horizontal">
+<form method='post' action='' enctype='multipart/form-data' onsubmit='return validate(this);'>
+<h3>Suggest Product</h3><br>
 <div class ="form-group">
         <label>Image:</label> 
         <br>
@@ -51,22 +51,22 @@
         <label>Name:</label>
         <input type="text" name="name" placeholder="Enter product name"  class="form-control">
         <div class='alert alert-danger' id="NameAlert" style="visibility: hidden">               
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <i class="glyphicon glyphicon-exclamation-sign"></i>
             <label id="NameError"></label>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <a href class="close" alert-hide=".alert">
                 <span aria-hidden="true">&times;</span>
-            </button> 
+            </a> 
         </div><br>
         <label>Link:</label><br>
         <input type="text" name="link" placeholder="The link for the product" class="form-control"><br><br>
         <label>Description:</label> <br>
         <textarea name="description" style="width: 100%;"></textarea>
         <div class='alert alert-danger' id="DescAlert" style="visibility: hidden" >               
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <i class="glyphicon glyphicon-exclamation-sign"></i>
             <label id="DescError"></label>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <a href class="close" alert-hide=".alert">
                 <span aria-hidden="true">&times;</span>
-            </button> 
+            </a> 
         </div>  <br>      
         <input type='Submit' name='submit'>
 

@@ -31,12 +31,13 @@
         }
         ?>
         <div class="container">
-            <div class="card justify-content-center">
-                <div class="List">
-                    <h3 style="text-align: center";>Investigation Requests</h3>
-                    <table class="table  content-table">
+            <div class="card">
+                <div class="large-card-container">
+                    <h3 class="text-center">Investigation Requests</h3>
+                    <table class="table custom-table">
                         <tr>
                             <th>ID </th>
+
                             <th>Auditor </th>
 
                             <th>HRPartner</th>

@@ -61,46 +61,47 @@ if($_SESSION['userType']=='administrator')
                    
                 }
                 
-    }        ?>
-        <div class='container'>
-                        <div class='card justify-content-center'>
-                                <div class='medium-card-container'>
-                                    <table class='table table-responsive text-center'>
-                                        <h3>Customers Chat History</h3>
-<?php
-                for($i=0;$i<sizeof($unique_customer_IDS);$i++)
-                {
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "<img src='". $unique_customer_images[$i]."'  class='user-pic-icon'><img>";
-                    echo "<a href=profile.php?id=" . $unique_customer_IDS[$i] .">". $unique_customer_names[$i] ."</a>";
-                    echo "</td>";
-                ?>
-                <td>
-                <form method="Post" action="DisplayCustomersList.php#2">
-                    
-               <!-- <a href=DiplayPrivateChat.php?id=<?php //echo $unique_customer_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
-               <?php
- echo"<input type=hidden name=uCustomerId value=".$unique_customer_IDS[$i].">"; 
- echo"<input type=hidden name=uCustomerName value=".$unique_customer_names[$i].">"; 
-                ?>
-                
-                <button type="submit" name="submitted"> Chat History <i class='fa fa-commenting'></i></button>
-                </form>
-                <br>
-                </td>
-  <?php                   
-                  echo "</tr>";
-  
-                }
+            }        
+            ?>
+                <div class='container'>
+                    <div class='card'>
+                        <div class='medium-card-container'>
+                            <h3 class='text-center'>Customers Chat History</h3>
 
-                ?>
-                 </table>
-                 </div>
-                                    </div>
-                                            </div>
-                                               <?php
+                            <table class='table text-center'>
+                                <?php
+                                for($i=0;$i<sizeof($unique_customer_IDS);$i++)
+                                {
+                                    echo "<tr>";
+                                    echo "<td>";
+                                    echo "<img src='". $unique_customer_images[$i]."'  class='user-pic-icon'><img>";
+                                    echo "<a href=profile.php?id=" . $unique_customer_IDS[$i] .">". $unique_customer_names[$i] ."</a>";
+                                    echo "</td>";
+                                ?>
+                                <td>
+                                <form method="Post" action="DisplayCustomersList.php#2">
+                                    
+                                <?php
+                                echo"<input type=hidden name=uCustomerId value=".$unique_customer_IDS[$i].">"; 
+                                echo"<input type=hidden name=uCustomerName value=".$unique_customer_names[$i].">"; 
+                                ?>
+                                
+                                <button type="submit" name="submitted"> Chat History <i class='fa fa-commenting'></i></button>
+                                </form>
+                                <br>
+                                </td>
+                                    <?php                   
+                                echo "</tr>";
                 
+                                }
+
+                                ?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            
             }
             if( isset($_POST['submitted']) ){
                 
@@ -131,7 +132,7 @@ if($_SESSION['userType']=='administrator')
                 $unique_admin_image_arr=array();
     
                 while($row = $result->fetch_assoc())
-        {
+                {
                     if ($row['senderID']==$_POST['uCustomerId'])
                     {
     
@@ -203,52 +204,55 @@ if($_SESSION['userType']=='administrator')
                             }  
                         }
                 
-        } 
-        ?>
-        <div class='container'>
-                            <div class='card justify-content-center' id='2'>
-                                    <div class='medium-card-container'>
-                                        <table class='table table-responsive text-center'>
-                                            <h3>Users <?php echo $_POST['uCustomerName']; ?> Chatted With</h3>
-    <?php    
-    
-            for ($i=0;$i<sizeof($unique_admin_name_arr);$i++)
-            {
-        echo"    <tr>";        
-    echo "<td><img src='". $unique_admin_image_arr[$i]."'  class='user-pic-icon'><img><a href=profile.php?id=" . $unique_admin_id_arr[$i] .">" .  $unique_admin_name_arr[$i]."</a></td>";
-                    echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype_arr[$i]." </td>";
-                    ?>
-        <!--<td><a href=Chat.php?id=<?php //echo $unique_admin_id_arr[$i]; ?> >Message</a></td>-->
-        <td>
-        <form method="Post" action="DiplayPrivateChat.php">
-                    
-                    <!-- <a href=DiplayPrivateChat.php?id=<?php //echo $unique_customer_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
-                    <?php
-                    if( isset($_POST['submitted']) ){
-                      echo"<input type=hidden name=uAdminId value=".$unique_admin_id_arr[$i].">";
-                      echo"<input type=hidden name=uCustomerId2 value=".$_POST['uCustomerId'].">";
-                    }      
-                    ?> 
-                        <button type="submit" name="uCustomerId_uCustomerIdSubmitted">View Chat   <i class='fa fa-commenting'></i></button>
-        </form>
-        </td>    
-    
-    </tr> 
-    
-    <?php
-    
-        }
-        ?>
-        </table>
-        </div>
-                           </div>
-                                   </div>
-                                      <?php
-       
-        
-   
+                } 
+                ?>
+                <div class='container'>
+                    <div class='card' id='2'>
+                        <div class='medium-card-container'>
+
+                            <h3 class='text-center'>Users <?php echo $_POST['uCustomerName']; ?> Chatted With</h3>
+
+                            <table class='table text-center'>
+
+                            <?php 
+                
+                            for ($i=0;$i<sizeof($unique_admin_name_arr);$i++)
+                            {
+                                echo"    <tr>";        
+                                echo "<td><img src='". $unique_admin_image_arr[$i]."'  class='user-pic-icon'><img><a href=profile.php?id=" . $unique_admin_id_arr[$i] .">" .  $unique_admin_name_arr[$i]."</a></td>";
+                                echo "<td><i class='fa fa-user'></i>  ". $unique_admin_usertype_arr[$i]." </td>";
+                                ?>
+                                <!--<td><a href=Chat.php?id=<?php //echo $unique_admin_id_arr[$i]; ?> >Message</a></td>-->
+                                <td>
+                                <form method="Post" action="DiplayPrivateChat.php">
+                                
+                                <!-- <a href=DiplayPrivateChat.php?id=<?php //echo $unique_customer_IDS[$i] ?>> YOU WANNA SEE MY CHATS MF? </a> -->
+                                <?php
+                                if( isset($_POST['submitted']) ){
+                                echo"<input type=hidden name=uAdminId value=".$unique_admin_id_arr[$i].">";
+                                echo"<input type=hidden name=uCustomerId2 value=".$_POST['uCustomerId'].">";
+                            }      
+                            ?> 
+                            
+                            <button type="submit" name="uCustomerId_uCustomerIdSubmitted">View Chat   <i class='fa fa-commenting'></i></button>
+                
+                                </form>
+
+                                </td> 
+
+                                 </tr> 
+
+                            <?php
+                            }
+                            ?>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        <?php
+                
         $conn->close(); 
-}
+    }
     ?>          
 </body>
 </html>

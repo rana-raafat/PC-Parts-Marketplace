@@ -37,7 +37,7 @@
             else{
                 if($row = $result->fetch_assoc()){
                     echo "<div class='container'>";
-                    echo "<div class='card justify-content-center'>";
+                    echo "<div class='card'>";
                     echo "<div class='profile'>";          
                     echo "<h1>" . $row['username'] . "</h1>";
                     echo "<br>";
@@ -122,10 +122,10 @@
                     echo "</div>";
                 }
             }
-        }
+        }//IF IT'S SESSIONED USER OWN PROFILE
         else if(isset($_SESSION['id'])){
             echo "<div class='container'>";
-            echo "<div class='card justify-content-center'>";
+            echo "<div class='card'>";
             echo "<div class='profile'>";
             echo "<h1>" . $_SESSION['username'] . "</h1>";
             echo "<br>";

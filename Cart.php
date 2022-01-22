@@ -45,10 +45,11 @@
                     }
                     ?>
                     <div class='container'>
-                        <div class='card justify-content-center'>
+                        <div class='card'>
                             <div class="shoppingCart">
+
                                 <div class="cart-items">
-                                    <table class="table table-responsive">
+                                    <table class="table">
                                         <thead><tr><th>Image</th><th>Name</th> <th>Price</th> <th>Amount</th><th></th></tr></thead>
                                         <tbody>
                                             <?php            
@@ -97,7 +98,7 @@
                                                             echo "</td>";
                                                             ?>
                                                             <td>
-                                                                <div class='cart-actions text-right'>
+                                                                <div class='cart-actions'>
                                                                     <button type='submit' name='update'>
                                                                         <i class="glyphicon glyphicon-refresh"></i> 
                                                                         Update
@@ -116,14 +117,16 @@
                                         echo "</tbody>";
                                     echo "</table>";
                                 echo "</div>";
-                                echo "<div class='cart-footer'>";
-                                    echo "<text class='header'> Total price: </text>" . $totalPrice;
-                                    if($totalPrice>0){
-                                    echo "<br><form action='Checkout.php' method='post'>"; 
-                                        echo "<button type='submit' name='total' value='" . $totalPrice ."'>Checkout</button>";  
-                                    echo "</form></div>";    
-                                    }     
-                                echo "</div>";
+
+
+                                echo "<text class='header'> Total price: </text>" . $totalPrice;
+                                if($totalPrice>0){
+                                echo "<br><form action='Checkout.php' method='post'>"; 
+                                    echo "<button type='submit' name='total' value='" . $totalPrice ."'>Checkout</button>";  
+                                echo "</form></div>";    
+                                }     
+
+
                         echo "</div>";
                     echo "</div>";
                     $con->close();

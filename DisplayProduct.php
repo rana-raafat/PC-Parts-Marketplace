@@ -351,19 +351,19 @@
                                 <input type='radio' name='rating' value='4stars'>4 stars
                                 <input type='radio' name='rating' value='5stars'>5 stars
                                 <div class='alert alert-danger' id="RatingAlert" style="visibility: hidden" >               
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i>
                                     <label id="RatingError"></label>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <a href class="close" alert-hide=".alert">
                                         <span aria-hidden="true">&times;</span>
-                                    </button> 
+                                    </a>  
                                 </div><br><br>
                                 <textarea name='review' rows='4' cols='50' maxlength='255'placeholder='Write a review...'></textarea>
                                 <div class='alert alert-danger' id="ReviewAlert" style="visibility: hidden" >               
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i>
                                     <label id="ReviewError"></label>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <a href class="close" alert-hide=".alert">
                                         <span aria-hidden="true">&times;</span>
-                                    </button> 
+                                    </a> 
                                 </div><br>
                                 <input type='submit' name='submitReview' value='submit'>
                             </form>
@@ -383,11 +383,11 @@
                                 <input type='radio' name='newRating' value='5stars' <?php echo ($currentRating==5)?'checked':'' ?>>5 stars<br><br>
                                 <textarea name='newreview' rows='4' cols='50' maxlength='255' wrap='hard' autofocus><?php echo $reviewText; ?></textarea>
                                 <div class='alert alert-danger' id="ReviewAlert" style="visibility: hidden" >               
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i>
                                     <label id="ReviewError"></label>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <a href class="close" alert-hide=".alert">
                                         <span aria-hidden="true">&times;</span>
-                                    </button> 
+                                    </a> 
                                 </div><br>
                                 <input type='submit' name='editReview' value='submit'>
                             </form>
@@ -461,11 +461,11 @@
                                             <textarea name='replyText' rows='4' cols='50' maxlength='255' autofocus wrap='hard' placeholder='Write a reply...'></textarea>
                                             <br><br>
                                             <div class='alert alert-danger' id="ReplyAlert" style="visibility: hidden" >               
-                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                <i class="glyphicon glyphicon-exclamation-sign"></i>
                                                 <label id="ReplyError"></label>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <a href class="close" alert-hide=".alert">
                                                     <span aria-hidden="true">&times;</span>
-                                                </button> 
+                                                </a> 
                                             </div><br>
                                             <button type='submit' name='reply' value='<?php echo $_POST['addreply']; ?>'>Post Reply</button>
                                         </form>
@@ -491,7 +491,7 @@
                                     }
                                     if($repliesresult->num_rows > 0){//if there are replies
                                         if(isset($_POST['viewreplies'])){//if the users clicks on view replies button
-                                            echo "<div class='reply-div'>";
+                                            echo "<div class='reply-div' id='reply-div'>";
                                             while($replyrows = $repliesresult->fetch_assoc()){ //get all replies
                                                 $reply_usernamesql = "SELECT * FROM users WHERE id='" . $replyrows['userID'] . "'"; //select username
                                                 $reply_username_result = $con->query($reply_usernamesql);
@@ -518,9 +518,14 @@
                                         }
                                         else if(!isset($_POST['addreply'])) { //if there are replies + the user didn't click on view replies, show the view replies button <form method='post' action=''> 
                                             ?>
+<<<<<<< Updated upstream
                                             <form method='post' action=''>
                                             <button type='submit' class='reply-btn' name='viewreplies' value='<?php echo $reviewRow['id']; ?>'>View replies</button>
                                             </form>
+=======
+                                            
+                                            <button type='submit' onclick="window.location.href='DisplayProduct.php?id=<?php echo $_GET['id']; ?>#reply-div'" class='reply-btn' name='viewreplies' value='<?php echo $reviewRow['id']; ?>'>View replies</button>
+>>>>>>> Stashed changes
                                             <?php
                                         }
                                     }

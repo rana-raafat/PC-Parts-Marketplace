@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Send Survey </title>
     </head>
     <body>
@@ -66,11 +65,11 @@
                         if(!empty($error)){
                             ?>
                             <div class='alert alert-danger justify-content-center'>               
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <i class="glyphicon glyphicon-exclamation-sign"></i>
                                 <?php echo $error ?>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <a href class="close" alert-hide=".alert">
                                     <span aria-hidden="true">&times;</span>
-                                </button> 
+                                </a> 
                             </div>
                             <br>
                             <?php

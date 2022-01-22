@@ -130,7 +130,7 @@
             }
 
             echo "<div class='container'>";
-            echo "<div class='card justify-content-center'>";
+            echo "<div class='card'>";
             echo "<div class='profile'>";
             echo "<img src='" . $_SESSION['imagePath'] ."' class='profile-image'>";
             echo "<br>";
@@ -143,11 +143,11 @@
             if(!empty($usernameError)){
             ?>
             <div class='alert alert-danger'>               
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                 <?php echo $usernameError ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <a href class="close" alert-hide=".alert">
                     <span aria-hidden="true">&times;</span>
-                </button> 
+                </a>  
             </div>
             <?php
             }
@@ -159,11 +159,11 @@
             if(!empty($emailError)){
             ?>
             <div class='alert alert-danger'>               
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                 <?php echo $emailError ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <a href class="close" alert-hide=".alert">
                     <span aria-hidden="true">&times;</span>
-                </button> 
+                </a> 
             </div>
             <?php 
             }           

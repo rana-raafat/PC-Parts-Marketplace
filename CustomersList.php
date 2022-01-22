@@ -1,6 +1,5 @@
 <html>
     <head>
-        <link rel="stylesheet" href="Style.css">
         <title> Customers </title>
     </head>
     <body>
@@ -40,10 +39,10 @@
                 }
                 ?>
                 <div class='container'>
-                    <div class='card justify-content-center'>
-                        <div class="ContactUs">
+                    <div class='card'>
+                        <div class="large-card-container">
                             <div class="List">
-                                <table class="table table-responsive">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th>Name</th> 
