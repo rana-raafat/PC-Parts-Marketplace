@@ -1,6 +1,6 @@
 <?php
         session_start();
-        include "Menu.php";
+        //include "Menu.php";
 
         function dbException($queryResult){
             if(!$queryResult){
@@ -38,7 +38,7 @@
                     dbException($result);
                 }
                 catch(Exception $e){
-                    echo("Database Error: %s\n", mysqli_error($conn));
+                    echo "Database Error: %s\n" . mysqli_error($conn);
                     die();
                 }
 

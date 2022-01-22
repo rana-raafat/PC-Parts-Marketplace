@@ -71,7 +71,7 @@
             //
             const xhttp= new XMLHttpRequest();
             xhttp.onload=function(){
-          
+            
                 if(this.responseText==""){
                    window.location.replace('Home.php');
                    return true;
