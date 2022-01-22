@@ -39,7 +39,7 @@
     	    }
         	else if(isset($_POST['No'])) {
 				echo "<script> 
-						$('#signOutModal .close').click(); 
+						$('#deleteAccountModal .close').click(); 
 						window.history.go(-1);
 			 		  </script>";     
 			}
