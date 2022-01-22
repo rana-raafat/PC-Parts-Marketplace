@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2022 at 08:18 PM
+-- Generation Time: Jan 22, 2022 at 12:55 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -89,10 +88,11 @@ INSERT INTO `cartitem` (`orderID`, `customerID`, `productID`, `amount`) VALUES
 (7, 15, 11, 1),
 (1, 9, 12, 1),
 (3, 11, 14, 3),
+(17, 13, 15, 1),
 (4, 12, 17, 2),
 (2, 10, 18, 4),
 (7, 15, 19, 1),
-(8, 16, 21, 3),
+(8, 16, 21, 2),
 (1, 9, 24, 1),
 (4, 12, 26, 1),
 (8, 16, 27, 1),
@@ -103,6 +103,7 @@ INSERT INTO `cartitem` (`orderID`, `customerID`, `productID`, `amount`) VALUES
 (7, 15, 34, 1),
 (2, 10, 36, 2),
 (5, 13, 36, 1),
+(15, 13, 37, 1),
 (8, 16, 38, 2),
 (8, 16, 39, 1),
 (9, 17, 39, 2),
@@ -171,7 +172,7 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`messageID`, `senderID`, `recepientID`, `auditorFlag`, `messageText`, `readStatus`) VALUES
-(1, 7, 1, 0, 'Investigation requested <a href=\"ViewInvestigationRequest.php?id=1\"\">click here </a> to view', 0),
+(1, 7, 1, 0, 'Investigation requested <a href=\"ViewInvestigationRequest.php?id=1\"\">click here </a> to view', 1),
 (2, 16, 3, 0, 'A new product was suggested <a href=\"DisplaySuggestions.php\">Click Here</a> to view', 1),
 (3, 16, 4, 0, 'A new product was suggested <a href=\"DisplaySuggestions.php\">Click Here</a> to view', 1),
 (4, 16, 5, 0, 'A new product was suggested <a href=\"DisplaySuggestions.php\">Click Here</a> to view', 1),
@@ -189,13 +190,14 @@ INSERT INTO `message` (`messageID`, `senderID`, `recepientID`, `auditorFlag`, `m
 (16, 7, 18, 0, 'Kindly take <a href=\"survey.php\">this survey</a>', 0),
 (17, 16, 7, 0, 'Excuse me an admin called Dina was very rude to me', 1),
 (18, 7, 16, 0, 'We formally apologise for your experience, we\'ll investigate this right away', 1),
-(19, 7, 2, 0, 'Investigation requested <a href=\"ViewInvestigationRequest.php?id=2\"\">click here </a> to view', 0),
+(19, 7, 2, 0, 'Investigation requested <a href=\"ViewInvestigationRequest.php?id=2\"\">click here </a> to view', 1),
 (20, 14, 4, 0, 'Is the new samsung ssd available?', 1),
 (21, 4, 14, 1, 'No sadly it\'s not, we\'ll notify you if it available in the future', 0),
 (22, 4, 14, 0, 'However you can fill the form on the contact us page to suggest a product', 0),
 (23, 15, 7, 0, 'Do i have to take the survey?', 0),
 (24, 15, 5, 0, 'when will this be available?', 1),
-(25, 5, 15, 1, 'some time in the future maybe', 0);
+(25, 5, 15, 1, 'some time in the future maybe', 0),
+(26, 8, 11, 0, 'Kindly take <a href=\"survey.php\">this survey</a>', 0);
 
 -- --------------------------------------------------------
 
@@ -222,14 +224,17 @@ INSERT INTO `orders` (`orderID`, `customerID`, `numberOfProducts`, `completed`) 
 (5, 13, 1, 1),
 (6, 14, 0, 0),
 (7, 15, 4, 1),
-(8, 16, 4, 0),
+(8, 16, 4, 1),
 (9, 17, 1, 1),
 (10, 18, 1, 0),
 (11, 11, 0, 0),
 (12, 10, 0, 0),
 (13, 15, 0, 0),
 (14, 17, 0, 0),
-(15, 13, 0, 0);
+(15, 13, 1, 1),
+(16, 16, 0, 0),
+(17, 13, 1, 1),
+(18, 13, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -281,7 +286,7 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`id`, `name`, `description`, `price`, `imagePath`, `1star`, `2stars`, `3stars`, `4stars`, `5stars`, `numberOfReviews`, `category`) VALUES
 (1, 'Gigabyte A320M-S2H', 'Supports AMD 3rd Gen Ryzen™/ 2nd Gen Ryzen™/ 1st Gen Ryzen™/ Athlon™ with Radeon™ Vega Graphics/ Athlon X4 Processors<br>\nDual Channel Non-ECC Unbuffered DDR4, 2 DIMMs <br>\nUltra-Fast PCIe Gen3 x4 M.2 with PCIe NVMe & SATA mode support <br>\nHigh Quality Audio Capacitors and Audio Noise Guard<br>', 1250.00, 'resources/images/ProductsPictures/Gigabyte A320M-S2H.jpg', 0, 0, 1, 0, 0, 1, 'Motherboard'),
-(2, 'GIGABYTE B560 AORUS PRO', 'Dual Channel DDR4, 4 DIMMs,Intel 2.5G GbE LAN<br>\n11th Generation Intel® Core™ i9 processors / Intel® Core™ i7 processors / Intel® Core™ i5 processors<br>\n1 x DisplayPort<br>\n1 x HDMI port<br>', 3000.00, 'resources/images/ProductsPictures/GIGABYTE B560 AORUS PRO.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
+(2, 'GIGABYTE B560 AORUS PRO', 'Dual Channel DDR4, 4 DIMMs,Intel 2.5G GbE LAN<br>\n11th Generation Intel® Core™ i9 processors / Intel® Core™ i7 processors / Intel® Core™ i5 processors<br>\n1 x DisplayPort<br>\n1 x HDMI port<br>', 3000.00, 'resources/images/ProductsPictures/GIGABYTE B560 AORUS PRO.jpg', 0, 0, 1, 0, 0, 1, 'Motherboard'),
 (3, 'Gigabyte X570 AORUS Elite', 'AMD X570 AORUS Motherboard with 12+2 Phases Digital VRM with DrMOS<br>\r\nAdvanced Thermal Design with Enlarge Heatsink, Dual PCIe 4.0 M.2 with Single Thermal Guard<br>\r\nIntel® GbE LAN with cFosSpeed, Front USB Type-C, RGB Fusion 2.0<br>', 4000.00, 'resources/images/ProductsPictures/Gigabyte X570 AORUS Elite.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
 (4, 'Gigabyte Z390 MASTER', 'Intel Z390 AORUS Motherboard with 12 Phases IR Digital VRM, Fins-Array Heatsink<br>\r\nRGB Fusion 2.0, 802.11ac Wireless, Triple M.2 with Thermal Guards, ESS SABRE HIFI 9118<br>\r\nIntel® GbE LAN with cFosSpeed, Front & Rear USB 3.1 Gen 2 Type-C<br>', 6500.00, 'resources/images/ProductsPictures/Gigabyte Z390 MASTER.jpg', 0, 0, 0, 0, 0, 0, 'Motherboard'),
 (5, 'MSI A520M PRO', 'AMD A520 Chipset, 2x DDR4 memory slots, support up to 64GB<br>\r\nDual channel memory architecture, Supports non-ECC UDIMM memory<br>\r\nSupports RAID 0, RAID 1 and RAID 10 for SATA storage devices<br>', 1500.00, 'resources/images/ProductsPictures/MSI A520M PRO.jpg', 0, 0, 0, 2, 0, 2, 'Motherboard'),
@@ -294,7 +299,7 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`, `imagePath`, `1star
 (12, 'Kingston HyperX FURY RGB DDR4 16GB', 'HyperX FURY DDR4 RGB delivers a boost of performance ans style with speeds up to 3733MHz<br>\r\naggressive styling and RGB lighting that runs the length of the module for smooth and stunning<br>\r\neffects. This dazzling, cost-effective upgrade is available in 2400MHz-3733MHz speeds<br>\r\nCL15-19 latencies, single module capacities of 4GB-32GB<br>', 2000.00, 'resources/images/ProductsPictures/Kingston HyperX FURY RGB DDR4 16GB.jpg', 0, 0, 0, 0, 1, 1, 'RAM'),
 (13, 'G.skill Trident Z Royal RGB 32GB', 'Trident Z Royal is the latest addition to the Trident Z flagship family and features a crown jewel design<br>\r\nMeticulously crafted to display just the right amount of light refraction<br>\r\nThe patented crystalline light bar scatters the RGB colors in a magnificent display of LED lighting<br>', 5500.00, 'resources/images/ProductsPictures/G.skill Trident Z Royal RGB 32GB.jpg', 0, 1, 0, 0, 1, 2, 'RAM'),
 (14, 'G.SKILL RipjawsV 16GB (2×8) DDR4', 'Memory Type is DDR4<br>\r\nCapacity of 16GB (8GBx2)<br>\r\nMulti-Channel Kit, Dual Channel Kit<br>\r\nTested Speed of 3200MHz<br>\r\nError Checking is Non-ECC<br>\r\nSPD Speed is 2133MHz<br>', 2000.00, 'resources/images/ProductsPictures/G.SKILL RipjawsV 16GB (2×8) DDR4.jpg', 0, 0, 0, 0, 0, 0, 'RAM'),
-(15, 'Team T-Force DELTA RGB 8GB DDR4', 'Full frame 120° ultra wide angle lighting<br>\r\nBuilt-in Force Flow RGB lighting effect<br>\r\nAluminum alloy heat spreader with asymmetric minimalist design<br>\r\nSupports ASUS Aura Sync software synchronization<br>\r\nLatest JEDEC RC 2.0 PCB<br>\r\nEnergy saving 1.2V~1.4V ultra low working voltage<br>\r\nSupports XMP2.0 one-click overclocking technology<br>', 1000.00, 'resources/images/ProductsPictures/Team T-Force DELTA RGB 8GB DDR4.jpg', 1, 0, 0, 0, 0, 1, 'RAM'),
+(15, 'Team T-Force DELTA RGB 8GB DDR4', 'Full frame 120° ultra wide angle lighting<br>\r\nBuilt-in Force Flow RGB lighting effect<br>\r\nAluminum alloy heat spreader with asymmetric minimalist design<br>\r\nSupports ASUS Aura Sync software synchronization<br>\r\nLatest JEDEC RC 2.0 PCB<br>\r\nEnergy saving 1.2V~1.4V ultra low working voltage<br>\r\nSupports XMP2.0 one-click overclocking technology<br>', 1000.00, 'resources/images/ProductsPictures/Team T-Force DELTA RGB 8GB DDR4.jpg', 1, 0, 1, 0, 0, 2, 'RAM'),
 (16, 'Team T-Force Vulcan Z 8GB DDR4', 'Simple design to perfectly protect the cooling module<br>\r\nHigh thermal conductive adhesive<br>\r\nSupports Intel & AMD motherboards<br>\r\nSelected high-quality IC<br>\r\nSupports XMP2.0<br>\r\nEnergy saving with ultra-low working voltage<br>', 750.00, 'resources/images/ProductsPictures/Team T-Force Vulcan Z 8GB DDR4.jpg', 1, 0, 0, 1, 0, 2, 'RAM'),
 (17, 'Kingston Fury Beast DDR4 16GB', 'Kingston FURY™ Beast DDR4 RGB1 delivers a boost of performance and style with speeds of up to 3733MHz<br>\r\nSingle-module capacities of 8GB–32GB<br>\r\nIt features Plug N Play automatic overclocking at 2666MHz2 and is both Intel® XMP-ready and ready for AMD Ryzen™<br>\r\nCustomise the RGB lighting effects by using Kingston FURY CTRL software and its patented Infrared Sync Technology<br>\r\nFURY Beast DDR4 RGB stays cool with its stylish, low-profile heat spreader<br>', 1600.00, 'resources/images/ProductsPictures/Kingston Fury Beast DDR4 16GB.jpg', 0, 0, 0, 0, 0, 0, 'RAM'),
 (18, 'Gigabyte Aorus RGB 16GB (2×8) DDR4', 'Memory Size of 16GB Kit (2 x 8GB)<br>\r\nFrequency of DDR4-3200 MHz<br>\r\nTiming is 16-18-18-38 (XMP 3200MHz)<br>\r\nVoltage of 1.35V (when XMP enable)<br>\r\nRGB Fusion supported, 100% Sorted & Tested<br>\r\nHigh efficient heat spreaders to keep performance<br>', 2250.00, 'resources/images/ProductsPictures/Gigabyte Aorus RGB 16GB (2×8) DDR4.jpg', 0, 0, 0, 0, 0, 0, 'RAM'),
@@ -324,7 +329,8 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`, `imagePath`, `1star
 (42, 'AMD RYZEN 3 3100', '4 CPU Cores<br>\r\n8 Threads<br>\r\nMax. Boost Clock Up to 3.9GHz<br>\r\nBase Clock 3.6GHz<br>\r\n256KB L1 Cache<br>\r\n2MB L2 Cache<br>\r\n16MB L3 Cache<br>\r\nDefault TDP 65W<br>', 2000.00, 'resources/images/ProductsPictures/AMD RYZEN 3 3100.jpg', 0, 0, 0, 0, 0, 0, 'Processor'),
 (43, 'Intel Pentium Gold G6405', '2 Cores<br>\r\n4 Threads<br>\r\nProcessor Base Frequency 4.10 GHz<br>\r\nCache of 4 MB Intel® Smart Cache<br>\r\nBus Speed 8 GT/s<br>\r\nTDP 58 W<br>', 1500.00, 'resources/images/ProductsPictures/Intel Pentium Gold G6405.jpg', 0, 0, 0, 0, 1, 1, 'Processor'),
 (44, 'Intel Core i9-9900K Coffee Lake', '8 Cores<br>\r\n16 Threads<br>\r\nMax Turbo Frequency 5.00 GHz<br>\r\nIntel® Turbo Boost Technology 2.0 Frequency 5.00 GHz<br>\r\nProcessor Base Frequency 3.60 GHz<br>\r\n16 MB Intel® Smart Cache<br>\r\nBus Speed 8 GT/s<br>\r\nTDP 95 W<br>', 8000.00, 'resources/images/ProductsPictures/Intel Core i9-9900K Coffee Lake.jpg', 1, 0, 0, 0, 1, 2, 'Processor'),
-(45, 'AMD RYZEN 5 3600X', '6 CPU Cores<br>\r\n12 Threads<br>\r\nMax. Boost Clock Up to 4.4GHz<br>\r\nBase Clock 3.8GHz<br>\r\n384KB L1 Cache<br>\r\n3MB L2 Cache<br>\r\n32MB L3 Cache<br>\r\nDefault TDP 95W<br>', 3750.00, 'resources/images/ProductsPictures/AMD RYZEN 5 3600X.jpg', 0, 0, 0, 0, 0, 0, 'Processor');
+(45, 'AMD RYZEN 5 3600X', '6 CPU Cores<br>\r\n12 Threads<br>\r\nMax. Boost Clock Up to 4.4GHz<br>\r\nBase Clock 3.8GHz<br>\r\n384KB L1 Cache<br>\r\n3MB L2 Cache<br>\r\n32MB L3 Cache<br>\r\nDefault TDP 95W<br>', 3750.00, 'resources/images/ProductsPictures/AMD RYZEN 5 3600X.jpg', 0, 0, 0, 0, 0, 0, 'Processor'),
+(46, '', 'mmmmmmmmmmmm', 0.75, 'resources/images/ProductsPictures/default.jpg', 0, 0, 0, 0, 0, 0, 'Fan');
 
 -- --------------------------------------------------------
 
@@ -399,7 +405,9 @@ INSERT INTO `review` (`id`, `productID`, `customerID`, `reviewText`, `starRating
 (30, 32, 13, 'Pretty colours', 5),
 (31, 25, 13, 'Wonderful performance', 5),
 (32, 38, 13, 'Relatively cheap quality but works well', 3),
-(33, 31, 16, 'Had a good experience using it', 4);
+(33, 31, 16, 'Had a good experience using it', 4),
+(34, 2, 16, 'hhhhhhhhhhhhh', 3),
+(35, 15, 13, 'Not the worst', 3);
 
 -- --------------------------------------------------------
 
@@ -422,7 +430,10 @@ INSERT INTO `reviewreply` (`id`, `reviewID`, `userID`, `replyText`) VALUES
 (2, 2, 15, 'Not bad?! It\'s great!'),
 (3, 13, 6, 'Unfortunately no'),
 (4, 11, 17, 'IKR!'),
-(5, 19, 13, 'ok...');
+(5, 19, 13, 'ok...'),
+(18, 22, 16, 'OK'),
+(19, 29, 13, 'haha'),
+(20, 31, 6, 'Glad to hear');
 
 -- --------------------------------------------------------
 
@@ -480,7 +491,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `address`, `imagePat
 (10, 'Mostafa', '0b742a325a584e413e0b9478337eb62b', 'mostafa@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer2.png', 'customer'),
 (11, 'Laila', 'e3f269c6cf359bf211f734647c72e938', 'laila@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer3.png', 'customer'),
 (12, 'Farida', '626a5d8f0e3d7820ec9647a5e102d50e', 'farida@mail.com', 'Obour', 'resources/images/ProfilePictures/customer4.png', 'customer'),
-(13, 'Rahma', '3b8a073fe11859eb285ef8646d64e632', 'rahma@mail.com', '6th of October', 'resources/images/ProfilePictures/customer5.png', 'customer'),
+(13, 'Rahma', '3b8a073fe11859eb285ef8646d64e632', 'rahma@mail.com', 'Heliopolis', 'resources/images/ProfilePictures/customer5.png', 'customer'),
 (14, 'Sayed', 'dbbf3063c5aea9512c646285dbb43d42', 'sayed@mail.com', 'Obour', 'resources/images/ProfilePictures/customer6.png', 'customer'),
 (15, 'Helmy', 'fd82b32013d092effd6fedcb1afb81f0', 'helmy@mail.com', 'Maadi', 'resources/images/ProfilePictures/customer7.png', 'customer'),
 (16, 'Reem', 'c6bcd95edc1a4686a690059e7c4a184e', 'reem@mail.com', 'Nasr City', 'resources/images/ProfilePictures/customer8.png', 'customer'),
@@ -613,13 +624,13 @@ ALTER TABLE `investigationrequest`
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `messageID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `orderID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `penalty`
@@ -631,7 +642,7 @@ ALTER TABLE `penalty`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `productsuggestion`
@@ -643,13 +654,13 @@ ALTER TABLE `productsuggestion`
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `reviewreply`
 --
 ALTER TABLE `reviewreply`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `survey`

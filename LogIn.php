@@ -9,8 +9,6 @@
             return true;
         }
     
-
-       
          $errors="";
      
             $email=$_GET['em'];
@@ -37,8 +35,6 @@
 
                 $sql= "SELECT * FROM users WHERE email='" . $email . "' AND password='" . $encryptedPass . "'";
                 
-
-                $sql= "SELECT * FROM users WHERE email='" . $email . "' AND password='" . $encryptedPass . "'";
                 $result = mysqli_query($conn,$sql);	
                 try{
                     dbException($result);
