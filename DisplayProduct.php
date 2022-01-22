@@ -4,45 +4,30 @@
 
     <script>
     function validate(form){ 
-        //var fail="";
+    
         if(form.rating.value == ""){
-            //fail+="Star rating required\n";
+   
             document.getElementById("RatingError").innerHTML = "Rating required";
             document.getElementById("RatingAlert").style.visibility = "visible";
             return false;
         }
         if(form.review.value == "" || form.review.value == "Write a review..."){
-            //fail+="Review required\n";
+     
             document.getElementById("ReviewError").innerHTML = "Review required";
             document.getElementById("ReviewAlert").style.visibility = "visible";
             return false;
         }
-        /*
-        if(fail == ""){
-            return true;
-        }
-        else{
-            alert(fail);
-            return false;
-        } */
         return true;    
     }
 
     function validateReply(form2){ 
-        //var fail="";
+  
         if(form2.replyText.value == "" || form2.replyText.value == "Write a reply..."){
-            //fail+="Reply required\n";
+      
             document.getElementById("ReplyError").innerHTML = "Reply required";
             document.getElementById("ReplyAlert").style.visibility = "visible";
             return false;
         }
-        /*if(fail == ""){
-            return true;
-        }
-        else{
-            alert(fail);
-            return false;
-        }  */
         return true;
     }
 
@@ -52,9 +37,17 @@
     <?php 
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         echo "<div class='container justify-content-center'>";
             $con = new mysqli("localhost", "root", "", "project");
-            if(!$con){ //maybe here we can throw an exception? instead of using die()
+            if(!$con){ 
                 echo "connection error<br>";
                 die();
             }
@@ -65,10 +58,12 @@
             
             $sql = "SELECT * FROM product WHERE id='" . $id . "'";
             $result = mysqli_query($con,$sql);	
-
-            if (!$result) { //exception here
-                printf("Error: %s\n", mysqli_error($con));
-                exit();
+            try{
+                dbException($result);
+            }
+            catch(Exception $e){
+                printf("Database Error: %s\n", mysqli_error($con));
+                die();
             }
 
             if(isset($_POST['reply'])){
@@ -76,12 +71,14 @@
                 $text=filter_var($text, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
                 $insertReply='INSERT INTO reviewreply(reviewID,userID,replyText) VALUES ("' . $_POST['reply'] . '","' . $_SESSION['id'] . '","' . $text . '")';
                 $insertReplyResult = $con->query($insertReply);
-                if(!$insertReplyResult){ //exception here
-                    echo "Error inserting into reply table<br>";
-                    printf("Error: %s\n", mysqli_error($con));
-                    exit();
+                try{
+                    dbException($insertReplyResult);
                 }
-                else{
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
+                
                     ?>
                     <script>
                         $(document).ready(function() {
@@ -89,41 +86,53 @@
                         });
                     </script>
                     <?php
-                }
+               
             }
 
 
             if(isset($_POST['addButton'])){ 
                 $checkCart = "SELECT * FROM cartitem WHERE customerID='". $_SESSION['id'] . "' AND productID='" . $id . "'";
                 $checkResult = $con->query($checkCart);
+                try{
+                    dbException($checkResult);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
                 if($checkResult->num_rows != 0){
                     $itemError= "Item is already in cart<br>";
                 }
                 else if($checkResult->num_rows == 0){
                     $orderIDsql = "SELECT orderID FROM orders WHERE customerID='" . $_SESSION['id'] . "' AND completed='0'";
                     $orderIDresult = $con->query($orderIDsql);
+                    try{
+                        dbException($orderIDresult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     if($orderIDresult->num_rows == 0){
                         echo "Error: order not found<br>";
                     }
-                    else if($orderRow = $orderIDresult->fetch_assoc()){ //not tested
+                    else if($orderRow = $orderIDresult->fetch_assoc()){ 
                         $addToCart = "INSERT INTO cartitem VALUES('" . $orderRow['orderID'] . "','". $_SESSION['id'] . "','" . $id . "','" . $_POST['amount'] ."')";
                         $addResult = $con->query($addToCart);
-                        if(!$addResult){ //exception here
+                        if(!$addResult){
                             echo "Error inserting into cart<br>";
                         }
                         else{
-                            //for now the order contains the number of unique products not number of items cause.. idk
+                           
                             $updateOrdersql = "UPDATE orders SET numberOfProducts = numberOfProducts+1 WHERE orderID='" . $orderRow['orderID'] . "' AND customerID='" . $_SESSION['id'] . "'"; 
                             $updateOrderResult = $con->query($updateOrdersql);
-                            if(!$updateOrderResult){ //exception here
+                            if(!$updateOrderResult){ 
                                 echo "Error updating order<br>";
                             }
                         }   
                         echo "<meta http-equiv='refresh' content='0'>";
                     }
                 }
-                //echo "<script>window.location.href='DisplayProduct.php?id=".$id'</script>";
-                //$con->close();
             }
             
             if($row = $result->fetch_assoc()){
@@ -178,7 +187,7 @@
                 echo "<h3 class='product-price'><i>" . $row['price'] . " LE</i></h3>";
                 if($row['numberOfReviews']>0){
                     $averageRating = (1.0*$row['1star'] + 2.0*$row['2stars'] + 3.0*$row['3stars'] + 4.0*$row['4stars'] + 5.0*$row['5stars']) / $row['numberOfReviews'];
-                    //echo "<h4 class='product-dsc'><a href='AllReviews.php'>Average Rating :</a> ";
+                 
                     echo "<h4><a href='#reviews'>Average Rating :</a> ";
                     for($i=1; $i<= 5; $i++){
                         if($i<=$averageRating)
@@ -188,10 +197,17 @@
                     }
                     echo " " . $averageRating . " Stars</h4><br>"; 
                 
-                    //average rating needs to be a link that also redirects to the "view all reviews" page with all the details and stuff
+                   
                     if(isset($_SESSION['id'])){
                         $select = "SELECT * FROM review WHERE productID='" . $id . "' AND customerID='" . $_SESSION['id'] . "'";
                         $selectResult = $con->query($select);
+                        try{
+                            dbException($selectResult);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if($selectResult->num_rows != 0){
                             $reviewed=true;
                             if($reviewRow = $selectResult->fetch_assoc()){
@@ -239,16 +255,16 @@
                         $insert = 'INSERT INTO review(productID,customerID,reviewText,starRating) VALUES("' . $id . '","' . $_SESSION['id'] . '","' . $review . '","' . $_POST['rating'] .'")';
                         
                         $insertResult = $con->query($insert);
-                        if(!$insertResult){ //exception here
+                        if(!$insertResult){ 
                             echo "Error inserting in the review table<br>";
                         }
                         else{
                             $updateResult = $con->query($update);
-                            if(!$updateResult){ //exception here
+                            if(!$updateResult){ 
                                 echo "Error updating the product table<br>";
                             }
                             else{
-                            //header("Location:DisplayProduct.php?id=".$id);
+                       
                             ?>
                             <script>
                                 $(document).ready(function() {
@@ -260,7 +276,7 @@
                         }
                     }
                     else{
-                        //echo "<script>window.location.href='DisplayProduct.php'</script>";
+                 
                         ?>
                         <script>
                             $(document).ready(function() {
@@ -271,14 +287,13 @@
                     }
                 }
                 else if(isset($_POST['editReview'])){
-                    
-                    $OldRatingsql="SELECT ". $_POST['newRating'] ." FROM product WHERE id='". $id ."'"; 
 
                     $updateReview = "UPDATE review SET reviewText='" . $_POST['newreview'] . "', starRating='" . $_POST['newRating'] ."' WHERE productID='" . $_GET['id']. "' AND customerID='" . $_SESSION['id'] . "'";
                     $reviewResult = $con->query($updateReview);
+                    
                     $updateRating = "UPDATE product SET " . $_POST['newRating'] . "=" . $_POST['newRating'] . " + 1, ". $stars . "=" . $stars . "-1 WHERE id='" . $id . "'";
                 
-                    if(!$reviewResult){ //exception here
+                    if(!$reviewResult){
                         echo "Error updating the review table<br>";
                     }
                     else{
@@ -287,7 +302,7 @@
                             echo "Error updating the product table<br>";
                         }
                         else{
-                            //header("Location:DisplayProduct.php?id=".$id);
+                           
                             ?>
                             <script>
                                 $(document).ready(function() {
@@ -303,16 +318,16 @@
                     $deleteResult = $con->query($deleteReview);
                     
                     $decrement_reviews_sql = "UPDATE product SET " . $stars . "=" . $stars . "-1, numberOfReviews = numberOfReviews-1 WHERE id='" . $id . "'";
-                    if(!$deleteResult){ //exception here
+                    if(!$deleteResult){ 
                         echo "Error deleting from the review table<br>";
                     }
                     else {
                         $decrementResult = $con->query($decrement_reviews_sql);
-                        if(!$decrementResult){ //exception here
+                        if(!$decrementResult){ 
                             echo "Error decrementing the reviews in product table<br>";
                         } 
                         else{
-                            //header("Location:DisplayProduct.php?id=".$id);
+                           
                             ?>
                             <script>
                                 $(document).ready(function() {
@@ -339,19 +354,19 @@
                                 <input type='radio' name='rating' value='4stars'>4 stars
                                 <input type='radio' name='rating' value='5stars'>5 stars
                                 <div class='alert alert-danger' id="RatingAlert" style="visibility: hidden" >               
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i>
                                     <label id="RatingError"></label>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <a href class="close" alert-hide=".alert">
                                         <span aria-hidden="true">&times;</span>
-                                    </button> 
+                                    </a>  
                                 </div><br><br>
                                 <textarea name='review' rows='4' cols='50' maxlength='255'placeholder='Write a review...'></textarea>
                                 <div class='alert alert-danger' id="ReviewAlert" style="visibility: hidden" >               
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i>
                                     <label id="ReviewError"></label>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <a href class="close" alert-hide=".alert">
                                         <span aria-hidden="true">&times;</span>
-                                    </button> 
+                                    </a> 
                                 </div><br>
                                 <input type='submit' name='submitReview' value='submit'>
                             </form>
@@ -371,19 +386,18 @@
                                 <input type='radio' name='newRating' value='5stars' <?php echo ($currentRating==5)?'checked':'' ?>>5 stars<br><br>
                                 <textarea name='newreview' rows='4' cols='50' maxlength='255' wrap='hard' autofocus><?php echo $reviewText; ?></textarea>
                                 <div class='alert alert-danger' id="ReviewAlert" style="visibility: hidden" >               
-                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <i class="glyphicon glyphicon-exclamation-sign"></i>
                                     <label id="ReviewError"></label>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <a href class="close" alert-hide=".alert">
                                         <span aria-hidden="true">&times;</span>
-                                    </button> 
+                                    </a> 
                                 </div><br>
                                 <input type='submit' name='editReview' value='submit'>
                             </form>
                             <?php
                             }
                             else{
-                                //echo "<img src='" . $_SESSION['imagePath'] . "' class='profile-icon'> ";
-                                //echo "<b> " . $_SESSION['username'] . " </b><br>";
+                                
                                 for($i=1; $i<= 5; $i++){
                                     if($i<=$currentRating)
                                         echo "<i class='fa fa-star'></i>";
@@ -398,7 +412,7 @@
                     }
                 }
                 echo "<h3 class='product-price'>Customers Reviews: </h3><br>";
-                //need to add rating and reviews and such here
+               
                 echo  "<div id='reviews'>";
                     if($row['numberOfReviews']>0){
                         
@@ -408,6 +422,13 @@
                             $reviewsql="SELECT * FROM `review` Where productID='". $itemid."' AND customerID <>'" . $_SESSION['id'] . "'";
                         }
                         $reviewResult=mysqli_query($con,$reviewsql);
+                        try{
+                            dbException($reviewResult);
+                        }
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($con));
+                            die();
+                        }
                         if (!$reviewResult) {
                             echo "Error fetching reviews<br>";
                         }
@@ -415,6 +436,13 @@
                             while($reviewRow = $reviewResult->fetch_assoc()){
                                 $namesql="SELECT username,imagePath FROM users WHERE id='".$reviewRow['customerID']."' ";
                                 $nameresult=mysqli_query($con,$namesql);
+                                try{
+                                    dbException($nameresult);
+                                }
+                                catch(Exception $e){
+                                    printf("Database Error: %s\n", mysqli_error($con));
+                                    die();
+                                }
                                 if($namerow=$nameresult->fetch_assoc()){
                             
                                     echo "<img src='" . $namerow['imagePath'] . "' class='profile-icon'> ";
@@ -425,10 +453,9 @@
                                         else
                                             echo "<i class='fa fa-star-o'></i>";
                                     }
-                                    echo " ". $reviewRow['starRating'] . " stars<br><p class='review'>" . $reviewRow['reviewText']."</p>";
+                                    echo " ". $reviewRow['starRating'] . " stars<br><p class='review'>" . $reviewRow['reviewText']."</p><br>";
                             
                                     //if the user clicked on reply show the textarea
-                                    //echo "<form id='replything' method='post' action=''>";
                                     if(isset($_POST['addreply']) && !isset($_POST['viewreplies'])){
                                         echo "<br><img src='" . $_SESSION['imagePath'] . "' class='profile-icon'> ";
                                         echo "<b>" . $_SESSION['username'] . "</b>";
@@ -437,11 +464,11 @@
                                             <textarea name='replyText' rows='4' cols='50' maxlength='255' autofocus wrap='hard' placeholder='Write a reply...'></textarea>
                                             <br><br>
                                             <div class='alert alert-danger' id="ReplyAlert" style="visibility: hidden" >               
-                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                <i class="glyphicon glyphicon-exclamation-sign"></i>
                                                 <label id="ReplyError"></label>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <a href class="close" alert-hide=".alert">
                                                     <span aria-hidden="true">&times;</span>
-                                                </button> 
+                                                </a> 
                                             </div><br>
                                             <button type='submit' name='reply' value='<?php echo $_POST['addreply']; ?>'>Post Reply</button>
                                         </form>
@@ -456,15 +483,28 @@
                                             <?php
                                         }
                                     }
-                                    $replies_sql="SELECT * FROM reviewreply WHERE reviewID='" . $reviewRow['id'] . "'";//get all replies to this review</form>
+                                    $replies_sql="SELECT * FROM reviewreply WHERE reviewID='" . $reviewRow['id'] . "'";//get all replies to this review
                                     $repliesresult=$con->query($replies_sql);
+                                    try{
+                                        dbException($repliesresult);
+                                    }
+                                    catch(Exception $e){
+                                        printf("Database Error: %s\n", mysqli_error($con));
+                                        die();
+                                    }
                                     if($repliesresult->num_rows > 0){//if there are replies
                                         if(isset($_POST['viewreplies'])){//if the users clicks on view replies button
-                                            echo "<div class='reply-div'>";
+                                            echo "<div class='reply-div' id='reply-div'>";
                                             while($replyrows = $repliesresult->fetch_assoc()){ //get all replies
                                                 $reply_usernamesql = "SELECT * FROM users WHERE id='" . $replyrows['userID'] . "'"; //select username
                                                 $reply_username_result = $con->query($reply_usernamesql);
-                                                
+                                                try{
+                                                    dbException($reply_username_result);
+                                                }
+                                                catch(Exception $e){
+                                                    printf("Database Error: %s\n", mysqli_error($con));
+                                                    die();
+                                                }
                                                 if($reply_username_result->num_rows > 0){ //if the query returned a username
                                                     if($username_row = $reply_username_result->fetch_assoc()){
                                                         
@@ -487,8 +527,6 @@
                                             <?php
                                         }
                                     }
-                                    //echo "<br><br>";
-                                    //echo "</form>";
                                 }
                             }
                         } 

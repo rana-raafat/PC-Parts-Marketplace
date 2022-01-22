@@ -7,16 +7,23 @@
     <?php
         session_start();
         include "Menu.php";
+
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         if($_SESSION['userType']=='auditor')
         {
 ?>
 
-<div class='container'>
-                        <div class='card justify-content-center'>
-                                <div class='large-card-container'>
-                <div class='chat'>
+    <div class='container'>
+        <div class='card'>
+            <div class='large-card-container'>
               <div class='chat-history'>
-                <ul class='m-b-0'>
+                <ul>
                     <?php
             if( ( isset($_POST['send']) ) || ( isset( $_POST['uCustomerId_uAdminIdSubmitted'] ) )  )
             {
@@ -24,9 +31,6 @@
                 $uCustomerId=$_POST['uCustomerId'];
                 $uAdminId2=$_POST['uAdminId2'];
                 
-                //echo "<h1>".$uCustomerId."</h1>";
-                //echo  "<h1>".$uAdminId2."</h1>";
-
              
             
                 $conn = new mysqli("localhost","root","", "project");
@@ -39,8 +43,11 @@
 
                 $fetch_customerName_sql="SELECT username FROM users WHERE id='" . $uCustomerId . "'";
                 $result3 = mysqli_query($conn,$fetch_customerName_sql);
-                if(!$result3){
-                    echo "COULDN'T SEARCH FOR THE NAME FROM THE DB<br>";
+                try{
+                    dbException($result3);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
 
@@ -49,12 +56,13 @@
                     //echo "<h1>".$fetch_customerName['username']."</h1>";
                 }
 
-
                 $fetch_messages_sql="SELECT * FROM message WHERE (senderID='".$uAdminId2."'AND recepientID='".$uCustomerId."') OR (senderID='".$uCustomerId."'AND recepientID='".$uAdminId2."') ORDER BY messageID ASC";
                 $result = mysqli_query($conn,$fetch_messages_sql);
-                if(!$result)
-                {
-                    echo "couldn't read the messages from the DataBase<br>";
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($conn));
                     die();
                 }
 
@@ -71,7 +79,7 @@
                     while($fetch_customer = $result3->fetch_assoc())
                     {
 
-                    echo "<li class='clearfix'>";
+                    echo "<li>";
 
                     if($fetch_customer['id']==$uAdminId2){
                     echo "<div class='text-left'>";
@@ -106,7 +114,6 @@
                 
             echo "</ul>";
             echo "</div>";
-            echo "</div>";    
             }
 
             else
@@ -114,6 +121,7 @@
                 echo "check again";
             }
                 if(isset($_POST['send'])) {
+
                     $text= $_POST['txt'];
                     $text=filter_var($text, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
 
@@ -132,7 +140,7 @@
                         }
                     }
                     $conn->close();
-                    //echo "<script>window.location.href='test2.php'</script>"; 
+                    
                 }
 
                 if(isset($_POST['exit']))
@@ -147,7 +155,15 @@
             
             Enter the message [number] you want to make your comment on: 
             <br>
-            <input type="number" name="num" value=1 min=1>
+            <?php
+            $messages_count_sql="SELECT COUNT(messageID) as messages_count FROM message";
+            $messages_count_result = mysqli_query($conn,$messages_count_sql);
+            if(!$messages_count_result){
+                echo "couldn't select from DataBase<br>";
+            }
+            $messages_count = $messages_count_result->fetch_assoc();
+            ?>
+            <input type="number" name="num" value=1 min=1 max=<?php echo $messages_count['messages_count'];?>>
             <br><br>
 
             Enter your comment:

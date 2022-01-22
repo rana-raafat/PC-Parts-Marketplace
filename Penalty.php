@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <title> Penalty </title>
     </head>
@@ -28,27 +27,41 @@
         session_start();
         include "Menu.php";
 
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
+
         if(isset($_SESSION['id'])){
             if($_SESSION['userType']=='hrpartner'){
                 $con = new mysqli("localhost", "root", "", "project");
-                if(!$con){ //exception
+                if(!$con){ 
                     echo "connection error<br>";
                     die();
                 }
 
                 $sql= "SELECT * FROM users WHERE userType='administrator'";
                 $result = mysqli_query($con,$sql);
+                try{
+                    dbException($result);
+                }
+                catch(Exception $e){
+                    printf("Database Error: %s\n", mysqli_error($con));
+                    die();
+                }
                 if ($result->num_rows == 0) {
                     echo "Error: No admins found<br>";
                 }
                 else{
                     ?>
                     <div class="container">
-                        <div class="card justify-content-center">
-                                 <div class="medium-card-container">
+                        <div class="card">
+                                 <div class="medium-card-container text-center">
                                      
                                       <div>
-                    <form action='' method='post' onsubmit="return validate(this);" class ="form-horizontal">
+                    <form action='' method='post' onsubmit="return validate(this);">
                     <h3>Penalties</h3><br>
                     <label>Select the Admininstrator this penalty will be given to: </label>
                     
@@ -91,6 +104,13 @@
 
                     $selectPenaltiessql="SELECT penalties FROM administrator WHERE id='" . $_POST['admin'] . "'";
                     $penaltyResult = $con->query($selectPenaltiessql);
+                    try{
+                        dbException($penaltyResult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     
                     if(!$insertResult || !$update_HR_Result || !$update_Admin_Result || $penaltyResult->num_rows == 0) {
                         if (!$insertResult){

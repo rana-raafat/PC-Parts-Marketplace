@@ -7,6 +7,12 @@
         session_start();
         include "Menu.php";
 
+        function dbException($queryResult){
+            if(!$queryResult){
+                throw new Exception("SQL Error");
+            }
+            return true;
+        }
         ?>
         <script>
         function validate(form){ 
@@ -41,20 +47,26 @@
 
             if(isset($_POST['submit'])){
                 $con = mysqli_connect("localhost","root","","project");
-                if(!$con){ //maybe here we can throw an exception? instead of using die()
+                if(!$con){ 
                     echo "connection error";
                     echo "<br>";
                     die();
                 }
                 $email = $_POST["email"];
-                $email= filter_var($email,FILTER_SANITIZE_EMAIL);
+$email= filter_var($email,FILTER_SANITIZE_EMAIL);
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){  
                     $emailError='Please enter a valid email';
                 }
                 else{
                     $checkUsername="SELECT * FROM users WHERE username='" . $_POST['username'] . "' AND username!='" . $_SESSION['username'] . "'";
                     $UsernameResult = $con->query($checkUsername);
-
+                    try{
+                        dbException($UsernameResult);
+                    }
+                    catch(Exception $e){
+                        printf("Database Error: %s\n", mysqli_error($con));
+                        die();
+                    }
                     if($UsernameResult->num_rows > 0){
                         $usernameError = "Username already taken";
                     }
@@ -97,6 +109,7 @@
                         else{
                             $encryptedPass=$_POST['password'];
                         }
+
                         $username=$_POST['username'];
                         $username=filter_var($username,FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
                         $address=$_POST['address'];
@@ -105,25 +118,27 @@
                         $updatesql = "UPDATE users SET username='" . $username . "', password='" . $encryptedPass . "', email='" 
                         . $email . "', address='" . $address . "', imagePath='" . $imagePath . "' WHERE id='" . $_SESSION['id'] . "'";
                         $updateResult = $con->query($updatesql);
-                        if (!$updateResult) {
-                            printf("Error: %s\n", mysqli_error($con));
-                            exit();
+                        try{
+                            dbException($updateResult);
                         }
-                        else{
-                            $_SESSION["username"]=$username;
+                        catch(Exception $e){
+                            printf("Database Error: %s\n", mysqli_error($con));
+                            die();
+                        }
+                            $_SESSION["username"]=$_POST['username'];
                             $_SESSION["password"]=$encryptedPass;
-                            $_SESSION["email"]=$email;
-                            $_SESSION["address"]=$address;
+                            $_SESSION["email"]=$_POST['email'];
+                            $_SESSION["address"]=$_POST['address'];
                             $_SESSION["imagePath"]=$imagePath;
                             echo "<script>window.location.href='Profile.php'</script>";
-                        }
+                     
                     }
                 }
                 $con->close();
             }
 
             echo "<div class='container'>";
-            echo "<div class='card justify-content-center'>";
+            echo "<div class='card'>";
             echo "<div class='profile'>";
             echo "<img src='" . $_SESSION['imagePath'] ."' class='profile-image'>";
             echo "<br>";
@@ -136,11 +151,11 @@
             if(!empty($usernameError)){
             ?>
             <div class='alert alert-danger'>               
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                 <?php echo $usernameError ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <a href class="close" alert-hide=".alert">
                     <span aria-hidden="true">&times;</span>
-                </button> 
+                </a>  
             </div>
             <?php
             }
@@ -152,11 +167,11 @@
             if(!empty($emailError)){
             ?>
             <div class='alert alert-danger'>               
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-exclamation-sign"></i>
                 <?php echo $emailError ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <a href class="close" alert-hide=".alert">
                     <span aria-hidden="true">&times;</span>
-                </button> 
+                </a> 
             </div>
             <?php 
             }           
